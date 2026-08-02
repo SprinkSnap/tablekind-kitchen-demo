@@ -1,0 +1,64 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/astro/Breadcrumbs.astro';
+import { DISCLOSURE, STORE } from '../../lib/config';
+import { breadcrumbSchema } from '../../lib/seo';
+
+const schemas = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Checkout', path: '/checkout/' },
+    { name: 'Order complete', path: '/checkout/success/' },
+  ]),
+];
+---
+
+<BaseLayout
+  title="Order Complete"
+  description={`Demo order confirmation for ${STORE.name}. No real order was created.`}
+  path="/checkout/success/"
+  schemas={schemas}
+>
+  <section class="section container-page success">
+    <Breadcrumbs
+      items={[
+        { name: 'Home', href: '/' },
+        { name: 'Checkout', href: '/checkout/' },
+        { name: 'Order complete' },
+      ]}
+    />
+    <div class="surface panel">
+      <p class="eyebrow">Demo complete</p>
+      <h1 class="section-title">Thank you for trying the demo checkout.</h1>
+      <p class="section-lede">
+        {DISCLOSURE.checkout} If you arrived here directly, no order was placed—this page is part of
+        the portfolio flow.
+      </p>
+      <div class="actions">
+        <a class="btn btn-primary" href="/shop/">Continue shopping</a>
+        <a class="btn btn-secondary" href="/collections/">Browse collections</a>
+        <button type="button" class="btn btn-ghost" data-open-enquiry>Build a Store Like This</button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .panel {
+    padding: clamp(1.25rem, 3vw, 2rem);
+    max-width: 42rem;
+  }
+
+  .panel .section-title {
+    margin-top: 0.35rem;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-top: 1.25rem;
+  }
+</style>

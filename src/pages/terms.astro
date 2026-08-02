@@ -1,0 +1,79 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/astro/Breadcrumbs.astro';
+import { DISCLOSURE, STUDIO, STORE } from '../lib/config';
+import { breadcrumbSchema } from '../lib/seo';
+
+const schemas = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Terms', path: '/terms/' },
+  ]),
+];
+---
+
+<BaseLayout
+  title="Terms"
+  description={`Terms of use for the ${STORE.name} fictional e-commerce portfolio demonstration.`}
+  path="/terms/"
+  schemas={schemas}
+>
+  <section class="section container-page policy">
+    <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Terms' }]} />
+    <h1 class="section-title">Terms</h1>
+    <p class="section-lede">Terms of use for this portfolio demonstration.</p>
+    <div class="disclosure">{DISCLOSURE.short}</div>
+    <div class="prose surface panel">
+      <h2>Fictional store</h2>
+      <p>
+        {STORE.name} is not a real retailer. Product names, prices, shipping windows and policies shown
+        here are illustrative samples for design and development evaluation only.
+      </p>
+      <h2>No commercial transactions</h2>
+      <p>
+        Cart, wishlist and checkout flows are interactive demonstrations. No orders, shipments,
+        payments or refunds are created. Do not submit real payment or personal fulfilment information
+        expecting a product to arrive.
+      </p>
+      <h2>Intellectual property</h2>
+      <p>
+        The design, copy and code for this demonstration are created by {STUDIO.name} for portfolio
+        purposes. Product imagery and catalogue content are fictional demo assets unless otherwise noted.
+      </p>
+      <h2>Enquiries to Che Xu Studio</h2>
+      <p>
+        Business enquiries submitted through the portfolio lead form are governed by {STUDIO.name}'s
+        own terms and policies on chexustudio.com.
+      </p>
+      <h2>Changes</h2>
+      <p>
+        This demonstration may be updated or removed at any time as part of an evolving portfolio.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .disclosure {
+    margin: 1rem 0 1.25rem;
+  }
+
+  .panel {
+    padding: 1.25rem;
+    max-width: 44rem;
+    line-height: 1.7;
+  }
+
+  .panel h2 {
+    font-family: var(--font-display);
+    color: var(--color-dark-pine);
+    margin: 1.25rem 0 0.5rem;
+    font-size: 1.15rem;
+  }
+
+  .panel h2:first-child {
+    margin-top: 0;
+  }
+</style>

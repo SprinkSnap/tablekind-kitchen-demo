@@ -1,0 +1,51 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/astro/Breadcrumbs.astro';
+import ConceptDisclosure from '../../components/astro/ConceptDisclosure.astro';
+import CheckoutDemo from '../../components/react/CheckoutDemo';
+import { DISCLOSURE, getCaseStudyUrl, STORE } from '../../lib/config';
+import { breadcrumbSchema } from '../../lib/seo';
+
+const caseStudyUrl = getCaseStudyUrl();
+
+const schemas = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Cart', path: '/cart/' },
+    { name: 'Checkout', path: '/checkout/' },
+  ]),
+];
+---
+
+<BaseLayout
+  title="Checkout"
+  description={`${STORE.name} demo checkout. ${DISCLOSURE.checkout}`}
+  path="/checkout/"
+  schemas={schemas}
+>
+  <section class="section container-page">
+    <Breadcrumbs
+      items={[
+        { name: 'Home', href: '/' },
+        { name: 'Cart', href: '/cart/' },
+        { name: 'Checkout' },
+      ]}
+    />
+    <h1 class="section-title">Checkout</h1>
+    <p class="section-lede">{DISCLOSURE.checkout}</p>
+    <ConceptDisclosure compact />
+    <CheckoutDemo client:load caseStudyUrl={caseStudyUrl} />
+  </section>
+</BaseLayout>
+
+<style>
+  .section-lede {
+    margin-bottom: 1rem;
+  }
+
+  :global(.concept-disclosure) {
+    margin-bottom: 1.25rem;
+  }
+</style>

@@ -1,32 +1,40 @@
 import { z } from 'zod';
 
 export const BUSINESS_TYPES = [
-  'restaurant',
-  'cafe',
-  'bakery',
-  'catering',
-  'food-truck',
-  'other-local-business',
+  'home-goods',
+  'furniture',
+  'apparel',
+  'beauty',
+  'specialty-retail',
+  'other-ecommerce',
 ] as const;
 
 export const PRIMARY_GOALS = [
-  'more-reservations',
-  'online-ordering',
-  'catering-leads',
-  'local-seo',
+  'increase-online-sales',
+  'better-product-discovery',
+  'faster-storefront',
+  'product-seo',
   'brand-refresh',
-  'faster-website',
+  'migrate-platform',
 ] as const;
 
 export const NEEDED_FEATURES = [
-  'menu',
-  'reservations',
-  'pickup-ordering',
-  'catering',
-  'private-events',
-  'multi-location',
+  'product-catalogue',
+  'variants',
+  'search-filters',
+  'wishlist',
+  'cart-checkout',
+  'stripe',
   'cms',
   'analytics',
+] as const;
+
+export const PRODUCT_COUNTS = [
+  '1-20',
+  '21-100',
+  '101-500',
+  '500-plus',
+  'not-sure',
 ] as const;
 
 export const LAUNCH_TIMINGS = [
@@ -43,6 +51,7 @@ export const portfolioLeadSchema = z
     businessName: z.string().trim().max(160).optional(),
     businessType: z.enum(BUSINESS_TYPES),
     existingWebsite: z.string().trim().max(300).optional(),
+    productCount: z.enum(PRODUCT_COUNTS),
     primaryGoal: z.enum(PRIMARY_GOALS),
     neededFeatures: z.array(z.enum(NEEDED_FEATURES)).min(1).max(8),
     launchTiming: z.enum(LAUNCH_TIMINGS),
@@ -75,6 +84,7 @@ export const MAX_REQUEST_BYTES = 12_000;
 export function redactLeadForLogs(lead: PortfolioLeadInput): Record<string, unknown> {
   return {
     businessType: lead.businessType,
+    productCount: lead.productCount,
     primaryGoal: lead.primaryGoal,
     neededFeatures: lead.neededFeatures,
     launchTiming: lead.launchTiming,

@@ -1,42 +1,50 @@
-# Launch Checklist — Tablekind Kitchen Demo
+# Launch Checklist — Harbour & Pine Home Demo
 
 ## Before any deploy
 
-- [ ] `DEMO_MODE=true` confirmed for the public portfolio demo
-- [ ] `noindex, nofollow` present on all pages
-- [ ] Fictional disclosure visible on key pages
-- [ ] No street address, phone, reviews, ratings or press claims
-- [ ] No alcohol / age-restricted products
-- [ ] Menu dietary notice present
-- [ ] Reservation and order flows complete locally only
-- [ ] Che Xu Studio enquiry form is the only real lead capture
-- [ ] Turnstile site key + secret configured for production
-- [ ] D1 auto-provisioned on deploy (or real `database_id` set — never a placeholder UUID)
-- [ ] D1 migrations applied (`npm run db:remote` / `portfolio_leads`)
-- [ ] `ALLOWED_ORIGINS` includes the production hostname
-- [ ] Secrets are in Wrangler secrets / `.dev.vars`, never in git
-- [ ] `npm run check` passes
-- [ ] `npm run build` passes
-- [ ] `npm run test:e2e` passes
-- [ ] `npm run cf:dry-run` passes
-- [ ] Custom domain `tablekindkitchen.chexustudio.com` ready (owner action)
-- [ ] Case study published at `https://chexustudio.com/work/tablekind-kitchen` (owner action)
+- [ ] `DEMO_MODE=true` / `PUBLIC_DEMO_MODE=true` confirmed for portfolio demo
+- [ ] No real merchant address, phone, founders, reviews or scarcity claims in content
+- [ ] Product catalogue reviewed for age-restricted or unsafe items (none)
+- [ ] `robots.txt` disallows crawling; pages emit `noindex, nofollow`
+- [ ] Fake Product/Offer/merchant schema suppressed
+- [ ] Cart/checkout disclosures visible
+- [ ] Lead form is the only real data capture path
+- [ ] Secrets only in Wrangler secrets / `.dev.vars` (never committed)
 
-## Production Worker
+## Cloudflare
 
-- [ ] Worker name: `tablekind-kitchen-demo`
-- [ ] Staging Worker: `tablekind-kitchen-demo-staging`
-- [ ] Observability enabled
-- [ ] Rate limiting / Turnstile verified with a real submission test
-- [ ] CSP / HSTS headers verified
-- [ ] AI binding optional; assistant falls back safely without it
+- [ ] Worker name `harbour-pine-home-demo` (staging: `harbour-pine-home-demo-staging`)
+- [ ] Workers Builds deploy command: `npm run deploy` (or build + `wrangler deploy --env=""` + `db:remote`)
+- [ ] D1 `harbour-pine-leads` provisioned; migrations applied
+- [ ] Turnstile site key + secret configured
+- [ ] `ALLOWED_ORIGINS` includes production domain
+- [ ] Custom domain `harbourandpinehome.chexustudio.com` attached
+- [ ] Security headers verified (CSP, HSTS, Referrer-Policy, Permissions-Policy)
+- [ ] Optional: Cloudflare Rate Limiting on `/api/*`
+- [ ] Optional: Workers AI binding for assistant
 
-## Converting for a verified restaurant later
+## QA
 
-- [ ] Set `DEMO_MODE=false` only after verified NAP, hours and menu data exist
-- [ ] Remove fictional disclosure
-- [ ] Enable accurate Restaurant / LocalBusiness schema
-- [ ] Connect approved reservation + ordering providers
-- [ ] Replace demo imagery with licensed photography
-- [ ] Re-enable indexing only after validation
-- [ ] Owner legal/privacy review completed
+- [ ] `npm run check` (format, lint, typecheck, unit tests)
+- [ ] `npm run build`
+- [ ] `npm run cf:dry-run`
+- [ ] Playwright smoke + a11y + API tests
+- [ ] Manual keyboard pass: nav, filters, variants, cart, checkout, enquiry
+- [ ] Mobile pass at 360 / 390 / 768
+- [ ] Desktop pass at 1024 / 1440
+- [ ] Lighthouse on homepage, collection, product, search, cart, checkout
+- [ ] Broken-link spot check on primary routes
+
+## Case study
+
+- [ ] Publish `CASE_STUDY_COPY.md` to chexustudio.com/work/harbour-pine-home
+- [ ] Attach real screenshots (never invent traffic/sales results)
+- [ ] Link live demo URL
+
+## Owner-supplied values still required
+
+- Turnstile keys
+- Confirmed D1 database id (after first provision)
+- DNS / custom domain authorization
+- Any real merchant assets if converting out of demo mode
+- Privacy retention policy for studio leads

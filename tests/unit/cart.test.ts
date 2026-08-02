@@ -4,52 +4,54 @@ import {
   calculateTotals,
   createEmptyCart,
   lineKey,
+  removeLine,
   updateQuantity,
 } from '../../src/lib/cart';
+import { PRODUCTS } from '../../src/data/products';
 
-describe('cart calculations', () => {
-  it('creates an empty cart', () => {
-    const cart = createEmptyCart();
-    expect(cart.lines).toHaveLength(0);
-    expect(calculateTotals(cart)).toEqual({
-      subtotal: 0,
-      tax: 0,
-      total: 0,
-      itemCount: 0,
-    });
+describe('demo cart', () => {
+  const product = PRODUCTS[0];
+  const variant = product.variants[0];
+
+  it('adds a line with server-side catalogue pricing', () => {
+    const cart = addToCart(createEmptyCart(), product.id, variant.id, 2);
+    expect(cart.lines).toHaveLength(1);
+    expect(cart.lines[0].unitPrice).toBe(variant.price ?? product.price);
+    expect(cart.lines[0].quantity).toBe(2);
+    expect(cart.lines[0].key).toBe(lineKey(product.id, variant.id));
   });
 
-  it('adds a pickup item with modifiers and computes tax', () => {
-    let cart = createEmptyCart();
-    cart = addToCart(cart, 'tk-011', 2, [
-      { id: 'make-spicy', name: 'Extra heat', priceDelta: 0 },
-      { id: 'extra-sauce', name: 'Extra sauce on the side', priceDelta: 1 },
-    ]);
+  it('merges quantities for the same variant', () => {
+    let cart = addToCart(createEmptyCart(), product.id, variant.id, 1);
+    cart = addToCart(cart, product.id, variant.id, 3);
+    expect(cart.lines).toHaveLength(1);
+    expect(cart.lines[0].quantity).toBe(4);
+  });
+
+  it('calculates subtotal, sample shipping and tax', () => {
+    const cart = addToCart(createEmptyCart(), product.id, variant.id, 1);
     const totals = calculateTotals(cart);
-    expect(cart.lines).toHaveLength(1);
-    expect(cart.lines[0]?.unitPrice).toBe(16);
-    expect(totals.itemCount).toBe(2);
-    expect(totals.subtotal).toBe(32);
-    expect(totals.tax).toBe(4.16);
-    expect(totals.total).toBe(36.16);
+    expect(totals.itemCount).toBe(1);
+    expect(totals.subtotal).toBe(variant.price ?? product.price);
+    expect(totals.shipping).toBe(12);
+    expect(totals.tax).toBeGreaterThan(0);
+    expect(totals.total).toBe(totals.subtotal + totals.shipping + totals.tax);
   });
 
-  it('merges identical lines and supports quantity updates', () => {
-    let cart = createEmptyCart();
-    cart = addToCart(cart, 'tk-027', 1);
-    cart = addToCart(cart, 'tk-027', 2);
-    expect(cart.lines).toHaveLength(1);
-    expect(cart.lines[0]?.quantity).toBe(3);
-    cart = updateQuantity(cart, cart.lines[0]!.key, 0);
+  it('updates and removes lines', () => {
+    let cart = addToCart(createEmptyCart(), product.id, variant.id, 2);
+    const key = cart.lines[0].key;
+    cart = updateQuantity(cart, key, 5);
+    expect(cart.lines[0].quantity).toBe(5);
+    cart = updateQuantity(cart, key, 0);
+    expect(cart.lines).toHaveLength(0);
+    cart = addToCart(createEmptyCart(), product.id, variant.id, 1);
+    cart = removeLine(cart, cart.lines[0].key);
     expect(cart.lines).toHaveLength(0);
   });
 
-  it('builds stable line keys', () => {
-    expect(lineKey('a', [{ id: 'z', name: 'Z', priceDelta: 1 }])).toBe('a::z');
-  });
-
-  it('ignores non-pickup items', () => {
-    const cart = addToCart(createEmptyCart(), 'tk-018', 1);
+  it('rejects unknown products', () => {
+    const cart = addToCart(createEmptyCart(), 'does-not-exist', 'x', 1);
     expect(cart.lines).toHaveLength(0);
   });
 });

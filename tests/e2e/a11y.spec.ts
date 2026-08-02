@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-const criticalRoutes = ['/', '/menu/', '/reservations/', '/order/', '/contact/'];
+const criticalRoutes = ['/', '/shop/', '/collections/living/', '/products/cedar-linen-throw/', '/cart/', '/checkout/', '/contact/'];
 
 test.describe('accessibility', () => {
   for (const route of criticalRoutes) {
@@ -20,10 +20,10 @@ test.describe('accessibility', () => {
   test('mobile nav is keyboard operable', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');
-    await page.getByRole('button', { name: 'Open menu' }).focus();
+    await page.getByRole('button', { name: /open menu/i }).focus();
     await page.keyboard.press('Enter');
-    await expect(page.getByRole('dialog', { name: 'Mobile navigation' })).toBeVisible();
+    await expect(page.getByRole('dialog', { name: /mobile/i })).toBeVisible();
     await page.keyboard.press('Escape');
-    await expect(page.getByRole('dialog', { name: 'Mobile navigation' })).toBeHidden();
+    await expect(page.getByRole('dialog', { name: /mobile/i })).toBeHidden();
   });
 });

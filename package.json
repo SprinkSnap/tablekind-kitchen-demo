@@ -1,9 +1,9 @@
 {
-  "name": "tablekind-kitchen-demo",
+  "name": "harbour-pine-home-demo",
   "type": "module",
   "version": "1.0.0",
   "private": true,
-  "description": "Tablekind Kitchen — fictional restaurant portfolio demo by Che Xu Studio",
+  "description": "Harbour & Pine Home — fictional e-commerce portfolio demo by Che Xu Studio",
   "engines": {
     "node": ">=22.12.0"
   },
@@ -13,6 +13,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "generate-types": "wrangler types",
+    "generate:assets": "node scripts/generate-product-svgs.mjs",
     "typecheck": "astro check && tsc --noEmit",
     "lint": "eslint . --max-warnings=0",
     "format": "prettier --write .",
@@ -23,8 +24,8 @@
     "test:a11y": "playwright test tests/e2e/a11y.spec.ts",
     "check": "npm run format:check && npm run lint && npm run typecheck && npm run test",
     "cf:dry-run": "npm run build && wrangler deploy --dry-run --outdir=.wrangler-bundle --env=\"\"",
-    "deploy": "npm run build && wrangler deploy --env=\"\" && npm run db:remote",
-    "deploy:staging": "CLOUDFLARE_ENV=staging npm run build && wrangler deploy --env=staging && npm run db:remote",
+    "deploy": "bash scripts/workers-deploy.sh",
+    "deploy:staging": "CLOUDFLARE_ENV=staging bash scripts/workers-deploy.sh",
     "db:local": "wrangler d1 migrations apply DB --local",
     "db:remote": "wrangler d1 migrations apply DB --remote",
     "prepare:hooks": "echo 'No git hooks configured'"

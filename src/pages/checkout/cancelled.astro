@@ -1,0 +1,63 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/astro/Breadcrumbs.astro';
+import { DISCLOSURE, STORE } from '../../lib/config';
+import { breadcrumbSchema } from '../../lib/seo';
+
+const schemas = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Checkout', path: '/checkout/' },
+    { name: 'Checkout cancelled', path: '/checkout/cancelled/' },
+  ]),
+];
+---
+
+<BaseLayout
+  title="Checkout Cancelled"
+  description={`Demo checkout cancelled for ${STORE.name}. No payment or order was processed.`}
+  path="/checkout/cancelled/"
+  schemas={schemas}
+>
+  <section class="section container-page cancelled">
+    <Breadcrumbs
+      items={[
+        { name: 'Home', href: '/' },
+        { name: 'Checkout', href: '/checkout/' },
+        { name: 'Cancelled' },
+      ]}
+    />
+    <div class="surface panel">
+      <p class="eyebrow">Demo checkout</p>
+      <h1 class="section-title">Checkout cancelled</h1>
+      <p class="section-lede">
+        {DISCLOSURE.checkout} Your demo cart items are still available if you would like to continue
+        browsing.
+      </p>
+      <div class="actions">
+        <a class="btn btn-primary" href="/cart/">Return to cart</a>
+        <a class="btn btn-secondary" href="/shop/">Continue shopping</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .panel {
+    padding: clamp(1.25rem, 3vw, 2rem);
+    max-width: 42rem;
+  }
+
+  .panel .section-title {
+    margin-top: 0.35rem;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-top: 1.25rem;
+  }
+</style>

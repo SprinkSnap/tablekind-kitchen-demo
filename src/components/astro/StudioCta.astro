@@ -1,0 +1,77 @@
+---
+import { getPackagesUrl, STUDIO } from '../../lib/config';
+
+interface Props {
+  heading?: string;
+  supporting?: string;
+  primaryLabel?: string;
+  secondaryLabel?: string;
+  class?: string;
+}
+
+const {
+  heading = 'Your Products Deserve More Than a Generic Storefront.',
+  supporting = `${STUDIO.name} designs conversion-focused e-commerce experiences for home and lifestyle brands—clear navigation, polished product storytelling, and thoughtful demo flows that help you sell online with confidence.`,
+  primaryLabel = 'Build a Store Like This',
+  secondaryLabel = 'View packages',
+  class: className,
+} = Astro.props;
+
+const packagesUrl = getPackagesUrl();
+---
+
+<section class:list={['studio-cta surface', className]} aria-labelledby="studio-cta-heading">
+  <div class="studio-cta__copy">
+    <p class="eyebrow">Designed by {STUDIO.name}</p>
+    <h2 id="studio-cta-heading" class="studio-cta__heading">{heading}</h2>
+    <p class="studio-cta__supporting">{supporting}</p>
+  </div>
+  <div class="studio-cta__actions">
+    <button type="button" class="btn btn-accent" data-open-enquiry data-track="che_xu_cta_selected">
+      {primaryLabel}
+    </button>
+    <a class="btn btn-secondary" href={packagesUrl} target="_blank" rel="noopener noreferrer">
+      {secondaryLabel}
+    </a>
+  </div>
+</section>
+
+<style>
+  .studio-cta {
+    display: grid;
+    gap: 1.25rem;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    background:
+      linear-gradient(135deg, rgb(23 59 50 / 0.04), rgb(40 91 104 / 0.06)),
+      rgb(255 254 251 / 0.9);
+  }
+
+  @media (min-width: 768px) {
+    .studio-cta {
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 2rem;
+    }
+  }
+
+  .studio-cta__heading {
+    margin: 0.35rem 0 0.65rem;
+    font-size: clamp(1.5rem, 3vw, 2.1rem);
+    line-height: 1.15;
+    color: var(--color-dark-pine);
+  }
+
+  .studio-cta__supporting {
+    margin: 0;
+    max-width: 38rem;
+    line-height: 1.65;
+    color: rgb(36 40 36 / 0.82);
+  }
+
+  .studio-cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    align-content: start;
+  }
+</style>

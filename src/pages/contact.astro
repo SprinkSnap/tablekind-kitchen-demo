@@ -3,8 +3,10 @@ export const prerender = true;
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/astro/Breadcrumbs.astro';
-import { DISCLOSURE, getCaseStudyUrl, getPackagesUrl, STUDIO } from '../lib/config';
+import { DISCLOSURE, getCaseStudyUrl, getPackagesUrl, getStudioUrl, STUDIO, STORE } from '../lib/config';
 import { breadcrumbSchema } from '../lib/seo';
+
+const studioUrl = getStudioUrl();
 
 const schemas = [
   breadcrumbSchema([
@@ -16,7 +18,7 @@ const schemas = [
 
 <BaseLayout
   title="Contact"
-  description="Contact Che Xu Studio about building a restaurant website like Tablekind Kitchen. No fictional restaurant phone or address."
+  description={`Contact ${STUDIO.name} about building an e-commerce store like ${STORE.name}. No fictional store phone or street address.`}
   path="/contact/"
   schemas={schemas}
 >
@@ -24,18 +26,22 @@ const schemas = [
     <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Contact' }]} />
     <h1 class="section-title">Contact</h1>
     <p class="section-lede">
-      All genuine business enquiries go to {STUDIO.name}. Tablekind Kitchen does not accept real
-      reservations, orders or restaurant messages.
+      All genuine business enquiries go to {STUDIO.name}. {STORE.name} does not accept real orders,
+      product questions or store support messages.
     </p>
     <div class="disclosure">{DISCLOSURE.short}</div>
     <div class="surface panel">
       <h2>Work with Che Xu Studio</h2>
       <p>
-        Request a website plan for your restaurant or local business. Tell us about your goals,
-        features and timing—we’ll follow up with next steps.
+        Request a website plan for your home, lifestyle or retail brand. Tell us about your catalogue,
+        features and timing—we will follow up with next steps.
+      </p>
+      <p>
+        Use the enquiry drawer on any page, or visit
+        <a href={studioUrl} target="_blank" rel="noopener noreferrer">{studioUrl}</a>.
       </p>
       <div class="actions">
-        <a class="btn btn-accent" href="#studio-enquiry" data-open-enquiry>Request My Website Plan</a>
+        <button type="button" class="btn btn-accent" data-open-enquiry>Request My Website Plan</button>
         <a class="btn btn-secondary" href={getPackagesUrl()} target="_blank" rel="noopener noreferrer">
           View Packages
         </a>
@@ -48,8 +54,31 @@ const schemas = [
 </BaseLayout>
 
 <style>
-  .panel { padding: 1.25rem; margin-top: 1.25rem; max-width: 40rem; }
-  .panel h2 { font-family: var(--font-display); color: #10271E; margin-top: 0; }
-  .actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem; }
-  .disclosure { margin: 1rem 0; }
+  .panel {
+    padding: 1.25rem;
+    margin-top: 1.25rem;
+    max-width: 40rem;
+  }
+
+  .panel h2 {
+    font-family: var(--font-display);
+    color: var(--color-dark-pine);
+    margin-top: 0;
+  }
+
+  .panel a {
+    color: var(--color-harbour);
+    text-decoration: underline;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1rem;
+  }
+
+  .disclosure {
+    margin: 1rem 0;
+  }
 </style>

@@ -1,0 +1,42 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/astro/Breadcrumbs.astro';
+import ConceptDisclosure from '../components/astro/ConceptDisclosure.astro';
+import CartPage from '../components/react/CartPage';
+import { DISCLOSURE, STORE } from '../lib/config';
+import { breadcrumbSchema } from '../lib/seo';
+
+const schemas = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Cart', path: '/cart/' },
+  ]),
+];
+---
+
+<BaseLayout
+  title="Cart"
+  description={`Review items in your ${STORE.name} demo cart. ${DISCLOSURE.cart}`}
+  path="/cart/"
+  schemas={schemas}
+>
+  <section class="section container-page">
+    <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Cart' }]} />
+    <h1 class="section-title">Cart</h1>
+    <p class="section-lede">{DISCLOSURE.cart}</p>
+    <ConceptDisclosure compact />
+    <CartPage client:load />
+  </section>
+</BaseLayout>
+
+<style>
+  .section-lede {
+    margin-bottom: 1rem;
+  }
+
+  :global(.concept-disclosure) {
+    margin-bottom: 1.25rem;
+  }
+</style>

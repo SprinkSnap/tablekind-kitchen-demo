@@ -1,0 +1,33 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/astro/Breadcrumbs.astro';
+import ProductFilters from '../components/react/ProductFilters';
+import { STORE } from '../lib/config';
+import { breadcrumbSchema } from '../lib/seo';
+
+const schemas = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Shop', path: '/shop/' },
+  ]),
+];
+---
+
+<BaseLayout
+  title="Shop"
+  description={`Browse the full ${STORE.name} demo catalogue—filter by collection, colour, category and price.`}
+  path="/shop/"
+  schemas={schemas}
+>
+  <section class="section container-page">
+    <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Shop' }]} />
+    <h1 class="section-title">Shop</h1>
+    <p class="section-lede">
+      Explore the full demo catalogue. Use filters and search to find products by collection, colour,
+      category or price.
+    </p>
+    <ProductFilters client:load mode="shop" />
+  </section>
+</BaseLayout>

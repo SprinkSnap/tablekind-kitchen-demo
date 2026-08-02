@@ -1,0 +1,113 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/astro/Breadcrumbs.astro';
+import { COLLECTIONS } from '../../data/products';
+import { STORE } from '../../lib/config';
+import { breadcrumbSchema, collectionListSchema } from '../../lib/seo';
+
+const schemas = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Collections', path: '/collections/' },
+  ]),
+  collectionListSchema(),
+];
+---
+
+<BaseLayout
+  title="Collections"
+  description={`Shop ${STORE.name} by collection—living, kitchen and dining, textiles, storage, workspace and gifts.`}
+  path="/collections/"
+  schemas={schemas}
+>
+  <section class="section container-page">
+    <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Collections' }]} />
+    <h1 class="section-title">Collections</h1>
+    <p class="section-lede">
+      Curated groupings for everyday rooms and routines. Each collection links to a filterable product
+      grid from the demo catalogue.
+    </p>
+    <ul class="collection-grid">
+      {
+        COLLECTIONS.map((collection) => (
+          <li>
+            <a class="collection-card surface" href={`/collections/${collection.slug}/`}>
+              <img
+                src={collection.image}
+                alt={collection.imageAlt}
+                width="800"
+                height="600"
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="collection-card__body">
+                <h2>{collection.name}</h2>
+                <p>{collection.longDescription}</p>
+                <span class="collection-card__link">Shop {collection.shortName}</span>
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .collection-grid {
+    list-style: none;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 720px) {
+    .collection-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .collection-card {
+    display: grid;
+    text-decoration: none;
+    overflow: hidden;
+    height: 100%;
+  }
+
+  .collection-card img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    background: var(--color-linen);
+  }
+
+  .collection-card__body {
+    padding: 1.1rem;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .collection-card h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    color: var(--color-dark-pine);
+  }
+
+  .collection-card p {
+    margin: 0;
+    line-height: 1.6;
+    color: rgb(36 40 36 / 0.8);
+  }
+
+  .collection-card__link {
+    font-weight: 700;
+    color: var(--color-harbour);
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+</style>

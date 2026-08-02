@@ -1,0 +1,80 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/astro/Breadcrumbs.astro';
+import { DISCLOSURE, STUDIO, STORE } from '../lib/config';
+import { breadcrumbSchema } from '../lib/seo';
+
+const schemas = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Privacy', path: '/privacy/' },
+  ]),
+];
+---
+
+<BaseLayout
+  title="Privacy"
+  description={`Privacy information for the ${STORE.name} portfolio demonstration and ${STUDIO.name} enquiry form.`}
+  path="/privacy/"
+  schemas={schemas}
+>
+  <section class="section container-page policy">
+    <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Privacy' }]} />
+    <h1 class="section-title">Privacy</h1>
+    <p class="section-lede">
+      How this demo handles information—and what happens when you contact {STUDIO.name}.
+    </p>
+    <div class="disclosure">{DISCLOSURE.short}</div>
+    <div class="prose surface panel">
+      <h2>Portfolio demonstration</h2>
+      <p>
+        {STORE.name} is a fictional e-commerce concept. Browsing, wishlist and demo cart data are stored
+        locally in your browser for this session. No real checkout, payment or order data is collected
+        or stored on a production server as part of the demo checkout flow.
+      </p>
+      <h2>Che Xu Studio enquiries</h2>
+      <p>
+        If you submit a website plan request through the enquiry drawer, {STUDIO.name} receives the
+        information you provide (such as name, email and project details) to respond to your enquiry.
+        That data is handled according to {STUDIO.name}'s own privacy practices on chexustudio.com.
+      </p>
+      <h2>Analytics</h2>
+      <p>
+        This demo may record anonymized interaction events—such as page views or filter usage—to
+        illustrate conversion analytics in a portfolio context. No payment card or shipping address
+        data is collected.
+      </p>
+      <h2>Contact</h2>
+      <p>
+        Questions about privacy for this demonstration can be directed to {STUDIO.name} via the enquiry
+        form.
+      </p>
+      <button type="button" class="btn btn-secondary" data-open-enquiry>Contact Che Xu Studio</button>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .disclosure {
+    margin: 1rem 0 1.25rem;
+  }
+
+  .panel {
+    padding: 1.25rem;
+    max-width: 44rem;
+    line-height: 1.7;
+  }
+
+  .panel h2 {
+    font-family: var(--font-display);
+    color: var(--color-dark-pine);
+    margin: 1.25rem 0 0.5rem;
+    font-size: 1.15rem;
+  }
+
+  .panel h2:first-child {
+    margin-top: 0;
+  }
+</style>

@@ -1,100 +1,108 @@
-# Tablekind Kitchen Case Study Copy
+# Harbour & Pine Home — Case Study Copy
 
-Publish at: `https://chexustudio.com/work/tablekind-kitchen`
+Publish at: `https://chexustudio.com/work/harbour-pine-home`
 
-## SEO title
+## SEO
 
-Restaurant Website Design Demo | Che Xu Studio
+**Title:** E-commerce Website Design Demo | Che Xu Studio
 
-## Meta description
-
-Explore Tablekind Kitchen, a mobile-first restaurant website concept by Che Xu Studio featuring reservations, ordering, restaurant SEO and optimized food imagery.
+**Meta description:** Explore Harbour & Pine Home, a mobile-first e-commerce concept by Che Xu Studio featuring product discovery, optimized images, accessible checkout and product SEO.
 
 ## H1
 
-Tablekind Kitchen Restaurant Website Concept
+Harbour & Pine Home E-commerce Website Concept
 
 ## Disclosure
 
-Concept Project — Created to demonstrate Che Xu Studio’s restaurant design, SEO and conversion capabilities.
+Concept Project — Created to demonstrate Che Xu Studio’s e-commerce design, SEO and conversion capabilities.
 
-## Live demo
-
-https://tablekindkitchen.chexustudio.com
+Harbour & Pine Home is a fictional store. No real orders, shipments or payments are processed.
 
 ## Project overview
 
-Tablekind Kitchen is a fictional modern Canadian neighbourhood restaurant website built as a portfolio demonstration. It shows how Che Xu Studio designs fast, accessible, conversion-focused restaurant experiences around menus, reservations, pickup ordering, catering enquiries and local discovery.
+Harbour & Pine Home is a portfolio demonstration of a modern Canadian home and lifestyle storefront. It shows how Che Xu Studio designs product discovery, collection architecture, variant selection, wishlist and cart flows, guest checkout demonstration, technical SEO foundations and accessible mobile shopping—without fake urgency, fabricated reviews or deceptive conversion patterns.
 
-## Intended audience
+**Live demo:** https://harbourandpinehome.chexustudio.com
 
-- Independent restaurant owners
-- Neighbourhood cafés and dining groups evaluating a website rebuild
-- Operators who need clearer paths to reservations, pickup orders and catering leads
-- Marketing leads comparing custom design versus template-based restaurant sites
+## Intended merchant audience
+
+- Home goods and lifestyle retailers
+- Specialty retailers building their first custom storefront
+- Merchants migrating away from generic template themes
+- Brands that need clearer product information and faster browsing
 
 ## Fictional business challenge
 
-Many local restaurants still rely on PDF menus, slow themes and unclear next steps. Guests struggle to browse dishes on mobile, booking feels fragmented and catering enquiries arrive as unstructured messages. Tablekind Kitchen demonstrates a cleaner alternative: one coherent brand experience that makes dining decisions easy without manipulative urgency tactics.
+Many home and lifestyle merchants struggle with storefronts that bury products behind cluttered layouts, weak mobile experiences and unclear product detail. Harbour & Pine Home demonstrates an alternative: calm visual design, structured collections, shareable filters, transparent pricing and a low-friction demo checkout—so decision-makers can evaluate the experience Che Xu Studio can tailor to a verified catalogue.
 
 ## Customer journey
 
-1. Land on a warm, editorial homepage with one clear composition and honest demo disclosure.
-2. Browse semantic HTML menus with filters, prices and dietary indicators.
-3. Start a short reservation demo or pickup-order demo.
-4. Explore catering / private-event planners.
-5. Contact Che Xu Studio to request a website plan.
+1. Land on a full-bleed editorial hero with a single primary path into the shop
+2. Browse collections or use search and filters
+3. Open a product page with variants, materials, dimensions and care
+4. Save to wishlist or add to the demo cart
+5. Complete a guest checkout demonstration (local only)
+6. Optionally request a Che Xu Studio store plan
 
-## Menu architecture
+## Product architecture
 
-A single typed menu-data module powers every menu page, featured dish module, filter UI and ordering drawer. Categories include brunch, lunch, small plates, mains, sides, desserts and non-alcoholic drinks. Content remains visible as semantic HTML and never depends on a PDF.
+Twenty-two typed fictional products across six collections (Living, Kitchen & Dining, Textiles, Storage, Workspace, Gifts). Each product includes variants, materials, dimensions, care, related products and SEO fields. The catalogue is a single TypeScript module consumed by pages, filters, cart and assistant.
 
-## Reservation funnel
+## Search and filtering
 
-An accessible multistep flow collects party size, date, time, seating preference and optional notes, then clearly states that no real table is reserved. A provider-agnostic adapter interface is ready for an approved reservation integration later.
+Shoppers can filter by collection, colour, category, price range and availability, then sort results. Active filters are summarized and clearable. Result counts are announced for assistive technologies. Filter state is reflected in the URL where practical.
 
-## Pickup-ordering flow
+## Product-page strategy
 
-Guests can open item details, choose modifiers, manage quantity, persist a demo cart locally, select a pickup time and complete the experience in-browser. Sample tax is shown for realism. No payment provider is charged and no kitchen ticket is created.
+Product pages prioritize:
 
-## Catering lead generation
+- Breadcrumbs and clear hierarchy
+- Reserved-aspect imagery
+- Accessible variant selection
+- Stable, transparent pricing
+- Materials, dimensions and care
+- Sample shipping/return notes clearly labelled as illustrative
+- Related products and a Che Xu Studio CTA
 
-Catering and private-event planners gather event type, guest count, date, service style, dietary considerations and fulfillment preference. Fictional Tablekind enquiries are not transmitted; completion invites a real Che Xu Studio conversation.
+No fabricated ratings, stock scarcity or countdown timers.
+
+## Cart and checkout flow
+
+The demo cart persists in the browser, shows sample shipping and tax estimates, and never creates a real order. Checkout is a multi-step guest demonstration with explicit disclosures. Completion invites the visitor to contact Che Xu Studio.
 
 ## Mobile design
 
-The experience is mobile-first, with sticky header navigation, a compact mobile action bar (Menu / Reserve / Order), large touch targets and drawers that restore focus and prevent background scroll.
+Mobile-first layouts, sticky cart access, large touch targets, accessible mobile navigation with focus restoration and scroll locking, and minimal client JavaScript outside interactive islands.
 
-## Local SEO strategy
+## Product SEO
 
-Technical SEO includes unique titles/descriptions, canonical URLs, breadcrumbs, sitemap, robots rules, Open Graph tags, FAQ schema, Menu schema and WebSite/Organization schema. In `DEMO_MODE`, the site remains `noindex, nofollow` and omits fabricated LocalBusiness NAP, reviews and ratings.
+Prepared architecture for unique titles/descriptions, canonical URLs, breadcrumbs, sitemap, robots, Open Graph and schema types (`WebSite`, `Organization`, `BreadcrumbList`, `FAQPage`). In `DEMO_MODE`, Product/Offer/merchant schema is suppressed and pages are `noindex, nofollow`.
 
 ## Image optimization
 
-Dish and hero visuals are purpose-built SVG assets with reserved aspect ratios, explicit dimensions, lazy-loading below the fold and an eager LCP hero treatment. A real restaurant can swap in licensed photography through Cloudflare Images or local responsive pipelines.
+Purpose-built SVG catalogue imagery with reserved dimensions, lazy-loading below the fold and eager LCP hero loading. Ready to swap for licensed photography and Cloudflare Images (AVIF/WebP, `srcset`, accurate `sizes`).
 
 ## Accessibility
 
-Implementation targets WCAG 2.2 AA as closely as practical: skip link, landmarks, keyboard support, dialog focus management, visible focus, status messages, reduced motion and contrast-conscious brand colours.
+Skip link, landmarks, keyboard navigation, focus-visible styles, dialog focus traps, status announcements, reduced-motion support and large touch targets—aligned toward WCAG 2.2 AA as closely as practical.
 
 ## Technical architecture
 
-- Astro with Strict TypeScript
-- Cloudflare Workers + Static Assets
-- React islands for interactive flows only
-- Tailwind CSS design tokens
-- Zod validation for the Che Xu Studio lead API
-- Cloudflare Turnstile, origin checks, honeypot and rate limiting
-- D1 storage for consented studio leads only
-- Optional Workers AI assistant with strict guardrails
+- Astro + Cloudflare Workers (static assets)
+- Strict TypeScript product configuration
+- React islands for cart, filters, checkout demo, enquiry and assistant
+- D1 for consented Che Xu Studio leads only
+- Turnstile, origin validation, rate limiting and CSP headers
 
 ## Security
 
-Portfolio lead submissions are protected with schema validation, allowed-field lists, request-size limits, content-type checks, origin validation, honeypot, Turnstile server verification, rate limiting, prepared D1 statements and personal-data redaction in logs.
+Content Security Policy, HSTS in production, strict lead endpoint validation, honeypot, Turnstile server verification, prepared D1 statements, personal-data redaction in logs and no secrets in client code.
 
 ## Verified performance results
 
-Performance should be measured on the deployed Worker with Lighthouse / CrUX after assets and edge configuration are live. Do not publish fictional conversion, traffic or Lighthouse scores as real results. Target budgets for evaluation:
+Attach Lighthouse and page-weight results from a production or preview deploy after measurement. Do **not** invent Core Web Vitals or conversion metrics.
+
+Targets (to verify after deploy):
 
 - Lighthouse Performance 95+
 - Accessibility 95–100
@@ -104,19 +112,20 @@ Performance should be measured on the deployed Worker with Lighthouse / CrUX aft
 
 ## Screenshots
 
-Capture and attach after deploy:
+Add desktop and mobile screenshots of:
 
-1. Desktop homepage hero
-2. Mobile homepage with sticky actions
-3. Menu filtering
-4. Reservation demo completion
-5. Pickup cart drawer
-6. Che Xu Studio enquiry drawer
+- Homepage hero
+- Collection / shop filters
+- Product page with variants
+- Cart drawer and checkout demo
+- Che Xu Studio enquiry drawer
 
-## Primary CTA
+## Live demo link
 
-Build a Website Like This → Che Xu Studio enquiry / packages
+https://harbourandpinehome.chexustudio.com
 
-## Important honesty note
+## CTA
 
-Tablekind Kitchen is fictional. Do not describe invented bookings, revenue lift, traffic growth or review scores as real client outcomes.
+**Build a Store Like This** — Request a store plan from Che Xu Studio tailored to your products, customers and growth goals.
+
+View packages: https://chexustudio.com/packages

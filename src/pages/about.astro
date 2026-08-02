@@ -3,7 +3,7 @@ export const prerender = true;
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/astro/Breadcrumbs.astro';
-import { DISCLOSURE, STUDIO } from '../lib/config';
+import { DISCLOSURE, STUDIO, STORE } from '../lib/config';
 import { breadcrumbSchema } from '../lib/seo';
 
 const schemas = [
@@ -16,33 +16,37 @@ const schemas = [
 
 <BaseLayout
   title="Our Story"
-  description="Learn about the Tablekind Kitchen concept—a fictional neighbourhood restaurant demonstration by Che Xu Studio."
+  description={`Learn about the ${STORE.name} concept—a fictional modern Canadian home and lifestyle demonstration by ${STUDIO.name}.`}
   path="/about/"
   schemas={schemas}
 >
   <section class="section container-page about">
     <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Our Story' }]} />
     <h1 class="section-title">Our Story</h1>
-    <p class="section-lede">Thoughtful food. Warm hospitality. Clear digital pathways to gather.</p>
+    <p class="section-lede">Thoughtful pieces for everyday living—with calm design and clear product information.</p>
     <div class="disclosure">{DISCLOSURE.short}</div>
     <div class="prose">
       <p>
-        Tablekind Kitchen is imagined as a modern Canadian neighbourhood dining room: seasonal
-        plates, welcoming service and an unhurried pace. The website experience is designed around
-        the moments that matter to guests—browsing a menu, reserving a table, ordering pickup and
-        planning a gathering.
+        {STORE.name} is imagined as a modern Canadian home and lifestyle brand: curated collections,
+        restrained colour palettes and products chosen for real rooms and everyday routines. The
+        experience is designed around how people actually shop—browsing collections, comparing
+        details, saving favourites and moving confidently toward checkout.
       </p>
       <p>
-        This story intentionally avoids inventing a chef, founder, farm partnership, award list or
-        press history. The focus is the product: a fast, accessible, conversion-minded restaurant
-        website that business owners can evaluate as a model for their own brand.
+        This story intentionally avoids inventing founders, employees, suppliers, press features or
+        award histories. The focus is the storefront itself: a fast, accessible, conversion-minded
+        e-commerce demonstration that business owners can evaluate as a model for their own catalogue.
       </p>
       <p>
-        If you run a restaurant or local food business and want a website with this level of care,
-        {STUDIO.name} can design and build it around your verified information, operations and goals.
+        The aesthetic draws on calm coastal and forest tones—pine, harbour blue, sand and linen—suited
+        to Canadian homes without claiming a specific neighbourhood, warehouse or retail location.
+      </p>
+      <p>
+        If you run a home, lifestyle or retail brand and want a store with this level of care,
+        {STUDIO.name} can design and build it around your verified products, operations and goals.
       </p>
     </div>
-    <a class="btn btn-accent" href="#studio-enquiry" data-open-enquiry>Build a Website Like This</a>
+    <button type="button" class="btn btn-accent" data-open-enquiry>Build a Store Like This</button>
   </section>
 </BaseLayout>
 
@@ -54,5 +58,8 @@ const schemas = [
     margin: 1.5rem 0;
     line-height: 1.7;
   }
-  .disclosure { margin: 1rem 0; }
+
+  .disclosure {
+    margin: 1rem 0;
+  }
 </style>

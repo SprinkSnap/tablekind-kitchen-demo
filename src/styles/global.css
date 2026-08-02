@@ -3,31 +3,30 @@
 @import "@fontsource-variable/source-sans-3/wght.css";
 
 @theme {
-  --color-forest: #18392b;
-  --color-deep: #10271e;
-  --color-cream: #f7f2e8;
-  --color-soft: #fffdfc;
-  --color-terracotta: #c76548;
-  --color-terracotta-deep: #8b3f2c;
-  --color-gold: #c99a45;
-  --color-charcoal: #222622;
-  --color-sage: #a9b8a4;
-  --color-mist: #e7efe4;
-  --color-line: #d8e0d4;
+  --color-pine: #173b32;
+  --color-dark-pine: #102820;
+  --color-harbour: #285b68;
+  --color-sand: #e8ddcc;
+  --color-linen: #f7f3ec;
+  --color-porcelain: #fffefb;
+  --color-clay: #b96f52;
+  --color-charcoal: #242824;
+  --color-sage: #9eaf9d;
+  --color-line: #d9d2c6;
 
   --font-display: "Fraunces Variable", "Fraunces", "Iowan Old Style", "Palatino Linotype", Palatino,
     Georgia, serif;
   --font-sans: "Source Sans 3 Variable", "Source Sans 3", "Segoe UI", "Helvetica Neue", Arial,
     sans-serif;
 
-  --radius-sm: 0.375rem;
-  --radius-md: 0.75rem;
-  --radius-lg: 1.25rem;
+  --radius-sm: 0.35rem;
+  --radius-md: 0.65rem;
+  --radius-lg: 1rem;
 
-  --shadow-soft: 0 10px 30px rgb(16 39 30 / 0.08);
-  --shadow-lift: 0 16px 40px rgb(16 39 30 / 0.12);
+  --shadow-soft: 0 12px 32px rgb(16 40 32 / 0.08);
+  --shadow-lift: 0 18px 44px rgb(16 40 32 / 0.12);
 
-  --space-section: clamp(3.5rem, 6vw, 6rem);
+  --space-section: clamp(3.25rem, 5.5vw, 5.5rem);
   --header-height: 4.25rem;
   --portfolio-bar-height: 2.75rem;
   --portfolio-offset: var(--portfolio-bar-height);
@@ -41,7 +40,7 @@
 @layer base {
   :root {
     color-scheme: light;
-    --focus-ring: 0 0 0 3px rgb(201 154 69 / 0.55);
+    --focus-ring: 0 0 0 3px rgb(40 91 104 / 0.45);
   }
 
   html {
@@ -68,9 +67,9 @@
     font-family: var(--font-sans);
     color: var(--color-charcoal);
     background:
-      radial-gradient(1200px 600px at 10% -10%, rgb(169 184 164 / 0.35), transparent 55%),
-      radial-gradient(900px 500px at 100% 0%, rgb(199 101 72 / 0.12), transparent 50%),
-      linear-gradient(180deg, var(--color-cream) 0%, var(--color-soft) 42%, var(--color-cream) 100%);
+      radial-gradient(1100px 520px at 8% -8%, rgb(158 175 157 / 0.28), transparent 55%),
+      radial-gradient(900px 480px at 100% 0%, rgb(40 91 104 / 0.1), transparent 48%),
+      linear-gradient(180deg, var(--color-linen) 0%, var(--color-porcelain) 45%, var(--color-sand) 100%);
     text-rendering: optimizeLegibility;
   }
 
@@ -80,7 +79,7 @@
   }
 
   ::selection {
-    background: rgb(24 57 43 / 0.18);
+    background: rgb(23 59 50 / 0.18);
   }
 
   h1,
@@ -109,8 +108,8 @@
     top: -100%;
     z-index: 100;
     border-radius: var(--radius-sm);
-    background: var(--color-deep);
-    color: var(--color-soft);
+    background: var(--color-dark-pine);
+    color: var(--color-porcelain);
     padding: 0.75rem 1rem;
   }
 
@@ -119,7 +118,7 @@
   }
 
   .container-page {
-    width: min(1120px, calc(100% - 2rem));
+    width: min(1140px, calc(100% - 2rem));
     margin-inline: auto;
   }
 
@@ -130,7 +129,7 @@
     gap: 0.5rem;
     min-height: 2.875rem;
     padding: 0.7rem 1.25rem;
-    border-radius: 999px;
+    border-radius: var(--radius-md);
     border: 1px solid transparent;
     font-weight: 600;
     font-size: 0.975rem;
@@ -149,48 +148,57 @@
   }
 
   .btn-primary {
-    background: var(--color-forest);
-    color: var(--color-soft);
+    background: var(--color-pine);
+    color: var(--color-porcelain);
   }
 
   .btn-primary:hover {
-    background: var(--color-deep);
+    background: var(--color-dark-pine);
   }
 
   .btn-secondary {
     background: transparent;
-    color: var(--color-forest);
-    border-color: rgb(24 57 43 / 0.28);
+    color: var(--color-pine);
+    border-color: rgb(23 59 50 / 0.28);
   }
 
   .btn-secondary:hover {
-    border-color: var(--color-forest);
-    background: rgb(24 57 43 / 0.04);
+    border-color: var(--color-pine);
+    background: rgb(23 59 50 / 0.04);
   }
 
   .btn-accent {
-    background: var(--color-terracotta-deep);
-    color: var(--color-soft);
+    background: var(--color-harbour);
+    color: var(--color-porcelain);
     font-weight: 700;
   }
 
   .btn-accent:hover {
-    background: #743525;
+    background: #1f4a55;
   }
 
   .btn-ghost {
-    background: rgb(255 253 252 / 0.7);
-    color: var(--color-forest);
-    border-color: rgb(24 57 43 / 0.12);
+    background: rgb(255 254 251 / 0.72);
+    color: var(--color-pine);
+    border-color: rgb(23 59 50 / 0.12);
+  }
+
+  .btn-clay {
+    background: var(--color-clay);
+    color: var(--color-porcelain);
+  }
+
+  .btn-clay:hover {
+    background: #9e5a41;
   }
 
   .eyebrow {
     display: inline-block;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--color-terracotta);
+    color: var(--color-harbour);
   }
 
   .section {
@@ -200,7 +208,7 @@
   .section-title {
     font-size: clamp(1.85rem, 3.4vw, 2.75rem);
     line-height: 1.15;
-    color: var(--color-deep);
+    color: var(--color-dark-pine);
     margin: 0 0 0.75rem;
   }
 
@@ -208,24 +216,24 @@
     max-width: 40rem;
     font-size: 1.05rem;
     line-height: 1.65;
-    color: rgb(34 38 34 / 0.82);
+    color: rgb(36 40 36 / 0.82);
     margin: 0;
   }
 
   .disclosure {
-    border: 1px solid rgb(24 57 43 / 0.12);
-    background: rgb(255 253 252 / 0.82);
+    border: 1px solid rgb(23 59 50 / 0.12);
+    background: rgb(255 254 251 / 0.88);
     border-radius: var(--radius-md);
     padding: 0.9rem 1rem;
     font-size: 0.92rem;
     line-height: 1.5;
-    color: rgb(34 38 34 / 0.88);
+    color: rgb(36 40 36 / 0.88);
   }
 
   .price {
     font-variant-numeric: tabular-nums;
     font-weight: 700;
-    color: var(--color-forest);
+    color: var(--color-pine);
     white-space: nowrap;
   }
 
@@ -234,49 +242,37 @@
     align-items: center;
     min-height: 1.75rem;
     padding: 0.15rem 0.55rem;
-    border-radius: 999px;
-    background: var(--color-mist);
-    color: var(--color-deep);
+    border-radius: var(--radius-sm);
+    background: rgb(158 175 157 / 0.28);
+    color: var(--color-dark-pine);
     font-size: 0.75rem;
     font-weight: 650;
   }
 
   .surface {
-    background: rgb(255 253 252 / 0.78);
-    border: 1px solid rgb(24 57 43 / 0.08);
+    background: rgb(255 254 251 / 0.82);
+    border: 1px solid rgb(23 59 50 / 0.08);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-soft);
-  }
-
-  .divider-leaf {
-    height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgb(24 57 43 / 0.2),
-      rgb(201 154 69 / 0.55),
-      rgb(24 57 43 / 0.2),
-      transparent
-    );
-    border: 0;
   }
 
   .hero-atmosphere {
     position: relative;
     isolation: isolate;
     overflow: hidden;
+    min-height: min(78vh, 720px);
     background:
-      linear-gradient(120deg, rgb(16 39 30 / 0.88), rgb(24 57 43 / 0.55) 45%, rgb(16 39 30 / 0.35)),
-      url("/images/hero-table.svg") center / cover no-repeat;
-    color: var(--color-soft);
+      linear-gradient(115deg, rgb(16 40 32 / 0.9), rgb(23 59 50 / 0.55) 48%, rgb(40 91 104 / 0.28)),
+      url("/images/hero-home.svg") center / cover no-repeat;
+    color: var(--color-porcelain);
   }
 
   .hero-atmosphere::after {
     content: "";
     position: absolute;
     inset: auto 0 0;
-    height: 30%;
-    background: linear-gradient(to top, var(--color-cream), transparent);
+    height: 28%;
+    background: linear-gradient(to top, var(--color-linen), transparent);
     pointer-events: none;
     z-index: 1;
   }
@@ -297,6 +293,40 @@
     .mobile-action-pad {
       padding-bottom: 0;
     }
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem 0.85rem;
+  }
+
+  @media (min-width: 768px) {
+    .product-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.5rem 1.25rem;
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .product-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .visually-quiet {
+    color: rgb(36 40 36 / 0.72);
   }
 }
 

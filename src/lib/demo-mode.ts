@@ -4,18 +4,19 @@ export type DemoCapabilities = {
   demoMode: boolean;
   indexable: boolean;
   showFictionalDisclosure: boolean;
-  allowFakeLocalBusinessSchema: boolean;
-  allowRealReservations: boolean;
-  allowRealOrdering: boolean;
+  allowFakeProductSchema: boolean;
+  allowFakeMerchantSchema: boolean;
+  allowRealCheckout: boolean;
+  allowRealPayments: boolean;
   routeLeadsToStudio: boolean;
 };
 
 /**
  * DEMO_MODE controls indexing, disclosures, and integration behaviour.
- * When false, verified restaurant information must be supplied before
- * enabling indexing or structured LocalBusiness data.
+ * When false, verified merchant + product data must be supplied before
+ * enabling indexing or structured Product/Offer data.
  */
-export function getDemoCapabilities(verifiedRestaurantReady = false): DemoCapabilities {
+export function getDemoCapabilities(verifiedMerchantReady = false): DemoCapabilities {
   const demoMode = isDemoMode();
 
   if (demoMode) {
@@ -23,20 +24,22 @@ export function getDemoCapabilities(verifiedRestaurantReady = false): DemoCapabi
       demoMode: true,
       indexable: false,
       showFictionalDisclosure: true,
-      allowFakeLocalBusinessSchema: false,
-      allowRealReservations: false,
-      allowRealOrdering: false,
+      allowFakeProductSchema: false,
+      allowFakeMerchantSchema: false,
+      allowRealCheckout: false,
+      allowRealPayments: false,
       routeLeadsToStudio: true,
     };
   }
 
   return {
     demoMode: false,
-    indexable: verifiedRestaurantReady,
+    indexable: verifiedMerchantReady,
     showFictionalDisclosure: false,
-    allowFakeLocalBusinessSchema: false,
-    allowRealReservations: verifiedRestaurantReady,
-    allowRealOrdering: verifiedRestaurantReady,
+    allowFakeProductSchema: false,
+    allowFakeMerchantSchema: false,
+    allowRealCheckout: verifiedMerchantReady,
+    allowRealPayments: verifiedMerchantReady,
     routeLeadsToStudio: false,
   };
 }

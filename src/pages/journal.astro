@@ -1,0 +1,205 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/astro/Breadcrumbs.astro';
+import { DISCLOSURE, STORE } from '../lib/config';
+import { breadcrumbSchema } from '../lib/seo';
+
+const articles = [
+  {
+    id: 'layer-textiles',
+    title: 'Layering Textiles Without Visual Clutter',
+    excerpt:
+      'How to combine throws, cushions and table linens in sand, sage and linen tones so a room feels collected—not crowded.',
+    date: 'Demo editorial · Spring styling',
+    body: [
+      'Start with one anchor textile—a throw or a set of napkins—in a neutral base tone. Add a second layer in a related hue rather than a sharp contrast.',
+      'Repeat texture at different scales: a chunky weave on the sofa, a finer linen on the dining table. Keep patterns minimal so materials read clearly.',
+      'In this demo catalogue, pieces like the Cedar Throw and Harbour Cushion Cover are styled to show how calm palettes layer across living and dining spaces.',
+    ],
+  },
+  {
+    id: 'small-spaces',
+    title: 'Storage That Looks Good in Open Sight',
+    excerpt:
+      'Baskets, trays and hooks that earn their place in entries, living rooms and workspaces when closed storage is limited.',
+    date: 'Demo editorial · Everyday organisation',
+    body: [
+      'Choose storage with a consistent material story—woven fibres, warm wood, matte ceramic—so pieces feel intentional when left visible.',
+      'Use vertical hooks for bags and scarves, floor baskets for blankets, and desk trays for the items you reach for daily.',
+      'The demo Storage and Workspace collections show how functional pieces can match a home’s visual calm.',
+    ],
+  },
+  {
+    id: 'table-setting',
+    title: 'Setting a Table for Weeknight Meals',
+    excerpt:
+      'A simple approach to dinnerware, boards and napkins that makes everyday meals feel a little more considered.',
+    date: 'Demo editorial · Kitchen & dining',
+    body: [
+      'Limit place settings to a cohesive palette—one plate shape, one mug style, napkins that complement rather than compete.',
+      'A wooden board can serve as a shared centerpiece for bread, cheese or roasted vegetables without extra dishes.',
+      'Browse the Kitchen & Dining collection in this demo to see how tableware is presented with clear dimensions and care notes.',
+    ],
+  },
+  {
+    id: 'workspace-calm',
+    title: 'A Calmer Desk in Three Objects',
+    excerpt:
+      'Tray, pen cup and desk mat as a starting point for a workspace that stays tidy through the week.',
+    date: 'Demo editorial · Workspace',
+    body: [
+      'Define zones: a tray for daily carry items, a cup for writing tools, a mat to anchor keyboard and notebook.',
+      'Keep colour restrained so the desk recedes visually and focus stays on the work itself.',
+      'The Calm Workspace Set in the demo catalogue is an illustrative grouping—each piece can be added individually.',
+    ],
+  },
+];
+
+const schemas = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Journal', path: '/journal/' },
+  ]),
+];
+---
+
+<BaseLayout
+  title="Journal"
+  description={`Home styling ideas and editorial notes from the ${STORE.name} demo—illustrative content for the portfolio concept.`}
+  path="/journal/"
+  schemas={schemas}
+>
+  <section class="section container-page journal">
+    <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Journal' }]} />
+    <h1 class="section-title">Journal</h1>
+    <p class="section-lede">
+      Illustrative editorial content about home styling and everyday routines. These articles are demo
+      copy—not published journalism and not attributed to real authors.
+    </p>
+    <div class="disclosure">{DISCLOSURE.short}</div>
+
+    <ul class="article-list">
+      {
+        articles.map((article) => (
+          <li class="article-teaser surface">
+            <p class="article-meta">{article.date}</p>
+            <h2>
+              <a href={`#${article.id}`}>{article.title}</a>
+            </h2>
+            <p>{article.excerpt}</p>
+            <a class="article-link" href={`#${article.id}`}>Read article</a>
+          </li>
+        ))
+      }
+    </ul>
+
+    {
+      articles.map((article) => (
+        <article class="article-full surface" id={article.id}>
+          <p class="article-meta">{article.date}</p>
+          <h2 class="article-title">{article.title}</h2>
+          {
+            article.body.map((paragraph) => <p>{paragraph}</p>)
+          }
+          <p class="article-note">
+            Demo editorial content for the {STORE.name} portfolio concept. No real publication or author
+            is represented.
+          </p>
+        </article>
+      ))
+    }
+  </section>
+</BaseLayout>
+
+<style>
+  .disclosure {
+    margin: 1rem 0 1.5rem;
+  }
+
+  .article-list {
+    list-style: none;
+    margin: 0 0 2.5rem;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .article-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .article-teaser {
+    padding: 1.15rem;
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .article-meta {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-harbour);
+  }
+
+  .article-teaser h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    line-height: 1.3;
+  }
+
+  .article-teaser h2 a {
+    color: var(--color-dark-pine);
+    text-decoration: none;
+  }
+
+  .article-teaser h2 a:hover {
+    color: var(--color-harbour);
+    text-decoration: underline;
+  }
+
+  .article-teaser p {
+    margin: 0;
+    line-height: 1.6;
+    color: rgb(36 40 36 / 0.82);
+  }
+
+  .article-link {
+    font-weight: 700;
+    color: var(--color-harbour);
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+    font-size: 0.92rem;
+  }
+
+  .article-full {
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+    scroll-margin-top: 6rem;
+  }
+
+  .article-title {
+    margin: 0 0 0.85rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+    color: var(--color-dark-pine);
+  }
+
+  .article-full p {
+    margin: 0 0 0.85rem;
+    line-height: 1.7;
+    max-width: 42rem;
+  }
+
+  .article-note {
+    margin-top: 1rem !important;
+    font-size: 0.88rem;
+    color: rgb(36 40 36 / 0.68) !important;
+  }
+</style>

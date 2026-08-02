@@ -1,31 +1,37 @@
 ---
 import Logo from './Logo.astro';
+import HeaderCartCount from '../react/HeaderCartCount';
+import { COLLECTIONS } from '../../data/products';
 
 const pathname = Astro.url.pathname;
 
-const links = [
-  { href: '/menu/', label: 'Menu' },
-  { href: '/reservations/', label: 'Reservations' },
-  { href: '/order/', label: 'Order Pickup' },
-  { href: '/catering/', label: 'Catering' },
-  { href: '/about/', label: 'Our Story' },
+const desktopLinks = [
+  { href: '/shop/?sort=newest', label: 'New & Featured', match: (path: string) => path.startsWith('/shop') },
+  { href: '/shop/', label: 'Shop', match: (path: string) => path.startsWith('/shop') },
+  { href: '/collections/', label: 'Collections', match: (path: string) => path.startsWith('/collections') },
+  { href: '/about/', label: 'Our Story', match: (path: string) => path === '/about/' || path.startsWith('/about') },
 ];
 
-function isActive(href: string) {
-  if (href === '/menu/') return pathname.startsWith('/menu');
-  return pathname === href || pathname.startsWith(href);
+const mobileCollections = COLLECTIONS.map((collection) => ({
+  href: `/collections/${collection.slug}/`,
+  label: collection.name,
+}));
+
+function isActive(match: (path: string) => boolean) {
+  return match(pathname);
 }
 ---
 
 <header class="site-header" data-site-header>
   <div class="container-page site-header__inner">
     <Logo />
+
     <nav class="desktop-nav" aria-label="Primary">
       <ul>
         {
-          links.map((link) => (
+          desktopLinks.map((link) => (
             <li>
-              <a href={link.href} aria-current={isActive(link.href) ? 'page' : undefined}>
+              <a href={link.href} aria-current={isActive(link.match) ? 'page' : undefined}>
                 {link.label}
               </a>
             </li>
@@ -33,11 +39,37 @@ function isActive(href: string) {
         }
       </ul>
     </nav>
-    <div class="site-header__actions">
-      <a class="btn btn-ghost header-studio" href="#studio-enquiry" data-open-enquiry>
-        Build a Website Like This
+
+    <div class="site-header__utilities" aria-label="Store utilities">
+      <a class="icon-link" href="/search/" aria-label="Search products">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.75"></circle>
+          <path d="M16 16l5 5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"></path>
+        </svg>
+        <span class="sr-only">Search</span>
       </a>
-      <a class="btn btn-primary" href="/reservations/">Reserve a Table</a>
+      <a class="icon-link" href="/wishlist/" aria-label="Wishlist">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path
+            d="M12 20.5s-6.2-3.9-8.4-7.4C1.8 9.8 3.6 6 7.1 6c1.9 0 3.2 1 4 2.1.8-1.1 2.1-2.1 4-2.1 3.5 0 5.3 3.8 3.5 7.1C18.2 16.6 12 20.5 12 20.5z"
+            stroke="currentColor"
+            stroke-width="1.75"
+            stroke-linejoin="round"></path>
+        </svg>
+        <span class="sr-only">Wishlist</span>
+      </a>
+      <HeaderCartCount client:load />
+    </div>
+
+    <div class="site-header__actions">
+      <button
+        type="button"
+        class="btn btn-ghost header-studio"
+        data-open-enquiry
+        data-track="che_xu_cta_selected"
+      >
+        Build a Store Like This
+      </button>
       <button
         class="menu-toggle"
         type="button"
@@ -55,29 +87,38 @@ function isActive(href: string) {
     <div class="mobile-nav__panel" role="dialog" aria-modal="true" aria-label="Mobile navigation">
       <div class="mobile-nav__top">
         <Logo compact />
-        <button type="button" class="menu-close" data-menu-close>Close</button>
+        <button type="button" class="menu-close" data-menu-close aria-label="Close menu">
+          Close
+        </button>
       </div>
-      <nav aria-label="Mobile primary">
+
+      <nav aria-label="Mobile shop">
+        <p class="mobile-nav__label">Shop</p>
         <ul>
+          <li><a href="/shop/">Shop All</a></li>
           {
-            links.map((link) => (
+            mobileCollections.map((link) => (
               <li>
-                <a href={link.href} aria-current={isActive(link.href) ? 'page' : undefined}>
-                  {link.label}
-                </a>
+                <a href={link.href}>{link.label}</a>
               </li>
             ))
           }
-          <li><a href="/private-events/">Private Events</a></li>
-          <li><a href="/location/">Location</a></li>
-          <li><a href="/contact/">Contact</a></li>
         </ul>
       </nav>
+
+      <nav aria-label="Mobile utilities">
+        <p class="mobile-nav__label">Account &amp; tools</p>
+        <ul>
+          <li><a href="/search/">Search</a></li>
+          <li><a href="/wishlist/">Wishlist</a></li>
+          <li><a href="/cart/" data-open-cart>Cart</a></li>
+        </ul>
+      </nav>
+
       <div class="mobile-nav__ctas">
-        <a class="btn btn-primary" href="/reservations/">Reserve a Table</a>
-        <a class="btn btn-secondary" href="#studio-enquiry" data-open-enquiry>
-          Build a Website Like This
-        </a>
+        <button type="button" class="btn btn-primary" data-open-enquiry data-track="che_xu_cta_selected">
+          Build a Store Like This
+        </button>
       </div>
     </div>
   </div>
@@ -87,6 +128,7 @@ function isActive(href: string) {
   function initHeader() {
     const root = document.querySelector('[data-site-header]');
     if (!root) return;
+
     const toggle = root.querySelector('[data-menu-toggle]');
     const closeBtn = root.querySelector('[data-menu-close]');
     const nav = root.querySelector('[data-mobile-nav]');
@@ -94,13 +136,20 @@ function isActive(href: string) {
 
     let lastFocus: HTMLElement | null = null;
 
+    const getFocusable = () =>
+      Array.from(
+        nav.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])',
+        ),
+      ).filter((el) => !el.hasAttribute('disabled') && el.offsetParent !== null);
+
     const open = () => {
       lastFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
       nav.hidden = false;
       toggle.setAttribute('aria-expanded', 'true');
       document.body.style.overflow = 'hidden';
-      const first = nav.querySelector('a, button');
-      if (first instanceof HTMLElement) first.focus();
+      const focusable = getFocusable();
+      (focusable[0] ?? closeBtn)?.focus();
     };
 
     const close = () => {
@@ -110,17 +159,36 @@ function isActive(href: string) {
       (lastFocus ?? toggle).focus();
     };
 
+    const trapFocus = (event: KeyboardEvent) => {
+      if (nav.hidden || event.key !== 'Tab') return;
+      const focusable = getFocusable();
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
     toggle.addEventListener('click', () => {
       if (nav.hidden) open();
       else close();
     });
+
     closeBtn?.addEventListener('click', close);
+
     nav.addEventListener('click', (event) => {
       if (event.target === nav) close();
       if (event.target instanceof HTMLAnchorElement) close();
     });
+
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape' && !nav.hidden) close();
+      trapFocus(event);
     });
   }
 
@@ -134,25 +202,28 @@ function isActive(href: string) {
     top: var(--portfolio-offset, 0px);
     z-index: 40;
     backdrop-filter: blur(12px);
-    background: rgb(247 242 232 / 0.9);
-    border-bottom: 1px solid rgb(24 57 43 / 0.08);
+    background: rgb(247 243 236 / 0.92);
+    border-bottom: 1px solid rgb(23 59 50 / 0.08);
+    overflow-x: clip;
   }
 
   .site-header__inner {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
     align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
+    gap: 0.75rem 1rem;
     min-height: var(--header-height);
   }
 
   .desktop-nav {
     display: none;
+    justify-self: center;
   }
 
   .desktop-nav ul {
     display: flex;
-    gap: 0.25rem;
+    flex-wrap: wrap;
+    gap: 0.15rem;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -167,32 +238,60 @@ function isActive(href: string) {
     text-decoration: none;
     font-weight: 600;
     color: var(--color-charcoal);
+    white-space: nowrap;
   }
 
   .desktop-nav a[aria-current='page'],
   .desktop-nav a:hover {
-    background: rgb(24 57 43 / 0.06);
-    color: var(--color-forest);
+    background: rgb(23 59 50 / 0.06);
+    color: var(--color-pine);
+  }
+
+  .site-header__utilities {
+    display: none;
+    align-items: center;
+    gap: 0.15rem;
+  }
+
+  .icon-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    border-radius: 999px;
+    color: var(--color-pine);
+    text-decoration: none;
+  }
+
+  .icon-link:hover {
+    background: rgb(23 59 50 / 0.06);
   }
 
   .site-header__actions {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     gap: 0.5rem;
   }
 
   .header-studio {
     display: none;
+    white-space: nowrap;
   }
 
   .menu-toggle,
   .menu-close {
     min-width: 44px;
     min-height: 44px;
-    border: 1px solid rgb(24 57 43 / 0.18);
+    border: 1px solid rgb(23 59 50 / 0.18);
     border-radius: 999px;
-    background: var(--color-soft);
+    background: var(--color-porcelain);
+    color: var(--color-pine);
     cursor: pointer;
+    font: inherit;
+    font-weight: 650;
+    padding: 0.4rem 0.9rem;
   }
 
   .menu-toggle__bars,
@@ -201,7 +300,7 @@ function isActive(href: string) {
     display: block;
     width: 18px;
     height: 2px;
-    background: var(--color-forest);
+    background: var(--color-pine);
     margin: 0 auto;
     position: relative;
   }
@@ -225,25 +324,40 @@ function isActive(href: string) {
     position: fixed;
     inset: 0;
     z-index: 60;
-    background: rgb(16 39 30 / 0.45);
+    background: rgb(16 40 32 / 0.45);
+    overflow: hidden;
   }
 
   .mobile-nav__panel {
     position: absolute;
     inset: 0 0 0 auto;
     width: min(22rem, 100%);
-    background: var(--color-cream);
+    max-width: 100%;
+    background: var(--color-linen);
     padding: 1rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
 
   .mobile-nav__top {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 0.75rem;
+  }
+
+  .mobile-nav__label {
+    margin: 0 0 0.35rem;
+    padding: 0 0.75rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-harbour);
   }
 
   .mobile-nav ul {
@@ -251,7 +365,7 @@ function isActive(href: string) {
     margin: 0;
     padding: 0;
     display: grid;
-    gap: 0.25rem;
+    gap: 0.15rem;
   }
 
   .mobile-nav a {
@@ -262,17 +376,20 @@ function isActive(href: string) {
     border-radius: var(--radius-md);
     text-decoration: none;
     font-weight: 650;
+    color: var(--color-charcoal);
   }
 
-  .mobile-nav a[aria-current='page'],
-  .mobile-nav a:hover {
-    background: rgb(24 57 43 / 0.07);
+  .mobile-nav a:hover,
+  .mobile-nav a:focus-visible {
+    background: rgb(23 59 50 / 0.07);
+    color: var(--color-pine);
   }
 
   .mobile-nav__ctas {
     display: grid;
     gap: 0.6rem;
     margin-top: auto;
+    padding-top: 0.5rem;
   }
 
   .sr-only {
@@ -286,7 +403,13 @@ function isActive(href: string) {
     border: 0;
   }
 
-  @media (min-width: 960px) {
+  @media (min-width: 768px) {
+    .site-header__utilities {
+      display: flex;
+    }
+  }
+
+  @media (min-width: 1024px) {
     .desktop-nav {
       display: block;
     }

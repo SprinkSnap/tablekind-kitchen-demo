@@ -1,5 +1,5 @@
 -- Che Xu Studio consented portfolio leads only.
--- Never store fictional Tablekind reservation or order data here.
+-- Never store fictional Harbour & Pine cart or checkout data here.
 
 CREATE TABLE IF NOT EXISTS portfolio_leads (
   id TEXT PRIMARY KEY NOT NULL,
@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS portfolio_leads (
   business_name TEXT,
   business_type TEXT NOT NULL,
   existing_website TEXT,
+  product_count TEXT,
   primary_goal TEXT NOT NULL,
   needed_features TEXT NOT NULL,
   launch_timing TEXT NOT NULL,

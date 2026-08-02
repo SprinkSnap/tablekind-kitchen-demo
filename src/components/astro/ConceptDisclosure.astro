@@ -8,31 +8,40 @@ interface Props {
 const { compact = false } = Astro.props;
 ---
 
-<aside class:list={['disclosure', compact && 'disclosure--compact']} aria-label="Portfolio disclosure">
-  <p>
-    <strong>Portfolio concept by Che Xu Studio</strong><br />
-    Tablekind Kitchen is a fictional restaurant demonstration.
-  </p>
-  {!compact && <p class="muted">{DISCLOSURE.reservation.replace('This is an interactive portfolio demonstration. ', '')}</p>}
+<aside
+  class:list={['disclosure', 'concept-disclosure', compact && 'concept-disclosure--compact']}
+  aria-label="Portfolio disclosure"
+>
+  {
+    DISCLOSURE.lines.map((line) => (
+      <p>
+        <strong>{line}</strong>
+      </p>
+    ))
+  }
 </aside>
 
 <style>
-  .disclosure {
+  .concept-disclosure {
+    border-left: 3px solid var(--color-harbour);
+    background: rgb(255 254 251 / 0.94);
+  }
+
+  .concept-disclosure p {
     margin: 0;
   }
 
-  .disclosure p {
-    margin: 0;
-  }
-
-  .disclosure .muted {
+  .concept-disclosure p + p {
     margin-top: 0.35rem;
-    color: rgb(34 38 34 / 0.72);
-    font-size: 0.88rem;
   }
 
-  .disclosure--compact {
-    padding: 0.7rem 0.85rem;
-    font-size: 0.85rem;
+  .concept-disclosure strong {
+    font-weight: 700;
+    color: var(--color-dark-pine);
+  }
+
+  .concept-disclosure--compact {
+    padding: 0.75rem 0.9rem;
+    font-size: 0.88rem;
   }
 </style>

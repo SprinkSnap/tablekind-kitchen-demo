@@ -4,7 +4,7 @@
 DEMO_MODE=true
 PUBLIC_SITE_URL=http://localhost:4321
 PUBLIC_STUDIO_URL=https://chexustudio.com
-PUBLIC_CASE_STUDY_URL=https://chexustudio.com/work/tablekind-kitchen
+PUBLIC_CASE_STUDY_URL=https://chexustudio.com/work/harbour-pine-home
 PUBLIC_PACKAGES_URL=https://chexustudio.com/packages
 PUBLIC_DEMO_MODE=true
 PUBLIC_TURNSTILE_SITE_KEY=

@@ -1,6 +1,6 @@
-import { RESTAURANT, getSiteUrl, STUDIO } from './config';
+import { STORE, getSiteUrl, STUDIO } from './config';
 import { getDemoCapabilities } from './demo-mode';
-import { CATEGORY_META, MENU_ITEMS, type MenuItem } from '../data/menu';
+import { COLLECTIONS, type Product } from '../data/products';
 import { HOME_FAQS } from '../data/faq';
 
 export type PageSeo = {
@@ -20,22 +20,27 @@ export function absoluteUrl(path: string): string {
 }
 
 export function buildTitle(pageTitle?: string): string {
-  if (!pageTitle) return `${RESTAURANT.name} | ${RESTAURANT.tagline}`;
-  return `${pageTitle} | ${RESTAURANT.name}`;
+  if (!pageTitle) return `${STORE.name} | ${STORE.tagline}`;
+  return `${pageTitle} | ${STORE.name}`;
 }
 
 export function websiteSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: RESTAURANT.name,
+    name: STORE.name,
     url: getSiteUrl(),
-    description: RESTAURANT.tagline,
-    inLanguage: RESTAURANT.locale,
+    description: STORE.tagline,
+    inLanguage: STORE.locale,
     publisher: {
       '@type': 'Organization',
       name: STUDIO.name,
       url: STUDIO.url,
+    },
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: `${getSiteUrl().replace(/\/$/, '')}/search/?q={search_term_string}`,
+      'query-input': 'required name=search_term_string',
     },
   };
 }
@@ -47,7 +52,7 @@ export function organizationSchema() {
     name: STUDIO.name,
     url: STUDIO.url,
     description:
-      'Che Xu Studio designs and builds fast, conversion-focused websites for local businesses.',
+      'Che Xu Studio designs and builds fast, conversion-focused e-commerce websites.',
   };
 }
 
@@ -79,47 +84,34 @@ export function faqSchema() {
   };
 }
 
-export function menuItemSchema(item: MenuItem) {
-  return {
-    '@type': 'MenuItem',
-    name: item.name,
-    description: item.description,
-    offers: {
-      '@type': 'Offer',
-      price: item.price.toFixed(2),
-      priceCurrency: RESTAURANT.currency,
-    },
-  };
+/**
+ * Product / Offer / OnlineStore schema is intentionally omitted in DEMO_MODE.
+ * Never publish fabricated SKUs, ratings, reviews or merchant NAP.
+ */
+export function productSchemaIfAllowed(_product: Product) {
+  const caps = getDemoCapabilities();
+  if (caps.demoMode || !caps.allowFakeProductSchema) return null;
+  return null;
 }
 
-export function menuSchema() {
-  const sections = Object.entries(CATEGORY_META).map(([key, meta]) => {
-    const items = MENU_ITEMS.filter((item) => item.category === key);
-    return {
-      '@type': 'MenuSection',
-      name: meta.label,
-      description: meta.description,
-      hasMenuItem: items.map(menuItemSchema),
-    };
-  });
+export function onlineStoreSchemaIfAllowed() {
+  const caps = getDemoCapabilities();
+  if (caps.demoMode || !caps.allowFakeMerchantSchema) return null;
+  return null;
+}
 
+export function collectionListSchema() {
   return {
     '@context': 'https://schema.org',
-    '@type': 'Menu',
-    name: `${RESTAURANT.name} Menu`,
-    description: 'Seasonal brunch, lunch, dinner, desserts and non-alcoholic drinks.',
-    hasMenuSection: sections,
+    '@type': 'ItemList',
+    name: `${STORE.name} Collections`,
+    itemListElement: COLLECTIONS.map((c, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: c.name,
+      url: absoluteUrl(`/collections/${c.slug}/`),
+    })),
   };
-}
-
-/**
- * LocalBusiness / Restaurant schema is intentionally omitted in DEMO_MODE.
- * Never publish fabricated NAP, reviews or ratings.
- */
-export function localBusinessSchemaIfAllowed() {
-  const caps = getDemoCapabilities();
-  if (caps.demoMode || !caps.allowFakeLocalBusinessSchema) return null;
-  return null;
 }
 
 export function jsonLdScript(data: unknown | unknown[]): string {
