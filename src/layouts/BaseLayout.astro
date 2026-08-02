@@ -87,7 +87,7 @@ const packagesUrl = getPackagesUrl();
     </main>
     <SiteFooter />
     <MobileActionBar />
-    <CartProvider client:idle />
+    <CartProvider client:load />
     <EnquiryDrawer client:idle packagesUrl={packagesUrl} turnstileSiteKey={turnstileSiteKey} />
     <AssistantChat client:visible />
     <script is:inline>

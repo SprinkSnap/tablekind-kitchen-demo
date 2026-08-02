@@ -106,31 +106,43 @@ export const POST: APIRoute = async ({ request }) => {
     const createdAt = new Date().toISOString();
 
     if (db) {
-      await db
-        .prepare(
-          `INSERT INTO portfolio_leads (
-            id, name, email, business_name, business_type, existing_website,
-            product_count, primary_goal, needed_features, launch_timing, message,
-            consent, source_demo, created_at
-          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        )
-        .bind(
-          id,
-          lead.name,
-          lead.email,
-          lead.businessName ?? null,
-          lead.businessType,
-          lead.existingWebsite ?? null,
-          lead.productCount,
-          lead.primaryGoal,
-          JSON.stringify(lead.neededFeatures),
-          lead.launchTiming,
-          lead.message ?? null,
-          1,
-          STORE.sourceDemo,
-          createdAt,
-        )
-        .run();
+      try {
+        await db
+          .prepare(
+            `INSERT INTO portfolio_leads (
+              id, name, email, business_name, business_type, existing_website,
+              product_count, primary_goal, needed_features, launch_timing, message,
+              consent, source_demo, created_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          )
+          .bind(
+            id,
+            lead.name,
+            lead.email,
+            lead.businessName ?? null,
+            lead.businessType,
+            lead.existingWebsite ?? null,
+            lead.productCount,
+            lead.primaryGoal,
+            JSON.stringify(lead.neededFeatures),
+            lead.launchTiming,
+            lead.message ?? null,
+            1,
+            STORE.sourceDemo,
+            createdAt,
+          )
+          .run();
+      } catch (dbError) {
+        console.error(
+          '[portfolio-lead] D1 insert failed',
+          dbError instanceof Error ? dbError.message : 'unknown',
+        );
+        if (import.meta.env.DEV) {
+          console.info('[portfolio-lead:dev-fallback]', redactLeadForLogs(lead));
+          return Response.json({ ok: true, stored: false });
+        }
+        return Response.json(genericError, { status: 503 });
+      }
     } else if (import.meta.env.DEV) {
       console.info('[portfolio-lead:dev]', redactLeadForLogs(lead));
     } else {

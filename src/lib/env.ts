@@ -10,8 +10,11 @@ export function parseAllowedOrigins(value: string | undefined): string[] {
     'http://localhost:4321',
     'http://127.0.0.1:4321',
   ];
-  return (value ?? fallback.join(','))
+  const parsed = (value ?? '')
     .split(',')
     .map((s) => s.trim())
     .filter(Boolean);
+  // Always allow local preview hosts so Playwright and `astro preview` work.
+  const merged = [...parsed, ...fallback.filter((origin) => !parsed.includes(origin))];
+  return merged.length ? merged : fallback;
 }

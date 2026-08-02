@@ -28,7 +28,7 @@
     "PUBLIC_STUDIO_URL": "https://chexustudio.com",
     "PUBLIC_CASE_STUDY_URL": "https://chexustudio.com/work/harbour-pine-home",
     "PUBLIC_PACKAGES_URL": "https://chexustudio.com/packages",
-    "ALLOWED_ORIGINS": "https://harbourandpinehome.chexustudio.com,http://localhost:4321"
+    "ALLOWED_ORIGINS": "https://harbourandpinehome.chexustudio.com,http://localhost:4321,http://127.0.0.1:4321"
   },
   // Omit database_id so Wrangler auto-provisions D1 on first deploy.
   "d1_databases": [
@@ -51,7 +51,7 @@
         "PUBLIC_STUDIO_URL": "https://chexustudio.com",
         "PUBLIC_CASE_STUDY_URL": "https://chexustudio.com/work/harbour-pine-home",
         "PUBLIC_PACKAGES_URL": "https://chexustudio.com/packages",
-        "ALLOWED_ORIGINS": "https://harbour-pine-home-demo-staging.workers.dev,http://localhost:4321"
+        "ALLOWED_ORIGINS": "https://harbour-pine-home-demo-staging.workers.dev,http://localhost:4321,http://127.0.0.1:4321"
       }
     }
   }

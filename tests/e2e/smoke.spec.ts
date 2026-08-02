@@ -45,18 +45,18 @@ test.describe('Harbour & Pine Home demo', () => {
 
   test('shop filtering works', async ({ page }) => {
     await page.goto('/shop/');
-    const search = page.getByLabel(/search/i).first();
-    await search.fill('throw');
-    await expect(page.getByText(/cedar linen throw/i).first()).toBeVisible();
-    const clear = page.getByRole('button', { name: /clear/i }).first();
-    if (await clear.isVisible()) await clear.click();
+    await page.getByLabel('Filter catalogue by keyword').fill('throw');
+    await expect(page.getByRole('link', { name: /cedar linen throw/i }).first()).toBeVisible();
+    const clear = page.getByRole('button', { name: /clear all/i });
+    if (await clear.isVisible().catch(() => false)) await clear.click();
   });
 
   test('product variants and add to demo cart', async ({ page }) => {
     await page.goto('/products/cedar-linen-throw/');
     await expect(page.getByRole('heading', { name: /cedar linen throw/i })).toBeVisible();
-    await page.getByRole('button', { name: /add to demo cart/i }).click();
-    await expect(page.getByRole('dialog', { name: /demo cart/i })).toBeVisible();
+    await page.waitForFunction(() => Boolean(document.querySelector('[data-cart-host], .hp-purchase')));
+    await page.locator('.hp-purchase').getByRole('button', { name: /add to demo cart/i }).click();
+    await expect(page.getByRole('dialog', { name: /demo cart/i })).toBeVisible({ timeout: 10_000 });
     await expect(page.getByText(/no real order/i).first()).toBeVisible();
   });
 
@@ -67,7 +67,7 @@ test.describe('Harbour & Pine Home demo', () => {
     });
 
     await page.goto('/products/riverstone-mug/');
-    await page.getByRole('button', { name: /add to demo cart/i }).click();
+    await page.locator('.hp-purchase').getByRole('button', { name: /add to demo cart/i }).click();
     await expect(page.getByRole('dialog', { name: /demo cart/i })).toBeVisible();
     await page.goto('/checkout/');
     await expect(

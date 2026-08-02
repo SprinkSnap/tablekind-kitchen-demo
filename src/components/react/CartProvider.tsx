@@ -32,6 +32,7 @@ export default function CartProvider() {
 
   return (
     <>
+      <div data-cart-host hidden aria-hidden="true" />
       <div className="sr-only" aria-live="polite" aria-atomic="true">
         {statusMessage}
       </div>

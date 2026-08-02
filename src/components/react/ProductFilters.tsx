@@ -159,18 +159,14 @@ export default function ProductFilters({ initialCollection, mode }: Props) {
 
       <div className="hp-filters__toolbar">
         <label className="hp-filters__search">
-          <span className="sr-only">Search products</span>
+          <span className="sr-only">Filter catalogue by keyword</span>
           <input
             type="search"
+            name="q"
             placeholder="Search products…"
             value={filters.q}
-            onChange={(e) => updateFilter({ q: e.target.value })}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                track('search_used', { mode });
-                writeParams({ ...filters, q: e.currentTarget.value }, false);
-              }
-            }}
+            aria-label="Filter catalogue by keyword"
+            onChange={(e) => updateFilter({ q: e.target.value }, { search: true })}
           />
         </label>
         <button
