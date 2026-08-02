@@ -1,0 +1,122 @@
+---
+import { DISCLOSURE, RESTAURANT, STUDIO } from '../../lib/config';
+import Logo from './Logo.astro';
+---
+
+<footer class="site-footer">
+  <div class="container-page site-footer__grid">
+    <div>
+      <Logo />
+      <p class="tagline">{RESTAURANT.tagline}</p>
+      <p class="disclosure disclosure--footer">{DISCLOSURE.short}</p>
+    </div>
+    <nav aria-label="Footer">
+      <h2>Visit the demo</h2>
+      <ul>
+        <li><a href="/menu/">Menu</a></li>
+        <li><a href="/reservations/">Reservations</a></li>
+        <li><a href="/order/">Order Pickup</a></li>
+        <li><a href="/catering/">Catering</a></li>
+        <li><a href="/private-events/">Private Events</a></li>
+        <li><a href="/about/">Our Story</a></li>
+        <li><a href="/location/">Location</a></li>
+        <li><a href="/contact/">Contact</a></li>
+        <li><a href="/accessibility/">Accessibility</a></li>
+      </ul>
+    </nav>
+    <div>
+      <h2>Che Xu Studio</h2>
+      <p>
+        Want a website like this for your restaurant or local business?
+      </p>
+      <div class="footer-actions">
+        <a class="btn btn-accent" href="#studio-enquiry" data-open-enquiry>Request My Website Plan</a>
+        <a class="btn btn-secondary" href={STUDIO.packagesUrl} target="_blank" rel="noopener noreferrer">
+          View Packages
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="container-page site-footer__base">
+    <p>© {new Date().getFullYear()} {STUDIO.name}. Fictional restaurant concept for portfolio demonstration.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: var(--space-section);
+    padding: 3rem 0 6.5rem;
+    background: var(--color-deep);
+    color: var(--color-soft);
+  }
+
+  @media (min-width: 768px) {
+    .site-footer {
+      padding-bottom: 3rem;
+    }
+  }
+
+  .site-footer__grid {
+    display: grid;
+    gap: 2rem;
+  }
+
+  @media (min-width: 900px) {
+    .site-footer__grid {
+      grid-template-columns: 1.3fr 1fr 1.2fr;
+      gap: 2.5rem;
+    }
+  }
+
+  .tagline {
+    margin: 1rem 0;
+    color: rgb(247 242 232 / 0.82);
+  }
+
+  .disclosure--footer {
+    background: rgb(255 253 252 / 0.06);
+    border-color: rgb(255 253 252 / 0.12);
+    color: rgb(247 242 232 / 0.9);
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    margin: 0 0 0.8rem;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  a {
+    color: rgb(247 242 232 / 0.92);
+    text-decoration: none;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  a:hover {
+    color: var(--color-gold);
+  }
+
+  .footer-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1rem;
+  }
+
+  .site-footer__base {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgb(255 253 252 / 0.12);
+    font-size: 0.88rem;
+    color: rgb(247 242 232 / 0.7);
+  }
+</style>

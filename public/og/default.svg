@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#10271E"/>
+  <circle cx="980" cy="140" r="180" fill="#C76548" opacity="0.35"/>
+  <circle cx="180" cy="520" r="160" fill="#C99A45" opacity="0.28"/>
+  <text x="80" y="250" fill="#F7F2E8" font-family="Georgia, serif" font-size="72">Tablekind Kitchen</text>
+  <text x="80" y="330" fill="#A9B8A4" font-family="Arial, sans-serif" font-size="34">Seasonal food, made for gathering.</text>
+  <text x="80" y="520" fill="#F7F2E8" font-family="Arial, sans-serif" font-size="24">Portfolio concept by Che Xu Studio</text>
+</svg>

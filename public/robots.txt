@@ -1,0 +1,5 @@
+# Tablekind Kitchen is a fictional portfolio demonstration.
+User-agent: *
+Disallow: /
+
+Sitemap: https://tablekindkitchen.chexustudio.com/sitemap.xml

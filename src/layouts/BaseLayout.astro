@@ -1,0 +1,107 @@
+---
+import '../styles/global.css';
+import SiteHeader from '../components/astro/SiteHeader.astro';
+import SiteFooter from '../components/astro/SiteFooter.astro';
+import MobileActionBar from '../components/astro/MobileActionBar.astro';
+import ConceptDisclosure from '../components/astro/ConceptDisclosure.astro';
+import PortfolioBar from '../components/react/PortfolioBar';
+import EnquiryDrawer from '../components/react/EnquiryDrawer';
+import AssistantChat from '../components/react/AssistantChat';
+import {
+  getCaseStudyUrl,
+  getPackagesUrl,
+  RESTAURANT,
+} from '../lib/config';
+import { robotsMetaContent } from '../lib/demo-mode';
+import { absoluteUrl, buildTitle, jsonLdScript } from '../lib/seo';
+
+interface Props {
+  title?: string;
+  description?: string;
+  path?: string;
+  ogImage?: string;
+  schemas?: unknown[];
+  showDisclosure?: boolean;
+}
+
+const {
+  title,
+  description = 'Seasonal food, made for gathering. A mobile-first restaurant website concept by Che Xu Studio featuring menus, reservations, pickup ordering and catering enquiries.',
+  path = Astro.url.pathname,
+  ogImage = '/og/default.svg',
+  schemas = [],
+  showDisclosure = true,
+} = Astro.props;
+
+const pageTitle = buildTitle(title);
+const canonical = absoluteUrl(path);
+const og = absoluteUrl(ogImage.endsWith('/') ? ogImage.slice(0, -1) : ogImage).replace(/\/$/, '');
+const robots = robotsMetaContent();
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+---
+
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content={robots} />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/brand/tk-monogram.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_CA" />
+    <meta property="og:site_name" content={RESTAURANT.name} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={og} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={og} />
+    <title>{pageTitle}</title>
+    {
+      schemas.length > 0 && (
+        <script is:inline type="application/ld+json" set:html={jsonLdScript(schemas)} />
+      )
+    }
+  </head>
+  <body class="mobile-action-pad">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <PortfolioBar client:load caseStudyUrl={getCaseStudyUrl()} />
+    <SiteHeader />
+    {
+      showDisclosure && (
+        <div class="container-page disclosure-wrap">
+          <ConceptDisclosure compact />
+        </div>
+      )
+    }
+    <main id="main">
+      <slot />
+    </main>
+    <SiteFooter />
+    <MobileActionBar />
+    <EnquiryDrawer
+      client:idle
+      packagesUrl={getPackagesUrl()}
+      turnstileSiteKey={turnstileSiteKey}
+    />
+    <AssistantChat client:idle />
+    <script is:inline>
+      window.dispatchEvent(
+        new CustomEvent('tk:analytics', {
+          detail: { event: 'demo_viewed', payload: { path: location.pathname }, at: Date.now() },
+        }),
+      );
+    </script>
+  </body>
+</html>
+
+<style>
+  .disclosure-wrap {
+    padding-top: 0.85rem;
+  }
+</style>

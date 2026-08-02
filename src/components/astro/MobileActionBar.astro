@@ -1,0 +1,50 @@
+---
+---
+
+<nav class="mobile-actions" aria-label="Quick actions">
+  <a href="/menu/">Menu</a>
+  <a href="/reservations/" class="primary">Reserve</a>
+  <a href="/order/">Order</a>
+</nav>
+
+<style>
+  .mobile-actions {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 35;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1fr;
+    gap: 0.4rem;
+    padding: 0.55rem 0.75rem calc(0.55rem + env(safe-area-inset-bottom, 0px));
+    background: rgb(255 253 252 / 0.96);
+    border-top: 1px solid rgb(24 57 43 / 0.12);
+    backdrop-filter: blur(10px);
+  }
+
+  .mobile-actions a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 700;
+    color: var(--color-forest);
+    border: 1px solid rgb(24 57 43 / 0.14);
+    background: var(--color-soft);
+  }
+
+  .mobile-actions a.primary {
+    background: var(--color-forest);
+    color: var(--color-soft);
+    border-color: transparent;
+  }
+
+  @media (min-width: 768px) {
+    .mobile-actions {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,122 @@
+# Tablekind Kitchen Case Study Copy
+
+Publish at: `https://chexustudio.com/work/tablekind-kitchen`
+
+## SEO title
+
+Restaurant Website Design Demo | Che Xu Studio
+
+## Meta description
+
+Explore Tablekind Kitchen, a mobile-first restaurant website concept by Che Xu Studio featuring reservations, ordering, restaurant SEO and optimized food imagery.
+
+## H1
+
+Tablekind Kitchen Restaurant Website Concept
+
+## Disclosure
+
+Concept Project — Created to demonstrate Che Xu Studio’s restaurant design, SEO and conversion capabilities.
+
+## Live demo
+
+https://tablekindkitchen.chexustudio.com
+
+## Project overview
+
+Tablekind Kitchen is a fictional modern Canadian neighbourhood restaurant website built as a portfolio demonstration. It shows how Che Xu Studio designs fast, accessible, conversion-focused restaurant experiences around menus, reservations, pickup ordering, catering enquiries and local discovery.
+
+## Intended audience
+
+- Independent restaurant owners
+- Neighbourhood cafés and dining groups evaluating a website rebuild
+- Operators who need clearer paths to reservations, pickup orders and catering leads
+- Marketing leads comparing custom design versus template-based restaurant sites
+
+## Fictional business challenge
+
+Many local restaurants still rely on PDF menus, slow themes and unclear next steps. Guests struggle to browse dishes on mobile, booking feels fragmented and catering enquiries arrive as unstructured messages. Tablekind Kitchen demonstrates a cleaner alternative: one coherent brand experience that makes dining decisions easy without manipulative urgency tactics.
+
+## Customer journey
+
+1. Land on a warm, editorial homepage with one clear composition and honest demo disclosure.
+2. Browse semantic HTML menus with filters, prices and dietary indicators.
+3. Start a short reservation demo or pickup-order demo.
+4. Explore catering / private-event planners.
+5. Contact Che Xu Studio to request a website plan.
+
+## Menu architecture
+
+A single typed menu-data module powers every menu page, featured dish module, filter UI and ordering drawer. Categories include brunch, lunch, small plates, mains, sides, desserts and non-alcoholic drinks. Content remains visible as semantic HTML and never depends on a PDF.
+
+## Reservation funnel
+
+An accessible multistep flow collects party size, date, time, seating preference and optional notes, then clearly states that no real table is reserved. A provider-agnostic adapter interface is ready for an approved reservation integration later.
+
+## Pickup-ordering flow
+
+Guests can open item details, choose modifiers, manage quantity, persist a demo cart locally, select a pickup time and complete the experience in-browser. Sample tax is shown for realism. No payment provider is charged and no kitchen ticket is created.
+
+## Catering lead generation
+
+Catering and private-event planners gather event type, guest count, date, service style, dietary considerations and fulfillment preference. Fictional Tablekind enquiries are not transmitted; completion invites a real Che Xu Studio conversation.
+
+## Mobile design
+
+The experience is mobile-first, with sticky header navigation, a compact mobile action bar (Menu / Reserve / Order), large touch targets and drawers that restore focus and prevent background scroll.
+
+## Local SEO strategy
+
+Technical SEO includes unique titles/descriptions, canonical URLs, breadcrumbs, sitemap, robots rules, Open Graph tags, FAQ schema, Menu schema and WebSite/Organization schema. In `DEMO_MODE`, the site remains `noindex, nofollow` and omits fabricated LocalBusiness NAP, reviews and ratings.
+
+## Image optimization
+
+Dish and hero visuals are purpose-built SVG assets with reserved aspect ratios, explicit dimensions, lazy-loading below the fold and an eager LCP hero treatment. A real restaurant can swap in licensed photography through Cloudflare Images or local responsive pipelines.
+
+## Accessibility
+
+Implementation targets WCAG 2.2 AA as closely as practical: skip link, landmarks, keyboard support, dialog focus management, visible focus, status messages, reduced motion and contrast-conscious brand colours.
+
+## Technical architecture
+
+- Astro with Strict TypeScript
+- Cloudflare Workers + Static Assets
+- React islands for interactive flows only
+- Tailwind CSS design tokens
+- Zod validation for the Che Xu Studio lead API
+- Cloudflare Turnstile, origin checks, honeypot and rate limiting
+- D1 storage for consented studio leads only
+- Optional Workers AI assistant with strict guardrails
+
+## Security
+
+Portfolio lead submissions are protected with schema validation, allowed-field lists, request-size limits, content-type checks, origin validation, honeypot, Turnstile server verification, rate limiting, prepared D1 statements and personal-data redaction in logs.
+
+## Verified performance results
+
+Performance should be measured on the deployed Worker with Lighthouse / CrUX after assets and edge configuration are live. Do not publish fictional conversion, traffic or Lighthouse scores as real results. Target budgets for evaluation:
+
+- Lighthouse Performance 95+
+- Accessibility 95–100
+- Best Practices 95+
+- SEO 100 where compatible with deliberate `noindex`
+- LCP ≤ 2.5s, INP ≤ 200ms, CLS ≤ 0.1
+
+## Screenshots
+
+Capture and attach after deploy:
+
+1. Desktop homepage hero
+2. Mobile homepage with sticky actions
+3. Menu filtering
+4. Reservation demo completion
+5. Pickup cart drawer
+6. Che Xu Studio enquiry drawer
+
+## Primary CTA
+
+Build a Website Like This → Che Xu Studio enquiry / packages
+
+## Important honesty note
+
+Tablekind Kitchen is fictional. Do not describe invented bookings, revenue lift, traffic growth or review scores as real client outcomes.

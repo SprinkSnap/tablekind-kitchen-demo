@@ -1,0 +1,290 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getFeaturedItems, DIETARY_LABELS, CATEGORY_META } from '../data/menu';
+import { HOME_FAQS } from '../data/faq';
+import { formatCad } from '../lib/currency';
+import { DISCLOSURE, getCaseStudyUrl, getPackagesUrl, STUDIO } from '../lib/config';
+import {
+  breadcrumbSchema,
+  faqSchema,
+  menuSchema,
+  organizationSchema,
+  websiteSchema,
+} from '../lib/seo';
+import ReservationFlow from '../components/react/ReservationFlow';
+
+const featured = getFeaturedItems(6);
+const schemas = [
+  websiteSchema(),
+  organizationSchema(),
+  menuSchema(),
+  faqSchema(),
+  breadcrumbSchema([{ name: 'Home', path: '/' }]),
+];
+---
+
+<BaseLayout
+  title="Seasonal Food, Made for Gathering"
+  description="Tablekind Kitchen is a fictional modern Canadian neighbourhood restaurant website concept by Che Xu Studio—featuring menus, reservations, pickup ordering and catering."
+  path="/"
+  schemas={schemas}
+>
+  <section class="hero-atmosphere hero">
+    <div class="container-page hero__content fade-up">
+      <p class="eyebrow hero__eyebrow">Modern Neighbourhood Dining</p>
+      <h1>Seasonal Food, Made for Gathering.</h1>
+      <p class="hero__lede">
+        Thoughtfully prepared dishes, welcoming service and a simple dining experience—from choosing
+        your meal to reserving your table.
+      </p>
+      <div class="hero__actions">
+        <a class="btn btn-accent" href="/reservations/">Reserve a Table</a>
+        <a class="btn btn-ghost" href="/menu/">Explore the Menu</a>
+        <a class="btn btn-ghost" href="/order/">Order Pickup</a>
+      </div>
+      <p class="hero__reassure">{DISCLOSURE.short} Reservations and ordering are interactive portfolio demonstrations only.</p>
+    </div>
+  </section>
+
+  <section class="section container-page" aria-labelledby="dining-options">
+    <h2 id="dining-options" class="section-title">Choose How You Gather.</h2>
+    <p class="section-lede">Four clear paths for brunch, lunch, dinner and pickup—labelled with illustrative demo hours only.</p>
+    <div class="option-grid">
+      <a class="option" href="/menu/brunch/">
+        <h3>Weekend Brunch</h3>
+        <p>Pancakes, toasts and bright morning plates.</p>
+        <p class="hours">Demo hours: Sat–Sun 9:00–14:00 · {DISCLOSURE.hours}</p>
+      </a>
+      <a class="option" href="/menu/lunch/">
+        <h3>Lunch</h3>
+        <p>Salads, bowls and sandwiches for midday tables.</p>
+        <p class="hours">Demo hours: Mon–Fri 11:30–15:00 · {DISCLOSURE.hours}</p>
+      </a>
+      <a class="option" href="/menu/dinner/">
+        <h3>Dinner</h3>
+        <p>Small plates and seasonal mains for evening gatherings.</p>
+        <p class="hours">Demo hours: Tue–Sun 17:00–21:30 · {DISCLOSURE.hours}</p>
+      </a>
+      <a class="option" href="/order/">
+        <h3>Pickup</h3>
+        <p>Mobile-friendly demo ordering with cart and totals.</p>
+        <p class="hours">Demo pickup windows shown in the order flow.</p>
+      </a>
+    </div>
+  </section>
+
+  <section class="section container-page" aria-labelledby="featured">
+    <h2 id="featured" class="section-title">Something for Every Table.</h2>
+    <p class="section-lede">A sample of featured dishes from the typed menu system—ready for browse, filter or demo order.</p>
+    <ul class="featured-grid">
+      {
+        featured.map((item) => (
+          <li class="featured-card">
+            <img src={item.image} alt={item.imageAlt} width="1200" height="900" loading="lazy" />
+            <div class="featured-card__body">
+              <p class="chip">{CATEGORY_META[item.category].label}</p>
+              <div class="row">
+                <h3>{item.name}</h3>
+                <p class="price">{formatCad(item.price)}</p>
+              </div>
+              <p>{item.description}</p>
+              {
+                item.dietaryLabels.length > 0 && (
+                  <ul class="chips">
+                    {item.dietaryLabels.map((label) => (
+                      <li class="chip">{DIETARY_LABELS[label]}</li>
+                    ))}
+                  </ul>
+                )
+              }
+              <div class="featured-actions">
+                <a class="btn btn-secondary" href={`/menu/#${item.category}`}>View on menu</a>
+                {
+                  item.availableForPickup && (
+                    <a class="btn btn-ghost" href={`/order/?item=${item.slug}`}>
+                      Add to demo order
+                    </a>
+                  )
+                }
+              </div>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="section story" aria-labelledby="story">
+    <div class="container-page story__inner">
+      <h2 id="story" class="section-title">Thoughtful Food. Warm Hospitality.</h2>
+      <p class="section-lede">
+        Tablekind Kitchen is imagined as a neighbourhood dining room where seasonal menus, clear
+        service and easy digital touchpoints make gathering feel simple. This concept focuses on the
+        guest journey—discovering dishes, reserving a table, ordering pickup and planning events—
+        without inventing a founder story, farm partnership or award history.
+      </p>
+    </div>
+  </section>
+
+  <section class="section container-page" aria-labelledby="experience">
+    <h2 id="experience" class="section-title">The Restaurant Experience.</h2>
+    <ul class="experience-grid">
+      <li><h3>Seasonal menu</h3><p>Semantic HTML menus that are easy to scan and filter.</p></li>
+      <li><h3>Welcoming atmosphere</h3><p>Warm visual identity with calm hierarchy on every screen.</p></li>
+      <li><h3>Easy reservations</h3><p>A short, accessible multistep demo booking flow.</p></li>
+      <li><h3>Pickup ordering</h3><p>Cart, modifiers, tax sample and local completion.</p></li>
+      <li><h3>Catering</h3><p>Structured enquiries for meetings and gatherings.</p></li>
+      <li><h3>Private gatherings</h3><p>Private dining planner that ends with a studio CTA.</p></li>
+    </ul>
+  </section>
+
+  <section class="section container-page" aria-labelledby="reserve-preview">
+    <h2 id="reserve-preview" class="section-title">Reserve a Demo Table.</h2>
+    <p class="section-lede">Try party size, date and preferred time. No real reservation is created.</p>
+    <ReservationFlow client:visible />
+  </section>
+
+  <section class="section container-page" aria-labelledby="events">
+    <h2 id="events" class="section-title">Catering & Private Events.</h2>
+    <div class="event-grid">
+      <article class="event-card">
+        <h3>Catering for Meetings and Gatherings</h3>
+        <p>Plan a demo catering enquiry with guest count, timing and service style.</p>
+        <a class="btn btn-primary" href="/catering/">Explore Catering</a>
+      </article>
+      <article class="event-card">
+        <h3>Private Dining and Celebrations</h3>
+        <p>Walk through a private-event planner designed for clear next steps.</p>
+        <a class="btn btn-primary" href="/private-events/">Plan an Event</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="section showcase" aria-labelledby="showcase">
+    <div class="container-page">
+      <h2 id="showcase" class="section-title">Designed to Turn Local Searches Into Reservations and Orders.</h2>
+      <ul class="showcase-grid">
+        <li>Mobile-first menu navigation</li>
+        <li>Search-friendly HTML menus</li>
+        <li>Reservation conversion flow</li>
+        <li>Pickup-ordering experience</li>
+        <li>Local SEO architecture</li>
+        <li>Responsive images</li>
+        <li>Catering lead generation</li>
+        <li>Accessible interactions</li>
+        <li>Conversion analytics</li>
+      </ul>
+      <a class="btn btn-accent" href="#studio-enquiry" data-open-enquiry>Build This for My Business</a>
+    </div>
+  </section>
+
+  <section class="section container-page" aria-labelledby="faq">
+    <h2 id="faq" class="section-title">Frequently Asked Questions</h2>
+    <div class="faq-list">
+      {
+        HOME_FAQS.map((faq) => (
+          <details>
+            <summary>{faq.question}</summary>
+            <p>{faq.answer}</p>
+          </details>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section container-page final-cta" aria-labelledby="final-cta">
+    <h2 id="final-cta" class="section-title">Your Restaurant Deserves More Than a PDF Menu and a Slow Website.</h2>
+    <p class="section-lede">
+      Che Xu Studio can build a fast, customer-friendly website designed around reservations, online
+      orders and local discovery.
+    </p>
+    <div class="hero__actions">
+      <a class="btn btn-accent" href="#studio-enquiry" data-open-enquiry>Request My Website Plan</a>
+      <a class="btn btn-secondary" href={getPackagesUrl()} target="_blank" rel="noopener noreferrer">
+        View Che Xu Studio Packages
+      </a>
+      <a class="btn btn-ghost" href={getCaseStudyUrl()} target="_blank" rel="noopener noreferrer">
+        View Case Study
+      </a>
+    </div>
+    <p class="tiny">Concept by {STUDIO.name}. Live demo for portfolio evaluation only.</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    min-height: min(86vh, 760px);
+    display: flex;
+    align-items: end;
+    padding: 5rem 0 4rem;
+  }
+  .hero__content { position: relative; z-index: 2; max-width: 40rem; padding-bottom: 1rem; }
+  .hero h1 {
+    font-size: clamp(2.4rem, 6vw, 4.4rem);
+    line-height: 1.05;
+    margin: 0.6rem 0 1rem;
+    color: #FFFDFC;
+  }
+  .hero__eyebrow { color: #C99A45; }
+  .hero__lede { font-size: 1.1rem; line-height: 1.65; color: rgb(255 253 252 / 0.9); margin: 0 0 1.25rem; }
+  .hero__actions { display: flex; flex-wrap: wrap; gap: 0.65rem; }
+  .hero__reassure { margin-top: 1rem; max-width: 36rem; color: rgb(255 253 252 / 0.78); font-size: 0.92rem; }
+  .option-grid, .featured-grid, .experience-grid, .event-grid, .showcase-grid {
+    list-style: none; margin: 1.5rem 0 0; padding: 0;
+    display: grid; gap: 1rem;
+  }
+  .option-grid, .event-grid { grid-template-columns: 1fr; }
+  .experience-grid, .showcase-grid { grid-template-columns: 1fr; }
+  @media (min-width: 720px) {
+    .option-grid, .event-grid { grid-template-columns: 1fr 1fr; }
+    .experience-grid { grid-template-columns: 1fr 1fr 1fr; }
+    .featured-grid { grid-template-columns: 1fr 1fr; }
+    .showcase-grid { grid-template-columns: 1fr 1fr 1fr; }
+  }
+  @media (min-width: 1100px) {
+    .featured-grid { grid-template-columns: 1fr 1fr 1fr; }
+  }
+  .option, .event-card, .featured-card, .experience-grid li {
+    background: rgb(255 253 252 / 0.82);
+    border: 1px solid rgb(24 57 43 / 0.08);
+    border-radius: 1.1rem;
+    padding: 1.1rem;
+    text-decoration: none;
+  }
+  .option h3, .event-card h3, .featured-card h3, .experience-grid h3 {
+    margin: 0 0 0.4rem; font-family: var(--font-display); color: #10271E;
+  }
+  .hours { font-size: 0.85rem; color: rgb(34 38 34 / 0.7); }
+  .featured-card { padding: 0; overflow: hidden; display: grid; }
+  .featured-card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; }
+  .featured-card__body { padding: 1rem; display: grid; gap: 0.5rem; }
+  .row { display: flex; justify-content: space-between; gap: 0.75rem; align-items: baseline; }
+  .chips { list-style: none; display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0; padding: 0; }
+  .featured-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .story {
+    background:
+      linear-gradient(90deg, rgb(24 57 43 / 0.96), rgb(16 39 30 / 0.9)),
+      url('/images/hero-table.svg') center / cover;
+    color: #FFFDFC;
+  }
+  .story .section-title, .story .section-lede { color: #FFFDFC; }
+  .showcase { background: #E7EFE4; }
+  .showcase-grid li {
+    background: rgb(255 253 252 / 0.8);
+    border-radius: 0.85rem;
+    padding: 0.9rem 1rem;
+    font-weight: 650;
+  }
+  .faq-list { display: grid; gap: 0.65rem; margin-top: 1.25rem; }
+  details {
+    background: rgb(255 253 252 / 0.82);
+    border: 1px solid rgb(24 57 43 / 0.1);
+    border-radius: 0.85rem;
+    padding: 0.85rem 1rem;
+  }
+  summary { cursor: pointer; font-weight: 700; min-height: 44px; display: flex; align-items: center; }
+  .final-cta { text-align: left; }
+  .tiny { margin-top: 1rem; color: rgb(34 38 34 / 0.65); font-size: 0.85rem; }
+</style>

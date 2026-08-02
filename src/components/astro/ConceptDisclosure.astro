@@ -1,0 +1,38 @@
+---
+import { DISCLOSURE } from '../../lib/config';
+
+interface Props {
+  compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
+---
+
+<aside class:list={['disclosure', compact && 'disclosure--compact']} aria-label="Portfolio disclosure">
+  <p>
+    <strong>Portfolio concept by Che Xu Studio</strong><br />
+    Tablekind Kitchen is a fictional restaurant demonstration.
+  </p>
+  {!compact && <p class="muted">{DISCLOSURE.reservation.replace('This is an interactive portfolio demonstration. ', '')}</p>}
+</aside>
+
+<style>
+  .disclosure {
+    margin: 0;
+  }
+
+  .disclosure p {
+    margin: 0;
+  }
+
+  .disclosure .muted {
+    margin-top: 0.35rem;
+    color: rgb(34 38 34 / 0.72);
+    font-size: 0.88rem;
+  }
+
+  .disclosure--compact {
+    padding: 0.7rem 0.85rem;
+    font-size: 0.85rem;
+  }
+</style>

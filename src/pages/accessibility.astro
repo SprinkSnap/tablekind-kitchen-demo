@@ -1,0 +1,55 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/astro/Breadcrumbs.astro';
+import { STUDIO } from '../lib/config';
+import { breadcrumbSchema } from '../lib/seo';
+
+const schemas = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Accessibility', path: '/accessibility/' },
+  ]),
+];
+---
+
+<BaseLayout
+  title="Accessibility"
+  description="Accessibility approach for the Tablekind Kitchen demo—WCAG 2.2 AA goals, keyboard support and reduced motion."
+  path="/accessibility/"
+  schemas={schemas}
+>
+  <section class="section container-page">
+    <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Accessibility' }]} />
+    <h1 class="section-title">Accessibility</h1>
+    <p class="section-lede">
+      This demonstration aims to meet WCAG 2.2 AA as closely as practical.
+    </p>
+    <div class="surface panel">
+      <h2>What we implemented</h2>
+      <ul>
+        <li>Skip link and semantic landmarks</li>
+        <li>Logical heading structure and one H1 per page</li>
+        <li>Keyboard-accessible navigation, filters, dialogs and drawers</li>
+        <li>Focus trapping and restoration in overlays</li>
+        <li>Visible focus indicators and large touch targets</li>
+        <li>Status announcements for cart and form outcomes</li>
+        <li>Reduced-motion support</li>
+        <li>Text alternatives for brand and dish imagery</li>
+      </ul>
+      <h2>Feedback</h2>
+      <p>
+        Accessibility feedback for this portfolio concept can be shared with {STUDIO.name} through
+        the website plan request form.
+      </p>
+      <a class="btn btn-primary" href="#studio-enquiry" data-open-enquiry>Contact Che Xu Studio</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .panel { padding: 1.25rem; margin-top: 1.25rem; max-width: 44rem; }
+  .panel h2 { font-family: var(--font-display); color: #10271E; }
+  .panel ul { line-height: 1.7; }
+</style>

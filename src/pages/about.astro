@@ -1,0 +1,58 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/astro/Breadcrumbs.astro';
+import { DISCLOSURE, STUDIO } from '../lib/config';
+import { breadcrumbSchema } from '../lib/seo';
+
+const schemas = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Our Story', path: '/about/' },
+  ]),
+];
+---
+
+<BaseLayout
+  title="Our Story"
+  description="Learn about the Tablekind Kitchen concept—a fictional neighbourhood restaurant demonstration by Che Xu Studio."
+  path="/about/"
+  schemas={schemas}
+>
+  <section class="section container-page about">
+    <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Our Story' }]} />
+    <h1 class="section-title">Our Story</h1>
+    <p class="section-lede">Thoughtful food. Warm hospitality. Clear digital pathways to gather.</p>
+    <div class="disclosure">{DISCLOSURE.short}</div>
+    <div class="prose">
+      <p>
+        Tablekind Kitchen is imagined as a modern Canadian neighbourhood dining room: seasonal
+        plates, welcoming service and an unhurried pace. The website experience is designed around
+        the moments that matter to guests—browsing a menu, reserving a table, ordering pickup and
+        planning a gathering.
+      </p>
+      <p>
+        This story intentionally avoids inventing a chef, founder, farm partnership, award list or
+        press history. The focus is the product: a fast, accessible, conversion-minded restaurant
+        website that business owners can evaluate as a model for their own brand.
+      </p>
+      <p>
+        If you run a restaurant or local food business and want a website with this level of care,
+        {STUDIO.name} can design and build it around your verified information, operations and goals.
+      </p>
+    </div>
+    <a class="btn btn-accent" href="#studio-enquiry" data-open-enquiry>Build a Website Like This</a>
+  </section>
+</BaseLayout>
+
+<style>
+  .about .prose {
+    display: grid;
+    gap: 1rem;
+    max-width: 42rem;
+    margin: 1.5rem 0;
+    line-height: 1.7;
+  }
+  .disclosure { margin: 1rem 0; }
+</style>

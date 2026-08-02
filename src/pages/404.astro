@@ -1,0 +1,30 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Page Not Found"
+  description="The page you requested is not part of the Tablekind Kitchen demo."
+  path="/404/"
+  showDisclosure={false}
+>
+  <section class="section container-page not-found">
+    <p class="eyebrow">404</p>
+    <h1 class="section-title">This table isn’t set.</h1>
+    <p class="section-lede">
+      The page you requested isn’t available in this portfolio demonstration.
+    </p>
+    <div class="actions">
+      <a class="btn btn-primary" href="/">Back to home</a>
+      <a class="btn btn-secondary" href="/menu/">Browse the menu</a>
+      <a class="btn btn-ghost" href="#studio-enquiry" data-open-enquiry>Build a Website Like This</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found { min-height: 50vh; }
+  .actions { display: flex; flex-wrap: wrap; gap: 0.65rem; margin-top: 1.25rem; }
+</style>

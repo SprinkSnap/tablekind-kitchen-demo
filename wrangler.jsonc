@@ -1,0 +1,46 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "compatibility_date": "2026-08-02",
+  "compatibility_flags": ["nodejs_compat"],
+  "name": "tablekind-kitchen-demo",
+  "main": "@astrojs/cloudflare/entrypoints/server",
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./dist"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "vars": {
+    "DEMO_MODE": "true",
+    "PUBLIC_SITE_URL": "https://tablekindkitchen.chexustudio.com",
+    "PUBLIC_STUDIO_URL": "https://chexustudio.com",
+    "PUBLIC_CASE_STUDY_URL": "https://chexustudio.com/work/tablekind-kitchen",
+    "PUBLIC_PACKAGES_URL": "https://chexustudio.com/packages",
+    "ALLOWED_ORIGINS": "https://tablekindkitchen.chexustudio.com,http://localhost:4321"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "tablekind-leads",
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "ai": {
+    "binding": "AI"
+  },
+  "env": {
+    "staging": {
+      "name": "tablekind-kitchen-demo-staging",
+      "vars": {
+        "DEMO_MODE": "true",
+        "PUBLIC_SITE_URL": "https://tablekind-kitchen-demo-staging.workers.dev",
+        "PUBLIC_STUDIO_URL": "https://chexustudio.com",
+        "PUBLIC_CASE_STUDY_URL": "https://chexustudio.com/work/tablekind-kitchen",
+        "PUBLIC_PACKAGES_URL": "https://chexustudio.com/packages",
+        "ALLOWED_ORIGINS": "https://tablekind-kitchen-demo-staging.workers.dev,http://localhost:4321"
+      }
+    }
+  }
+}

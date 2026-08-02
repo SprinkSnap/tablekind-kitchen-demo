@@ -1,0 +1,95 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/astro/Breadcrumbs.astro';
+import MenuFilters from '../../components/react/MenuFilters';
+import { CATEGORY_META, MENU_ITEMS } from '../../data/menu';
+import { DISCLOSURE } from '../../lib/config';
+import { breadcrumbSchema, menuSchema } from '../../lib/seo';
+import { formatCad as money } from '../../lib/currency';
+
+const schemas = [
+  menuSchema(),
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Menu', path: '/menu/' },
+  ]),
+];
+
+// Static semantic menu remains available without JavaScript
+const byCategory = Object.keys(CATEGORY_META).map((key) => ({
+  key,
+  ...CATEGORY_META[key as keyof typeof CATEGORY_META],
+  items: MENU_ITEMS.filter((item) => item.category === key).sort((a, b) => a.sortOrder - b.sortOrder),
+}));
+---
+
+<BaseLayout
+  title="Menu"
+  description="Browse the Tablekind Kitchen demo menu—brunch, lunch, dinner, desserts and non-alcoholic drinks with clear CAD prices."
+  path="/menu/"
+  schemas={schemas}
+>
+  <section class="section container-page">
+    <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Menu' }]} />
+    <h1 class="section-title">Menu</h1>
+    <p class="section-lede">
+      Semantic HTML menus with search, filters and category anchors. Prices shown in CAD.
+    </p>
+    <p class="disclosure">{DISCLOSURE.dietary}</p>
+    <nav class="cat-nav" aria-label="Menu categories">
+      {
+        byCategory.map((cat) => (
+          <a href={`#${cat.key}`}>{cat.label}</a>
+        ))
+      }
+      <a href="/menu/brunch/">Brunch page</a>
+      <a href="/menu/lunch/">Lunch page</a>
+      <a href="/menu/dinner/">Dinner page</a>
+      <a href="/menu/dessert/">Dessert page</a>
+    </nav>
+
+    <MenuFilters client:load showAddButtons />
+
+    <div class="sr-only-focusable noscript-menu">
+      <h2>Full menu</h2>
+      {
+        byCategory.map((cat) => (
+          <section id={`static-${cat.key}`} aria-label={cat.label}>
+            <h3>{cat.label}</h3>
+            <ul>
+              {cat.items.map((item) => (
+                <li>
+                  <strong>{item.name}</strong> — {money(item.price)}. {item.description}
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .cat-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin: 1.25rem 0 1.5rem;
+  }
+  .cat-nav a {
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.8rem;
+    border-radius: 999px;
+    border: 1px solid rgb(24 57 43 / 0.16);
+    text-decoration: none;
+    font-weight: 650;
+    background: rgb(255 253 252 / 0.8);
+  }
+  .disclosure { margin: 1rem 0; }
+  .noscript-menu { margin-top: 2rem; }
+</style>

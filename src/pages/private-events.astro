@@ -1,0 +1,32 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/astro/Breadcrumbs.astro';
+import CateringPlanner from '../components/react/CateringPlanner';
+import { breadcrumbSchema } from '../lib/seo';
+
+const schemas = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Private Events', path: '/private-events/' },
+  ]),
+];
+---
+
+<BaseLayout
+  title="Private Events"
+  description="Plan a private dining or celebration enquiry in this Tablekind Kitchen portfolio demonstration."
+  path="/private-events/"
+  schemas={schemas}
+>
+  <section class="section container-page">
+    <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Private Events' }]} />
+    <h1 class="section-title">Private Dining and Celebrations</h1>
+    <p class="section-lede">
+      A conversion-focused planner for private gatherings—demo details stay local and are never sent
+      as Tablekind enquiries.
+    </p>
+    <CateringPlanner client:load variant="private-events" />
+  </section>
+</BaseLayout>

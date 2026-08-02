@@ -1,0 +1,55 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/astro/Breadcrumbs.astro';
+import { DISCLOSURE, getCaseStudyUrl, getPackagesUrl, STUDIO } from '../lib/config';
+import { breadcrumbSchema } from '../lib/seo';
+
+const schemas = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Contact', path: '/contact/' },
+  ]),
+];
+---
+
+<BaseLayout
+  title="Contact"
+  description="Contact Che Xu Studio about building a restaurant website like Tablekind Kitchen. No fictional restaurant phone or address."
+  path="/contact/"
+  schemas={schemas}
+>
+  <section class="section container-page">
+    <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Contact' }]} />
+    <h1 class="section-title">Contact</h1>
+    <p class="section-lede">
+      All genuine business enquiries go to {STUDIO.name}. Tablekind Kitchen does not accept real
+      reservations, orders or restaurant messages.
+    </p>
+    <div class="disclosure">{DISCLOSURE.short}</div>
+    <div class="surface panel">
+      <h2>Work with Che Xu Studio</h2>
+      <p>
+        Request a website plan for your restaurant or local business. Tell us about your goals,
+        features and timing—we’ll follow up with next steps.
+      </p>
+      <div class="actions">
+        <a class="btn btn-accent" href="#studio-enquiry" data-open-enquiry>Request My Website Plan</a>
+        <a class="btn btn-secondary" href={getPackagesUrl()} target="_blank" rel="noopener noreferrer">
+          View Packages
+        </a>
+        <a class="btn btn-ghost" href={getCaseStudyUrl()} target="_blank" rel="noopener noreferrer">
+          View Case Study
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .panel { padding: 1.25rem; margin-top: 1.25rem; max-width: 40rem; }
+  .panel h2 { font-family: var(--font-display); color: #10271E; margin-top: 0; }
+  .actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem; }
+  .disclosure { margin: 1rem 0; }
+</style>
