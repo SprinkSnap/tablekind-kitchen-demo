@@ -13,6 +13,15 @@
   "observability": {
     "enabled": true
   },
+  // Existing namespace from an earlier deploy attempt. Pinning the ID prevents
+  // "namespace ... already exists" during auto-provision. Safe to keep even
+  // though Astro sessions are disabled for this demo.
+  "kv_namespaces": [
+    {
+      "binding": "SESSION",
+      "id": "db81c3ea2e7841d98cc210a4db8ea1bd"
+    }
+  ],
   "vars": {
     "DEMO_MODE": "true",
     "PUBLIC_DEMO_MODE": "true",

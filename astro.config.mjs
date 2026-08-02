@@ -19,6 +19,13 @@ export default defineConfig({
     remoteBindings: false,
     persistState: true,
   }),
+  // This demo does not use Astro sessions. Disable the default Cloudflare KV
+  // SESSION binding so Wrangler does not try to re-create an existing namespace.
+  session: {
+    driver: {
+      entrypoint: 'unstorage/drivers/null',
+    },
+  },
   integrations: [react()],
   vite: {
     plugins: [tailwindcss()],

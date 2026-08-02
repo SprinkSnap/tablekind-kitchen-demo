@@ -38,6 +38,20 @@ Install command: default `npm clean-install` is fine
 
 Re-run the deployment (Retry deployment) on the failed build, or push a new commit.
 
+## SESSION KV conflict
+
+A previous deploy attempt created KV namespace `tablekind-kitchen-demo-session`
+(`db81c3ea2e7841d98cc210a4db8ea1bd`). Later auto-provision retries failed with:
+
+```text
+a namespace with this account ID and title already exists [code: 10014]
+```
+
+This repo now:
+
+1. Disables Astro sessions (`unstorage/drivers/null`) so SESSION is not required
+2. Pins that existing KV id in `wrangler.jsonc` so Wrangler binds instead of recreating
+
 ## D1 database
 
 Do **not** commit a fake `database_id` (for example `00000000-0000-0000-0000-000000000000`).
