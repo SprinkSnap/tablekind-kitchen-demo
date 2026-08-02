@@ -1,72 +1,77 @@
 # Cloudflare Workers Builds — required settings
 
-## Why the last deploy failed
+## Why this deploy keeps failing
 
-Workers Builds ran:
+Your build log still shows:
 
 ```text
 Executing user deploy command: npx wrangler deploy
+✘ [ERROR] Could not detect a directory containing static files (e.g. html, css and js)
 ```
 
-Astro had not produced `dist/client`, so Wrangler failed with:
+That means **the Workers Builds Deploy command has not been changed yet**. Cloudflare is still running bare `npx wrangler deploy`.
+
+That path:
+
+1. Does **not** run `npm ci` (your log also shows empty tool detection / no dependency install)
+2. Does **not** run `astro build`, so `dist/client` never exists
+3. Often falls into Wrangler **autoconfig** and fails looking for a static `index.html`
+
+Repo code cannot change the Cloudflare dashboard. You must update Build settings once.
+
+## Fix (do this in the Cloudflare dashboard)
+
+Open the Worker that is failing → **Settings** → **Builds**:
+
+| Field | Required value |
+| --- | --- |
+| **Root directory** | `/` (repository root — must contain `wrangler.jsonc`) |
+| **Install command** | `npm ci` |
+| **Build command** | *(leave empty)* |
+| **Deploy command** | `npm run deploy` |
+| **Node.js version** | `22` (or current LTS ≥ 22.12) |
+| **Production branch** | whichever branch has this Harbour & Pine code (`main` after merge, or the PR branch) |
+
+Then click **Retry deployment** (or push a new commit).
+
+A successful log must contain lines like:
 
 ```text
-Could not detect a directory containing static files (e.g. html, css and js)
+→ Installing dependencies (npm ci)   # if node_modules missing
+→ Building Astro
+→ Deploying with wrangler
 ```
 
-This project is an Astro + Cloudflare Workers app. **`dist/` only exists after `npm run build`.**
+If you still see only `Executing user deploy command: npx wrangler deploy`, the dashboard Deploy command was not saved.
 
-## Fix in the Cloudflare dashboard (required)
+## What `npm run deploy` does
 
-Workers & Pages → **harbour-pine-home-demo** → Settings → Builds:
+`scripts/workers-deploy.sh`:
 
-| Field | Value |
+1. `npm ci` when `node_modules` is missing  
+2. `npm run build` (Astro → `dist/client` + Worker entry)  
+3. `wrangler deploy --env=` (production Worker `harbour-pine-home-demo`)  
+4. `wrangler d1 migrations apply DB --remote`
+
+## Branch note
+
+Until this PR is merged, production Builds pointed at `main` still deploy the old Tablekind Kitchen commit. Either:
+
+- Merge the Harbour & Pine PR into `main`, **or**
+- Point the Worker’s production branch / preview trigger at `cursor/harbour-pine-home-demo-b735`
+
+## Why `--env=`
+
+`wrangler.jsonc` defines a `staging` environment. `--env=` (empty) selects the top-level production Worker name.
+
+## Do not use
+
+| Deploy command | Result |
 | --- | --- |
-| **Install command** | `npm ci` (default is fine) |
-| **Build command** | leave empty **or** `npm run build` |
-| **Deploy command** | `npm run deploy` |
+| `npx wrangler deploy` | Fails without Astro build / install (current error) |
+| `npx wrangler deploy` alone after merge | May still skip D1 migrations |
 
-`npm run deploy` runs:
+## D1 / SESSION
 
-1. `astro build` → writes `dist/client` + Worker entry  
-2. `wrangler deploy --env=""` → production Worker `harbour-pine-home-demo`  
-3. `npm run db:remote` → applies D1 migrations  
-
-### Alternative (two-step)
-
-| Field | Value |
-| --- | --- |
-| Build command | `npm run build` |
-| Deploy command | `npx wrangler deploy --env="" && npm run db:remote` |
-
-### Do not use
-
-| Field | Value | Why it fails |
-| --- | --- | --- |
-| Deploy command | `npx wrangler deploy` alone | Historically skipped the Astro build / D1 migrations / `--env=""` |
-
-`wrangler.jsonc` now includes a `build.command` safety net (`npm run build`) so bare `wrangler deploy` attempts an Astro build first. Prefer **`npm run deploy`** anyway so migrations and `--env=""` are applied.
-
-## Why `--env=""`
-
-`wrangler.jsonc` defines a `staging` environment. An empty `--env=""` selects the top-level production Worker name `harbour-pine-home-demo`.
-
-## After changing settings
-
-Re-run the deployment (Retry deployment), or push a new commit.
-
-## SESSION KV
-
-Astro sessions are disabled (`unstorage/drivers/null`). A pinned SESSION KV id is kept in `wrangler.jsonc` to avoid namespace recreation conflicts on accounts that already provisioned one.
-
-## D1 database
-
-Do **not** commit a fake `database_id`.
-
-`wrangler.jsonc` omits `database_id` so Wrangler **auto-provisions** the `harbour-pine-leads` D1 database on first deploy.
-
-`npm run deploy` then runs:
-
-```bash
-wrangler d1 migrations apply DB --remote
-```
+- D1 `database_id` is omitted on purpose for auto-provision (`harbour-pine-leads`)
+- SESSION KV id is pinned to avoid namespace recreate conflicts
