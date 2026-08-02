@@ -85,14 +85,14 @@ When `DEMO_MODE=false`:
 
 ## Cloudflare setup
 
-1. Create D1 database `tablekind-leads`
-2. Put the real `database_id` into `wrangler.jsonc`
-3. Apply migrations: `wrangler d1 migrations apply tablekind-leads --remote`
-4. Create Turnstile widget and set secrets:
+1. Deploy with `npm run deploy` (or Workers Builds using that command).  
+   Wrangler auto-provisions the `tablekind-leads` D1 database when `database_id` is omitted, then applies migrations via `npm run db:remote`.
+2. Create Turnstile widget and set secrets:
    - `wrangler secret put TURNSTILE_SECRET_KEY`
-5. Set production vars / secrets for allowed origins
-6. Deploy Worker `tablekind-kitchen-demo`
-7. Attach custom domain `tablekindkitchen.chexustudio.com`
+3. Set production vars / secrets for allowed origins
+4. Attach custom domain `tablekindkitchen.chexustudio.com`
+
+Do not commit a placeholder D1 `database_id`. Leave it omitted for auto-provisioning, or paste a real ID from `wrangler d1 list` after the first deploy.
 
 Staging:
 

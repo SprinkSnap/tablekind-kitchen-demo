@@ -11,8 +11,8 @@
 - [ ] Reservation and order flows complete locally only
 - [ ] Che Xu Studio enquiry form is the only real lead capture
 - [ ] Turnstile site key + secret configured for production
-- [ ] D1 database created and `database_id` set in `wrangler.jsonc`
-- [ ] D1 migrations applied (`portfolio_leads`)
+- [ ] D1 auto-provisioned on deploy (or real `database_id` set — never a placeholder UUID)
+- [ ] D1 migrations applied (`npm run db:remote` / `portfolio_leads`)
 - [ ] `ALLOWED_ORIGINS` includes the production hostname
 - [ ] Secrets are in Wrangler secrets / `.dev.vars`, never in git
 - [ ] `npm run check` passes

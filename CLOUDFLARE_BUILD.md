@@ -37,3 +37,34 @@ Install command: default `npm clean-install` is fine
 ## After changing settings
 
 Re-run the deployment (Retry deployment) on the failed build, or push a new commit.
+
+## D1 database
+
+Do **not** commit a fake `database_id` (for example `00000000-0000-0000-0000-000000000000`).
+
+`wrangler.jsonc` omits `database_id` on purpose so Wrangler **auto-provisions** the `tablekind-leads` D1 database on first deploy (same pattern as the SESSION KV namespace).
+
+`npm run deploy` then runs:
+
+```bash
+wrangler d1 migrations apply DB --remote
+```
+
+If you already created a D1 database manually, you may set its real `database_id` in `wrangler.jsonc`, but leaving it omitted is preferred for this demo.
+
+## Recommended Workers Builds commands
+
+If Build and Deploy are separate fields (current setup):
+
+| Field | Value |
+| --- | --- |
+| Build command | `npm run build` |
+| Deploy command | `npx wrangler deploy --env="" && npm run db:remote` |
+
+If only a Deploy command is used:
+
+| Field | Value |
+| --- | --- |
+| Deploy command | `npm run deploy` |
+
+Do not use bare `npx wrangler deploy --env=""` alone after this change — migrations would not apply.

@@ -23,9 +23,10 @@
     "test:a11y": "playwright test tests/e2e/a11y.spec.ts",
     "check": "npm run format:check && npm run lint && npm run typecheck && npm run test",
     "cf:dry-run": "npm run build && wrangler deploy --dry-run --outdir=.wrangler-bundle --env=\"\"",
-    "deploy": "npm run build && wrangler deploy --env=\"\"",
-    "deploy:staging": "CLOUDFLARE_ENV=staging npm run build && wrangler deploy --env=staging",
-    "db:local": "wrangler d1 migrations apply tablekind-leads --local",
+    "deploy": "npm run build && wrangler deploy --env=\"\" && npm run db:remote",
+    "deploy:staging": "CLOUDFLARE_ENV=staging npm run build && wrangler deploy --env=staging && npm run db:remote",
+    "db:local": "wrangler d1 migrations apply DB --local",
+    "db:remote": "wrangler d1 migrations apply DB --remote",
     "prepare:hooks": "echo 'No git hooks configured'"
   },
   "dependencies": {
