@@ -1,0 +1,102 @@
+---
+import { getCaseStudyUrl } from '../../lib/config';
+const caseStudyUrl = getCaseStudyUrl();
+---
+
+<div class="portfolio-bar" role="region" aria-label="Che Xu Studio portfolio notice" data-portfolio-bar>
+  <p>Restaurant website concept designed by Che Xu Studio.</p>
+  <div class="portfolio-bar__actions">
+    <a href={caseStudyUrl} target="_blank" rel="noopener noreferrer" data-track="case_study_selected">
+      View Case Study
+    </a>
+    <a href="#studio-enquiry" data-open-enquiry data-track="che_xu_cta_selected">
+      Build a Website Like This
+    </a>
+    <button type="button" class="dismiss" data-portfolio-dismiss aria-label="Dismiss portfolio notice">
+      Dismiss
+    </button>
+  </div>
+</div>
+
+<script>
+  const STORAGE_KEY = 'tk-portfolio-bar-dismissed';
+  const bar = document.querySelector('[data-portfolio-bar]');
+  const dismiss = document.querySelector('[data-portfolio-dismiss]');
+  if (bar instanceof HTMLElement) {
+    try {
+      if (window.localStorage.getItem(STORAGE_KEY) === '1') {
+        bar.hidden = true;
+        document.documentElement.style.setProperty('--portfolio-offset', '0px');
+      }
+    } catch {
+      /* ignore */
+    }
+    dismiss?.addEventListener('click', () => {
+      bar.hidden = true;
+      document.documentElement.style.setProperty('--portfolio-offset', '0px');
+      try {
+        window.localStorage.setItem(STORAGE_KEY, '1');
+      } catch {
+        /* ignore */
+      }
+    });
+  }
+</script>
+
+<style>
+  .portfolio-bar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem 1rem;
+    min-height: var(--portfolio-bar-height);
+    padding: 0.45rem 1rem;
+    background: #10271e;
+    color: #f7f2e8;
+    font-size: 0.9rem;
+  }
+
+  .portfolio-bar[hidden] {
+    display: none !important;
+  }
+
+  .portfolio-bar p {
+    margin: 0;
+  }
+
+  .portfolio-bar__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    align-items: center;
+  }
+
+  .portfolio-bar a,
+  .portfolio-bar .dismiss {
+    min-height: 36px;
+    border-radius: 999px;
+    padding: 0.25rem 0.75rem;
+    border: 1px solid rgb(247 242 232 / 0.28);
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-weight: 650;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .portfolio-bar a:hover {
+    background: rgb(247 242 232 / 0.1);
+  }
+
+  .portfolio-bar .dismiss {
+    border-color: transparent;
+    opacity: 0.85;
+  }
+</style>

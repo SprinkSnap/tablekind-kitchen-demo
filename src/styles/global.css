@@ -8,6 +8,7 @@
   --color-cream: #f7f2e8;
   --color-soft: #fffdfc;
   --color-terracotta: #c76548;
+  --color-terracotta-deep: #8b3f2c;
   --color-gold: #c99a45;
   --color-charcoal: #222622;
   --color-sage: #a9b8a4;
@@ -29,6 +30,7 @@
   --space-section: clamp(3.5rem, 6vw, 6rem);
   --header-height: 4.25rem;
   --portfolio-bar-height: 2.75rem;
+  --portfolio-offset: var(--portfolio-bar-height);
   --mobile-action-height: 4.25rem;
 
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -167,12 +169,13 @@
   }
 
   .btn-accent {
-    background: var(--color-terracotta);
+    background: var(--color-terracotta-deep);
     color: var(--color-soft);
+    font-weight: 700;
   }
 
   .btn-accent:hover {
-    background: #b4573d;
+    background: #743525;
   }
 
   .btn-ghost {

@@ -13,6 +13,7 @@
   },
   "vars": {
     "DEMO_MODE": "true",
+    "PUBLIC_DEMO_MODE": "true",
     "PUBLIC_SITE_URL": "https://tablekindkitchen.chexustudio.com",
     "PUBLIC_STUDIO_URL": "https://chexustudio.com",
     "PUBLIC_CASE_STUDY_URL": "https://chexustudio.com/work/tablekind-kitchen",
@@ -27,9 +28,9 @@
       "migrations_dir": "migrations"
     }
   ],
-  "ai": {
-    "binding": "AI"
-  },
+  // Optional: enable Workers AI in production dashboards when desired.
+  // Local assistant falls back safely without this binding.
+  // "ai": { "binding": "AI", "remote": true },
   "env": {
     "staging": {
       "name": "tablekind-kitchen-demo-staging",

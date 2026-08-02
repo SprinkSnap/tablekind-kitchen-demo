@@ -4,11 +4,10 @@ import SiteHeader from '../components/astro/SiteHeader.astro';
 import SiteFooter from '../components/astro/SiteFooter.astro';
 import MobileActionBar from '../components/astro/MobileActionBar.astro';
 import ConceptDisclosure from '../components/astro/ConceptDisclosure.astro';
-import PortfolioBar from '../components/react/PortfolioBar';
+import PortfolioBar from '../components/astro/PortfolioBar.astro';
 import EnquiryDrawer from '../components/react/EnquiryDrawer';
 import AssistantChat from '../components/react/AssistantChat';
 import {
-  getCaseStudyUrl,
   getPackagesUrl,
   RESTAURANT,
 } from '../lib/config';
@@ -50,6 +49,11 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
     <meta name="generator" content={Astro.generator} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/brand/tk-monogram.svg" />
+    {
+      path === '/' && (
+        <link rel="preload" as="image" href="/images/hero-table.svg" fetchpriority="high" />
+      )
+    }
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_CA" />
     <meta property="og:site_name" content={RESTAURANT.name} />
@@ -70,7 +74,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
   </head>
   <body class="mobile-action-pad">
     <a class="skip-link" href="#main">Skip to content</a>
-    <PortfolioBar client:load caseStudyUrl={getCaseStudyUrl()} />
+    <PortfolioBar />
     <SiteHeader />
     {
       showDisclosure && (
@@ -89,7 +93,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
       packagesUrl={getPackagesUrl()}
       turnstileSiteKey={turnstileSiteKey}
     />
-    <AssistantChat client:idle />
+    <AssistantChat client:visible />
     <script is:inline>
       window.dispatchEvent(
         new CustomEvent('tk:analytics', {

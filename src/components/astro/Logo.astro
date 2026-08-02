@@ -6,10 +6,12 @@ interface Props {
 
 const { variant = 'dark', compact = false } = Astro.props;
 const color = variant === 'light' ? '#F7F2E8' : '#18392B';
-const accent = variant === 'light' ? '#C99A45' : '#C76548';
+const accent = variant === 'light' ? '#E2B65A' : '#8B3F2C';
+const markFill = variant === 'light' ? '#F7F2E8' : '#18392B';
+const markLetter = variant === 'light' ? '#10271E' : '#F7F2E8';
 ---
 
-<a href="/" class="logo" aria-label="Tablekind Kitchen home">
+<a href="/" class="logo" aria-label="Tablekind Kitchen home" data-variant={variant}>
   <svg
     class="logo__mark"
     xmlns="http://www.w3.org/2000/svg"
@@ -19,9 +21,8 @@ const accent = variant === 'light' ? '#C99A45' : '#C76548';
     aria-hidden="true"
     focusable="false"
   >
-    <rect width="64" height="64" rx="14" fill={color}></rect>
-    <path d="M18 18h28v6H36v22h-8V24H18v-6z" fill={variant === 'light' ? '#10271E' : '#F7F2E8'}
-    ></path>
+    <rect width="64" height="64" rx="14" fill={markFill}></rect>
+    <path d="M18 18h28v6H36v22h-8V24H18v-6z" fill={markLetter}></path>
     <path d="M40 40c6 0 10 3 10 8H30c0-5 4-8 10-8z" fill={accent}></path>
   </svg>
   {

@@ -27,7 +27,9 @@ test.describe('Tablekind Kitchen demo', () => {
         'content',
         'noindex, nofollow',
       );
-      await expect(page.getByText('fictional restaurant demonstration', { exact: false })).toBeVisible();
+      await expect(
+        page.getByText('fictional restaurant demonstration', { exact: false }).first(),
+      ).toBeVisible();
     });
   }
 
@@ -43,7 +45,7 @@ test.describe('Tablekind Kitchen demo', () => {
     await page.getByRole('button', { name: 'Find a Demo Table' }).click();
     await page.getByRole('button', { name: 'Continue' }).click();
     await expect(
-      page.getByText('No real table will be reserved', { exact: false }),
+      page.getByRole('note').getByText('No real table will be reserved', { exact: false }),
     ).toBeVisible();
     await page.getByRole('button', { name: 'Complete Demo Reservation' }).click();
     await expect(page.getByText('Reservation experience complete.')).toBeVisible();
@@ -63,7 +65,9 @@ test.describe('Tablekind Kitchen demo', () => {
 
   test('location page has no fake address or phone', async ({ page }) => {
     await page.goto('/location/');
-    await expect(page.getByText('No street address or phone number is published')).toBeVisible();
+    await expect(
+      page.getByText('No street address or phone number is published', { exact: false }).first(),
+    ).toBeVisible();
     const body = await page.locator('body').innerText();
     expect(body).not.toMatch(/\(\d{3}\)\s*\d{3}-\d{4}/);
     expect(body.toLowerCase()).not.toContain('123 main');
