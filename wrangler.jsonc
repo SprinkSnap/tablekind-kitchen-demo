@@ -3,10 +3,12 @@
   "compatibility_date": "2026-08-02",
   "compatibility_flags": ["nodejs_compat"],
   "name": "tablekind-kitchen-demo",
+  // Resolved by Astro after `npm run build` into dist/server/entry.mjs.
+  // Do not run `wrangler deploy` without building first.
   "main": "@astrojs/cloudflare/entrypoints/server",
   "assets": {
     "binding": "ASSETS",
-    "directory": "./dist"
+    "directory": "./dist/client"
   },
   "observability": {
     "enabled": true

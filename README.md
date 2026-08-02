@@ -151,7 +151,35 @@ npm run build
 npm run cf:dry-run
 ```
 
-Do **not** deploy without explicit authorization.
+Production deploy (build + Wrangler):
+
+```bash
+npm run deploy
+```
+
+Staging deploy:
+
+```bash
+npm run deploy:staging
+```
+
+### Cloudflare Workers Builds settings
+
+Workers Builds must build Astro **before** Wrangler deploys. Use one of:
+
+**Option A — single deploy command (recommended)**
+
+- **Build command:** leave empty / unused
+- **Deploy command:** `npm run deploy`
+
+**Option B — separate build + deploy**
+
+- **Build command:** `npm run build`
+- **Deploy command:** `npx wrangler deploy --env=""`
+
+`--env=""` targets the top-level Worker (`tablekind-kitchen-demo`) when a `staging` environment is also defined in `wrangler.jsonc`.
+
+Do **not** set the deploy command to bare `npx wrangler deploy` without a prior Astro build — Wrangler will fail looking for `@astrojs/cloudflare/entrypoints/server` before `dist/` exists.
 
 ## Custom domain
 

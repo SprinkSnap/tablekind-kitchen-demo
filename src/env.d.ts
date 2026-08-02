@@ -12,6 +12,8 @@ declare namespace Cloudflare {
     TURNSTILE_SECRET_KEY?: string;
     RATE_LIMIT_SALT?: string;
     PUBLIC_TURNSTILE_SITE_KEY?: string;
+    /** Optional Workers AI binding — enable in wrangler when desired. */
+    AI?: Ai;
   }
 }
 
