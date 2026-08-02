@@ -6,11 +6,9 @@ import MobileActionBar from '../components/astro/MobileActionBar.astro';
 import ConceptDisclosure from '../components/astro/ConceptDisclosure.astro';
 import PortfolioBar from '../components/astro/PortfolioBar.astro';
 import EnquiryDrawer from '../components/react/EnquiryDrawer';
+import CartProvider from '../components/react/CartProvider';
 import AssistantChat from '../components/react/AssistantChat';
-import {
-  getPackagesUrl,
-  RESTAURANT,
-} from '../lib/config';
+import { getPackagesUrl, STORE } from '../lib/config';
 import { robotsMetaContent } from '../lib/demo-mode';
 import { absoluteUrl, buildTitle, jsonLdScript } from '../lib/seo';
 
@@ -25,7 +23,7 @@ interface Props {
 
 const {
   title,
-  description = 'Seasonal food, made for gathering. A mobile-first restaurant website concept by Che Xu Studio featuring menus, reservations, pickup ordering and catering enquiries.',
+  description = `${STORE.name} is a modern Canadian home and lifestyle store concept by Che Xu Studio—featuring curated collections, product discovery, wishlist, demo cart and checkout.`,
   path = Astro.url.pathname,
   ogImage = '/og/default.svg',
   schemas = [],
@@ -37,6 +35,7 @@ const canonical = absoluteUrl(path);
 const og = absoluteUrl(ogImage.endsWith('/') ? ogImage.slice(0, -1) : ogImage).replace(/\/$/, '');
 const robots = robotsMetaContent();
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+const packagesUrl = getPackagesUrl();
 ---
 
 <!doctype html>
@@ -48,15 +47,15 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" type="image/svg+xml" href="/brand/tk-monogram.svg" />
+    <link rel="icon" type="image/svg+xml" href="/brand/hp-monogram.svg" />
     {
       path === '/' && (
-        <link rel="preload" as="image" href="/images/hero-table.svg" fetchpriority="high" />
+        <link rel="preload" as="image" href="/images/hero-home.svg" fetchpriority="high" />
       )
     }
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_CA" />
-    <meta property="og:site_name" content={RESTAURANT.name} />
+    <meta property="og:site_name" content={STORE.name} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
@@ -88,15 +87,12 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
     </main>
     <SiteFooter />
     <MobileActionBar />
-    <EnquiryDrawer
-      client:idle
-      packagesUrl={getPackagesUrl()}
-      turnstileSiteKey={turnstileSiteKey}
-    />
+    <CartProvider client:idle />
+    <EnquiryDrawer client:idle packagesUrl={packagesUrl} turnstileSiteKey={turnstileSiteKey} />
     <AssistantChat client:visible />
     <script is:inline>
       window.dispatchEvent(
-        new CustomEvent('tk:analytics', {
+        new CustomEvent('hp:analytics', {
           detail: { event: 'demo_viewed', payload: { path: location.pathname }, at: Date.now() },
         }),
       );

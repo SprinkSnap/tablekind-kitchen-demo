@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200" role="img" aria-label="Gift set">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#102820"/>
+      <stop offset="55%" stop-color="#173B32"/>
+      <stop offset="100%" stop-color="#242824"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="48%" cy="38%" r="52%">
+      <stop offset="0%" stop-color="#F7F3EC" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#F7F3EC" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="1200" fill="url(#bg)"/>
+  <circle cx="620" cy="420" r="320" fill="url(#glow)"/>
+  <ellipse cx="600" cy="860" rx="280" ry="40" fill="#000" opacity="0.16"/>
+  <rect x="310" y="300" width="580" height="520" rx="36" fill="#FFFEFB" opacity="0.96"/>
+  <rect x="360" y="360" width="480" height="360" rx="28" fill="#285B68" opacity="0.22"/>
+  <path d="M420 560c40-120 120-180 180-180s140 60 180 180c-40 100-110 150-180 150s-140-50-180-150z" fill="#F7F3EC" opacity="0.92"/>
+  <path d="M470 530c50-24 120-24 170 0" stroke="#FFFEFB" stroke-width="10" stroke-linecap="round" fill="none" opacity="0.5"/>
+  <circle cx="560" cy="500" r="16" fill="#FFFEFB" opacity="0.65"/>
+  <text x="600" y="1080" text-anchor="middle" fill="#F7F3EC" font-family="Georgia, serif" font-size="44" opacity="0.88">Gift set</text>
+</svg>

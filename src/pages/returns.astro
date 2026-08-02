@@ -1,0 +1,76 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/astro/Breadcrumbs.astro';
+import { DISCLOSURE, STORE } from '../lib/config';
+import { breadcrumbSchema } from '../lib/seo';
+
+const schemas = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Returns', path: '/returns/' },
+  ]),
+];
+---
+
+<BaseLayout
+  title="Returns"
+  description={`Sample returns information for the ${STORE.name} portfolio demonstration.`}
+  path="/returns/"
+  schemas={schemas}
+>
+  <section class="section container-page policy">
+    <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Returns' }]} />
+    <h1 class="section-title">Returns</h1>
+    <p class="section-lede">{DISCLOSURE.sampleReturns}</p>
+    <div class="disclosure">{DISCLOSURE.shipping}</div>
+    <div class="prose surface panel">
+      <h2>Illustrative return window</h2>
+      <p>
+        A verified merchant would define its own return eligibility, timelines and restocking rules. This
+        demo uses the following sample structure only:
+      </p>
+      <ul>
+        <li><strong>Return window:</strong> Sample 30 days from delivery for unused items in original packaging.</li>
+        <li><strong>Exchanges:</strong> Sample option to exchange for another variant when stock is available.</li>
+        <li><strong>Refunds:</strong> Sample processing within 5–10 business days after the return is received.</li>
+        <li><strong>Final sale items:</strong> Would be clearly labelled on real product pages when applicable.</li>
+      </ul>
+      <h2>How to start a return</h2>
+      <p>
+        A live store would provide a returns portal or customer service channel with order lookup. This
+        demonstration does not process real orders, so no return can be initiated here.
+      </p>
+      <h2>Demo disclosure</h2>
+      <p>{DISCLOSURE.short}</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .disclosure {
+    margin: 1rem 0 1.25rem;
+  }
+
+  .panel {
+    padding: 1.25rem;
+    max-width: 44rem;
+    line-height: 1.7;
+  }
+
+  .panel h2 {
+    font-family: var(--font-display);
+    color: var(--color-dark-pine);
+    margin: 1.25rem 0 0.5rem;
+    font-size: 1.15rem;
+  }
+
+  .panel h2:first-child {
+    margin-top: 0;
+  }
+
+  .panel ul {
+    padding-left: 1.2rem;
+  }
+</style>

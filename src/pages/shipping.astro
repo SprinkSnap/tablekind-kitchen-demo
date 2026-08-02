@@ -1,0 +1,75 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/astro/Breadcrumbs.astro';
+import { DISCLOSURE, STORE } from '../lib/config';
+import { breadcrumbSchema } from '../lib/seo';
+
+const schemas = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Shipping', path: '/shipping/' },
+  ]),
+];
+---
+
+<BaseLayout
+  title="Shipping"
+  description={`Sample shipping information for the ${STORE.name} portfolio demonstration.`}
+  path="/shipping/"
+  schemas={schemas}
+>
+  <section class="section container-page policy">
+    <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Shipping' }]} />
+    <h1 class="section-title">Shipping</h1>
+    <p class="section-lede">{DISCLOSURE.sampleShipping}</p>
+    <div class="disclosure">{DISCLOSURE.shipping}</div>
+    <div class="prose surface panel">
+      <h2>Illustrative delivery options</h2>
+      <p>
+        A real {STORE.name} store would publish carrier names, delivery windows, rates and regional
+        restrictions approved by the merchant. For this demo, the following sample structure shows how
+        that information might be presented:
+      </p>
+      <ul>
+        <li><strong>Standard delivery:</strong> Sample estimate of 5–7 business days within Canada.</li>
+        <li><strong>Express delivery:</strong> Sample estimate of 2–3 business days in major urban centres.</li>
+        <li><strong>Order tracking:</strong> Tracking links would be provided by the merchant’s fulfilment partner.</li>
+        <li><strong>Shipping costs:</strong> Calculated at checkout based on verified rates—not simulated live payments here.</li>
+      </ul>
+      <h2>What this demo does not do</h2>
+      <p>
+        No packages are shipped, no carriers are contacted and no delivery addresses are stored on a
+        production server as part of this portfolio checkout flow.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .disclosure {
+    margin: 1rem 0 1.25rem;
+  }
+
+  .panel {
+    padding: 1.25rem;
+    max-width: 44rem;
+    line-height: 1.7;
+  }
+
+  .panel h2 {
+    font-family: var(--font-display);
+    color: var(--color-dark-pine);
+    margin: 1.25rem 0 0.5rem;
+    font-size: 1.15rem;
+  }
+
+  .panel h2:first-child {
+    margin-top: 0;
+  }
+
+  .panel ul {
+    padding-left: 1.2rem;
+  }
+</style>

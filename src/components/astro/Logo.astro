@@ -1,35 +1,35 @@
 ---
+import { STORE } from '../../lib/config';
+
 interface Props {
   variant?: 'dark' | 'light';
   compact?: boolean;
 }
 
 const { variant = 'dark', compact = false } = Astro.props;
-const color = variant === 'light' ? '#F7F2E8' : '#18392B';
-const accent = variant === 'light' ? '#E2B65A' : '#8B3F2C';
-const markFill = variant === 'light' ? '#F7F2E8' : '#18392B';
-const markLetter = variant === 'light' ? '#10271E' : '#F7F2E8';
 ---
 
-<a href="/" class="logo" aria-label="Tablekind Kitchen home" data-variant={variant}>
-  <svg
+<a
+  href="/"
+  class:list={['logo', `logo--${variant}`]}
+  aria-label={`${STORE.name} home`}
+>
+  <img
     class="logo__mark"
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 64 64"
+    src="/brand/hp-monogram.svg"
+    alt=""
     width="40"
     height="40"
-    aria-hidden="true"
-    focusable="false"
-  >
-    <rect width="64" height="64" rx="14" fill={markFill}></rect>
-    <path d="M18 18h28v6H36v22h-8V24H18v-6z" fill={markLetter}></path>
-    <path d="M40 40c6 0 10 3 10 8H30c0-5 4-8 10-8z" fill={accent}></path>
-  </svg>
+    decoding="async"
+  />
   {
     !compact && (
-      <span class="logo__wordmark" style={`color:${color}`}>
-        <span class="logo__name">Tablekind</span>
-        <span class="logo__kitchen" style={`color:${accent}`}>Kitchen</span>
+      <span class="logo__wordmark">
+        <span class="logo__primary">
+          <span class="logo__name">{STORE.shortName}</span>
+          <span class="logo__home">Home</span>
+        </span>
+        <span class="logo__tagline">{STORE.tagline}</span>
       </span>
     )
   }
@@ -39,32 +39,66 @@ const markLetter = variant === 'light' ? '#10271E' : '#F7F2E8';
   .logo {
     display: inline-flex;
     align-items: center;
-    gap: 0.7rem;
+    gap: 0.75rem;
     text-decoration: none;
     min-height: 44px;
+    max-width: 100%;
   }
 
   .logo__mark {
     flex-shrink: 0;
+    border-radius: var(--radius-sm);
+    box-shadow: 0 1px 0 rgb(16 40 32 / 0.08);
   }
 
   .logo__wordmark {
     display: flex;
     flex-direction: column;
+    gap: 0.12rem;
     line-height: 1.05;
+    min-width: 0;
+  }
+
+  .logo__primary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.28rem 0.35rem;
   }
 
   .logo__name {
     font-family: var(--font-display);
-    font-size: 1.15rem;
+    font-size: clamp(1.05rem, 2.4vw, 1.2rem);
     font-weight: 650;
     letter-spacing: -0.02em;
+    color: var(--color-dark-pine);
   }
 
-  .logo__kitchen {
+  .logo__home {
+    font-family: var(--font-sans);
     font-size: 0.72rem;
     font-weight: 700;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
+    color: var(--color-harbour);
+  }
+
+  .logo__tagline {
+    font-size: 0.72rem;
+    line-height: 1.35;
+    color: rgb(36 40 36 / 0.68);
+    max-width: 16rem;
+  }
+
+  .logo--light .logo__name {
+    color: var(--color-porcelain);
+  }
+
+  .logo--light .logo__home {
+    color: var(--color-sand);
+  }
+
+  .logo--light .logo__tagline {
+    color: rgb(247 243 236 / 0.78);
   }
 </style>

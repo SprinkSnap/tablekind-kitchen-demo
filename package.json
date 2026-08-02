@@ -1,9 +1,9 @@
 {
-  "name": "tablekind-kitchen-demo",
+  "name": "harbour-pine-home-demo",
   "type": "module",
   "version": "1.0.0",
   "private": true,
-  "description": "Tablekind Kitchen — fictional restaurant portfolio demo by Che Xu Studio",
+  "description": "Harbour & Pine Home — fictional e-commerce portfolio demo by Che Xu Studio",
   "engines": {
     "node": ">=22.12.0"
   },
@@ -13,6 +13,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "generate-types": "wrangler types",
+    "generate:assets": "node scripts/generate-product-svgs.mjs",
     "typecheck": "astro check && tsc --noEmit",
     "lint": "eslint . --max-warnings=0",
     "format": "prettier --write .",

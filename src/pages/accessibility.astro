@@ -3,7 +3,7 @@ export const prerender = true;
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/astro/Breadcrumbs.astro';
-import { STUDIO } from '../lib/config';
+import { STUDIO, STORE } from '../lib/config';
 import { breadcrumbSchema } from '../lib/seo';
 
 const schemas = [
@@ -16,7 +16,7 @@ const schemas = [
 
 <BaseLayout
   title="Accessibility"
-  description="Accessibility approach for the Tablekind Kitchen demo—WCAG 2.2 AA goals, keyboard support and reduced motion."
+  description={`Accessibility approach for the ${STORE.name} demo—WCAG 2.2 AA goals, keyboard support and reduced motion.`}
   path="/accessibility/"
   schemas={schemas}
 >
@@ -24,7 +24,7 @@ const schemas = [
     <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Accessibility' }]} />
     <h1 class="section-title">Accessibility</h1>
     <p class="section-lede">
-      This demonstration aims to meet WCAG 2.2 AA as closely as practical.
+      This {STORE.name} demonstration aims to meet WCAG 2.2 AA as closely as practical.
     </p>
     <div class="surface panel">
       <h2>What we implemented</h2>
@@ -33,23 +33,51 @@ const schemas = [
         <li>Logical heading structure and one H1 per page</li>
         <li>Keyboard-accessible navigation, filters, dialogs and drawers</li>
         <li>Focus trapping and restoration in overlays</li>
-        <li>Visible focus indicators and large touch targets</li>
-        <li>Status announcements for cart and form outcomes</li>
+        <li>Visible focus indicators and large touch targets (44px minimum)</li>
+        <li>Status announcements for cart, filters and form outcomes</li>
         <li>Reduced-motion support</li>
-        <li>Text alternatives for brand and dish imagery</li>
+        <li>Text alternatives for product and brand imagery</li>
+        <li>Reserved image aspect ratios to reduce layout shift</li>
       </ul>
+      <h2>Known demo limitations</h2>
+      <p>
+        Some interactive flows—wishlist, cart and checkout—rely on client-side state stored in your
+        browser. A production store would integrate with verified account and order systems.
+      </p>
       <h2>Feedback</h2>
       <p>
-        Accessibility feedback for this portfolio concept can be shared with {STUDIO.name} through
-        the website plan request form.
+        Accessibility feedback for this portfolio concept can be shared with {STUDIO.name} through the
+        website plan request form.
       </p>
-      <a class="btn btn-primary" href="#studio-enquiry" data-open-enquiry>Contact Che Xu Studio</a>
+      <button type="button" class="btn btn-primary" data-open-enquiry>Contact Che Xu Studio</button>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .panel { padding: 1.25rem; margin-top: 1.25rem; max-width: 44rem; }
-  .panel h2 { font-family: var(--font-display); color: #10271E; }
-  .panel ul { line-height: 1.7; }
+  .panel {
+    padding: 1.25rem;
+    margin-top: 1.25rem;
+    max-width: 44rem;
+  }
+
+  .panel h2 {
+    font-family: var(--font-display);
+    color: var(--color-dark-pine);
+    margin: 1.25rem 0 0.5rem;
+    font-size: 1.15rem;
+  }
+
+  .panel h2:first-child {
+    margin-top: 0;
+  }
+
+  .panel ul {
+    line-height: 1.7;
+    padding-left: 1.2rem;
+  }
+
+  .panel p {
+    line-height: 1.7;
+  }
 </style>

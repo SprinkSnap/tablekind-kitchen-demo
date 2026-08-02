@@ -2,7 +2,7 @@
   "$schema": "./node_modules/wrangler/config-schema.json",
   "compatibility_date": "2026-08-02",
   "compatibility_flags": ["nodejs_compat"],
-  "name": "tablekind-kitchen-demo",
+  "name": "harbour-pine-home-demo",
   // Resolved by Astro after `npm run build` into dist/server/entry.mjs.
   // Do not run `wrangler deploy` without building first.
   "main": "@astrojs/cloudflare/entrypoints/server",
@@ -13,9 +13,8 @@
   "observability": {
     "enabled": true
   },
-  // Existing namespace from an earlier deploy attempt. Pinning the ID prevents
-  // "namespace ... already exists" during auto-provision. Safe to keep even
-  // though Astro sessions are disabled for this demo.
+  // Existing namespace from an earlier deploy attempt on this account.
+  // Pinning the ID prevents "namespace ... already exists" during auto-provision.
   "kv_namespaces": [
     {
       "binding": "SESSION",
@@ -25,17 +24,17 @@
   "vars": {
     "DEMO_MODE": "true",
     "PUBLIC_DEMO_MODE": "true",
-    "PUBLIC_SITE_URL": "https://tablekindkitchen.chexustudio.com",
+    "PUBLIC_SITE_URL": "https://harbourandpinehome.chexustudio.com",
     "PUBLIC_STUDIO_URL": "https://chexustudio.com",
-    "PUBLIC_CASE_STUDY_URL": "https://chexustudio.com/work/tablekind-kitchen",
+    "PUBLIC_CASE_STUDY_URL": "https://chexustudio.com/work/harbour-pine-home",
     "PUBLIC_PACKAGES_URL": "https://chexustudio.com/packages",
-    "ALLOWED_ORIGINS": "https://tablekindkitchen.chexustudio.com,http://localhost:4321"
+    "ALLOWED_ORIGINS": "https://harbourandpinehome.chexustudio.com,http://localhost:4321"
   },
   // Omit database_id so Wrangler auto-provisions D1 on first deploy.
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "tablekind-leads",
+      "database_name": "harbour-pine-leads",
       "migrations_dir": "migrations"
     }
   ],
@@ -44,15 +43,15 @@
   // "ai": { "binding": "AI", "remote": true },
   "env": {
     "staging": {
-      "name": "tablekind-kitchen-demo-staging",
+      "name": "harbour-pine-home-demo-staging",
       "vars": {
         "DEMO_MODE": "true",
         "PUBLIC_DEMO_MODE": "true",
-        "PUBLIC_SITE_URL": "https://tablekind-kitchen-demo-staging.workers.dev",
+        "PUBLIC_SITE_URL": "https://harbour-pine-home-demo-staging.workers.dev",
         "PUBLIC_STUDIO_URL": "https://chexustudio.com",
-        "PUBLIC_CASE_STUDY_URL": "https://chexustudio.com/work/tablekind-kitchen",
+        "PUBLIC_CASE_STUDY_URL": "https://chexustudio.com/work/harbour-pine-home",
         "PUBLIC_PACKAGES_URL": "https://chexustudio.com/packages",
-        "ALLOWED_ORIGINS": "https://tablekind-kitchen-demo-staging.workers.dev,http://localhost:4321"
+        "ALLOWED_ORIGINS": "https://harbour-pine-home-demo-staging.workers.dev,http://localhost:4321"
       }
     }
   }

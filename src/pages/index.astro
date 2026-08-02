@@ -2,196 +2,212 @@
 export const prerender = true;
 
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getFeaturedItems, DIETARY_LABELS, CATEGORY_META } from '../data/menu';
+import ConceptDisclosure from '../components/astro/ConceptDisclosure.astro';
+import ProductCard from '../components/astro/ProductCard.astro';
+import StudioCta from '../components/astro/StudioCta.astro';
+import ProductFinder from '../components/react/ProductFinder';
 import { HOME_FAQS } from '../data/faq';
-import { formatCad } from '../lib/currency';
-import { DISCLOSURE, getCaseStudyUrl, getPackagesUrl, STUDIO } from '../lib/config';
 import {
-  breadcrumbSchema,
-  faqSchema,
-  menuSchema,
-  organizationSchema,
-  websiteSchema,
-} from '../lib/seo';
-import ReservationFlow from '../components/react/ReservationFlow';
+  BUNDLES,
+  COLLECTIONS,
+  getProductById,
+  getFeaturedProducts,
+} from '../data/products';
+import { formatCad } from '../lib/currency';
+import { DISCLOSURE, getCaseStudyUrl, getPackagesUrl, STUDIO, STORE } from '../lib/config';
+import { faqSchema, organizationSchema, websiteSchema } from '../lib/seo';
 
-const featured = getFeaturedItems(6);
-const schemas = [
-  websiteSchema(),
-  organizationSchema(),
-  menuSchema(),
-  faqSchema(),
-  breadcrumbSchema([{ name: 'Home', path: '/' }]),
+const featured = getFeaturedProducts(8);
+
+const rooms = [
+  { label: 'Living room', href: '/collections/living/', image: '/images/living-room.svg', alt: 'Calm living room with soft textiles and natural light' },
+  { label: 'Dining area', href: '/collections/kitchen-dining/', image: '/images/dining-area.svg', alt: 'Dining table set with ceramic dinnerware and linens' },
+  { label: 'Kitchen', href: '/collections/kitchen-dining/', image: '/images/kitchen.svg', alt: 'Kitchen counter with everyday tableware and storage' },
+  { label: 'Workspace', href: '/collections/workspace/', image: '/images/workspace.svg', alt: 'Organized desk with tray, mat and desk accessories' },
 ];
+
+const values = [
+  { title: 'Thoughtful function', text: 'Products are presented with clear use cases—not hype or invented scarcity.' },
+  { title: 'Clear product information', text: 'Materials, dimensions and care guidance help shoppers decide with confidence.' },
+  { title: 'Calm design', text: 'A restrained palette and generous spacing keep focus on the catalogue.' },
+  { title: 'Easy shopping', text: 'Filters, wishlist and a demo cart show how everyday purchases can feel simple.' },
+  { title: 'Responsive customer experience', text: 'Mobile-first layouts, accessible controls and fast page loads across the journey.' },
+];
+
+const capabilities = [
+  'Collection and category navigation',
+  'Search-friendly product pages',
+  'Variant selectors and wishlist',
+  'Demo cart and checkout flow',
+  'Filter and sort architecture',
+  'Responsive product imagery',
+  'Structured SEO foundations',
+  'Accessible interactions',
+  'Conversion analytics hooks',
+];
+
+const bundleCards = BUNDLES.map((bundle) => {
+  const products = bundle.productIds
+    .map((id) => getProductById(id))
+    .filter((product): product is NonNullable<typeof product> => Boolean(product));
+  const bundleTotal = products.reduce((sum, product) => sum + product.price, 0);
+  return { ...bundle, products, bundleTotal };
+});
+
+const schemas = [websiteSchema(), organizationSchema(), faqSchema()];
 ---
 
 <BaseLayout
-  title="Seasonal Food, Made for Gathering"
-  description="Tablekind Kitchen is a fictional modern Canadian neighbourhood restaurant website concept by Che Xu Studio—featuring menus, reservations, pickup ordering and catering."
+  title="Thoughtful Pieces for Everyday Living"
+  description={`${STORE.name} is a modern Canadian home and lifestyle store concept by ${STUDIO.name}—featuring curated collections, product discovery, wishlist, demo cart and checkout.`}
   path="/"
   schemas={schemas}
 >
-  <section class="hero">
-    <img
-      class="hero__image"
-      src="/images/hero-table.svg"
-      alt="Shared table with seasonal dishes in warm evening light"
-      width="1920"
-      height="1080"
-      fetchpriority="high"
-      decoding="async"
-    />
-    <div class="hero__shade" aria-hidden="true"></div>
-    <div class="container-page hero__content fade-up">
-      <p class="eyebrow hero__eyebrow">Modern Neighbourhood Dining</p>
-      <h1>Seasonal Food, Made for Gathering.</h1>
+  <section class="hero-atmosphere" aria-labelledby="hero-heading">
+    <div class="container-page hero__inner fade-up">
+      <ConceptDisclosure compact />
+      <p class="eyebrow hero__eyebrow">Modern Home Essentials</p>
+      <h1 id="hero-heading">Thoughtful Pieces for Everyday Living.</h1>
       <p class="hero__lede">
-        Thoughtfully prepared dishes, welcoming service and a simple dining experience—from choosing
-        your meal to reserving your table.
+        A curated collection of practical, beautifully designed objects created to make everyday
+        spaces feel more comfortable and considered.
       </p>
       <div class="hero__actions">
-        <a class="btn btn-accent" href="/reservations/">Reserve a Table</a>
-        <a class="btn btn-ghost" href="/menu/">Explore the Menu</a>
-        <a class="btn btn-ghost" href="/order/">Order Pickup</a>
+        <a class="btn btn-accent" href="/shop/">Shop the Collection</a>
+        <a class="btn btn-ghost" href="/shop/?sort=newest">Explore New Arrivals</a>
+        <button type="button" class="btn btn-ghost" data-open-enquiry>Build a Store Like This</button>
       </div>
-      <p class="hero__reassure">{DISCLOSURE.short} Reservations and ordering are interactive portfolio demonstrations only.</p>
+      <p class="hero__reassure">
+        Interactive store demonstration—no real orders or payments. {DISCLOSURE.short}
+      </p>
     </div>
   </section>
 
-  <section class="section container-page" aria-labelledby="dining-options">
-    <h2 id="dining-options" class="section-title">Choose How You Gather.</h2>
-    <p class="section-lede">Four clear paths for brunch, lunch, dinner and pickup—labelled with illustrative demo hours only.</p>
-    <div class="option-grid">
-      <a class="option" href="/menu/brunch/">
-        <h3>Weekend Brunch</h3>
-        <p>Pancakes, toasts and bright morning plates.</p>
-        <p class="hours">Demo hours: Sat–Sun 9:00–14:00 · {DISCLOSURE.hours}</p>
-      </a>
-      <a class="option" href="/menu/lunch/">
-        <h3>Lunch</h3>
-        <p>Salads, bowls and sandwiches for midday tables.</p>
-        <p class="hours">Demo hours: Mon–Fri 11:30–15:00 · {DISCLOSURE.hours}</p>
-      </a>
-      <a class="option" href="/menu/dinner/">
-        <h3>Dinner</h3>
-        <p>Small plates and seasonal mains for evening gatherings.</p>
-        <p class="hours">Demo hours: Tue–Sun 17:00–21:30 · {DISCLOSURE.hours}</p>
-      </a>
-      <a class="option" href="/order/">
-        <h3>Pickup</h3>
-        <p>Mobile-friendly demo ordering with cart and totals.</p>
-        <p class="hours">Demo pickup windows shown in the order flow.</p>
-      </a>
-    </div>
-  </section>
-
-  <section class="section container-page" aria-labelledby="featured">
-    <h2 id="featured" class="section-title">Something for Every Table.</h2>
-    <p class="section-lede">A sample of featured dishes from the typed menu system—ready for browse, filter or demo order.</p>
-    <ul class="featured-grid">
+  <section class="section container-page" aria-labelledby="collections-heading">
+    <h2 id="collections-heading" class="section-title">Shop by Collection</h2>
+    <p class="section-lede">
+      Six curated collections spanning living, dining, textiles, storage, workspace and gifts.
+    </p>
+    <ul class="collection-grid">
       {
-        featured.map((item) => (
-          <li class="featured-card">
-            <img src={item.image} alt={item.imageAlt} width="1200" height="900" loading="lazy" />
-            <div class="featured-card__body">
-              <p class="chip">{CATEGORY_META[item.category].label}</p>
-              <div class="row">
-                <h3>{item.name}</h3>
-                <p class="price">{formatCad(item.price)}</p>
+        COLLECTIONS.map((collection) => (
+          <li>
+            <a class="collection-card surface" href={`/collections/${collection.slug}/`}>
+              <img
+                src={collection.image}
+                alt={collection.imageAlt}
+                width="800"
+                height="600"
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="collection-card__body">
+                <h3>{collection.name}</h3>
+                <p>{collection.description}</p>
               </div>
-              <p>{item.description}</p>
-              {
-                item.dietaryLabels.length > 0 && (
-                  <ul class="chips">
-                    {item.dietaryLabels.map((label) => (
-                      <li class="chip">{DIETARY_LABELS[label]}</li>
-                    ))}
-                  </ul>
-                )
-              }
-              <div class="featured-actions">
-                <a class="btn btn-secondary" href={`/menu/#${item.category}`}>View on menu</a>
-                {
-                  item.availableForPickup && (
-                    <a class="btn btn-ghost" href={`/order/?item=${item.slug}`}>
-                      Add to demo order
-                    </a>
-                  )
-                }
-              </div>
-            </div>
+            </a>
           </li>
         ))
       }
     </ul>
   </section>
 
-  <section class="section story" aria-labelledby="story">
-    <div class="container-page story__inner">
-      <h2 id="story" class="section-title">Thoughtful Food. Warm Hospitality.</h2>
-      <p class="section-lede">
-        Tablekind Kitchen is imagined as a neighbourhood dining room where seasonal menus, clear
-        service and easy digital touchpoints make gathering feel simple. This concept focuses on the
-        guest journey—discovering dishes, reserving a table, ordering pickup and planning events—
-        without inventing a founder story, farm partnership or award history.
-      </p>
+  <section class="section container-page" aria-labelledby="featured-heading">
+    <h2 id="featured-heading" class="section-title">Featured Products</h2>
+    <p class="section-lede">A sample of the demo catalogue—ready to browse, filter or add to a demo cart.</p>
+    <div class="product-grid">
+      {featured.map((product, index) => <ProductCard product={product} eager={index < 4} />)}
+    </div>
+    <p class="section-cta">
+      <a class="btn btn-secondary" href="/shop/">View all products</a>
+    </p>
+  </section>
+
+  <section class="section values" aria-labelledby="values-heading">
+    <div class="container-page">
+      <h2 id="values-heading" class="section-title">Designed for Real Homes and Everyday Routines.</h2>
+      <ul class="values-grid">
+        {
+          values.map((item) => (
+            <li class="surface values-card">
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </li>
+          ))
+        }
+      </ul>
     </div>
   </section>
 
-  <section class="section container-page" aria-labelledby="experience">
-    <h2 id="experience" class="section-title">The Restaurant Experience.</h2>
-    <ul class="experience-grid">
-      <li><h3>Seasonal menu</h3><p>Semantic HTML menus that are easy to scan and filter.</p></li>
-      <li><h3>Welcoming atmosphere</h3><p>Warm visual identity with calm hierarchy on every screen.</p></li>
-      <li><h3>Easy reservations</h3><p>A short, accessible multistep demo booking flow.</p></li>
-      <li><h3>Pickup ordering</h3><p>Cart, modifiers, tax sample and local completion.</p></li>
-      <li><h3>Catering</h3><p>Structured enquiries for meetings and gatherings.</p></li>
-      <li><h3>Private gatherings</h3><p>Private dining planner that ends with a studio CTA.</p></li>
+  <section class="section container-page" aria-labelledby="rooms-heading">
+    <h2 id="rooms-heading" class="section-title">Shop by Room</h2>
+    <p class="section-lede">Start with a room in mind—each link opens a relevant collection from the demo catalogue.</p>
+    <ul class="room-grid">
+      {
+        rooms.map((room) => (
+          <li>
+            <a class="room-card surface" href={room.href}>
+              <img src={room.image} alt={room.alt} width="800" height="600" loading="lazy" decoding="async" />
+              <span>{room.label}</span>
+            </a>
+          </li>
+        ))
+      }
     </ul>
   </section>
 
-  <section class="section container-page" aria-labelledby="reserve-preview">
-    <h2 id="reserve-preview" class="section-title">Reserve a Demo Table.</h2>
-    <p class="section-lede">Try party size, date and preferred time. No real reservation is created.</p>
-    <ReservationFlow client:visible />
+  <section class="section container-page" aria-labelledby="finder-heading">
+    <h2 id="finder-heading" class="section-title">Find the Right Piece</h2>
+    <p class="section-lede">Answer a few quick questions to see matching products from the demo catalogue.</p>
+    <ProductFinder client:visible />
   </section>
 
-  <section class="section container-page" aria-labelledby="events">
-    <h2 id="events" class="section-title">Catering & Private Events.</h2>
-    <div class="event-grid">
-      <article class="event-card">
-        <h3>Catering for Meetings and Gatherings</h3>
-        <p>Plan a demo catering enquiry with guest count, timing and service style.</p>
-        <a class="btn btn-primary" href="/catering/">Explore Catering</a>
-      </article>
-      <article class="event-card">
-        <h3>Private Dining and Celebrations</h3>
-        <p>Walk through a private-event planner designed for clear next steps.</p>
-        <a class="btn btn-primary" href="/private-events/">Plan an Event</a>
-      </article>
-    </div>
+  <section class="section container-page" aria-labelledby="bundles-heading">
+    <h2 id="bundles-heading" class="section-title">Complete the Space</h2>
+    <p class="section-lede">
+      Illustrative product groupings for inspiration. Add each item individually—no automatic discounts
+      are applied in this demo.
+    </p>
+    <ul class="bundle-grid">
+      {
+        bundleCards.map((bundle) => (
+          <li class="bundle-card surface">
+            <h3>{bundle.name}</h3>
+            <p>{bundle.description}</p>
+            <ul class="bundle-products">
+              {
+                bundle.products.map((product) => (
+                  <li>
+                    <a href={`/products/${product.slug}/`}>{product.name}</a>
+                    <span class="price">{formatCad(product.price)}</span>
+                  </li>
+                ))
+              }
+            </ul>
+            <p class="bundle-total">
+              Illustrative total: <span class="price">{formatCad(bundle.bundleTotal)}</span>
+            </p>
+            <p class="bundle-note">{bundle.note}</p>
+          </li>
+        ))
+      }
+    </ul>
   </section>
 
-  <section class="section showcase" aria-labelledby="showcase">
+  <section class="section showcase" aria-labelledby="showcase-heading">
     <div class="container-page">
-      <h2 id="showcase" class="section-title">Designed to Turn Local Searches Into Reservations and Orders.</h2>
+      <h2 id="showcase-heading" class="section-title">
+        Designed to Turn Product Browsing Into Confident Purchases.
+      </h2>
       <ul class="showcase-grid">
-        <li>Mobile-first menu navigation</li>
-        <li>Search-friendly HTML menus</li>
-        <li>Reservation conversion flow</li>
-        <li>Pickup-ordering experience</li>
-        <li>Local SEO architecture</li>
-        <li>Responsive images</li>
-        <li>Catering lead generation</li>
-        <li>Accessible interactions</li>
-        <li>Conversion analytics</li>
+        {capabilities.map((item) => <li>{item}</li>)}
       </ul>
-      <a class="btn btn-accent" href="#studio-enquiry" data-open-enquiry>Build This for My Business</a>
+      <button type="button" class="btn btn-accent" data-open-enquiry>Build This for My Business</button>
     </div>
   </section>
 
-  <section class="section container-page" aria-labelledby="faq">
-    <h2 id="faq" class="section-title">Frequently Asked Questions</h2>
+  <section class="section container-page" aria-labelledby="faq-heading">
+    <h2 id="faq-heading" class="section-title">Frequently Asked Questions</h2>
     <div class="faq-list">
       {
         HOME_FAQS.map((faq) => (
@@ -204,118 +220,320 @@ const schemas = [
     </div>
   </section>
 
-  <section class="section container-page final-cta" aria-labelledby="final-cta">
-    <h2 id="final-cta" class="section-title">Your Restaurant Deserves More Than a PDF Menu and a Slow Website.</h2>
-    <p class="section-lede">
-      Che Xu Studio can build a fast, customer-friendly website designed around reservations, online
-      orders and local discovery.
+  <section class="section container-page">
+    <StudioCta
+      heading="Your Products Deserve More Than a Generic Storefront."
+      supporting={`${STUDIO.name} designs conversion-focused e-commerce experiences for home and lifestyle brands—clear navigation, polished product storytelling, and thoughtful demo flows that help you sell online with confidence.`}
+      primaryLabel="Build a Store Like This"
+    />
+    <p class="footer-note">
+      <a href={getPackagesUrl()} target="_blank" rel="noopener noreferrer">View packages</a>
+      {' · '}
+      <a href={getCaseStudyUrl()} target="_blank" rel="noopener noreferrer">View case study</a>
     </p>
-    <div class="hero__actions">
-      <a class="btn btn-accent" href="#studio-enquiry" data-open-enquiry>Request My Website Plan</a>
-      <a class="btn btn-secondary" href={getPackagesUrl()} target="_blank" rel="noopener noreferrer">
-        View Che Xu Studio Packages
-      </a>
-      <a class="btn btn-ghost" href={getCaseStudyUrl()} target="_blank" rel="noopener noreferrer">
-        View Case Study
-      </a>
-    </div>
-    <p class="tiny">Concept by {STUDIO.name}. Live demo for portfolio evaluation only.</p>
   </section>
 </BaseLayout>
 
 <style>
-  .hero {
+  .hero__inner {
     position: relative;
-    isolation: isolate;
-    min-height: min(86vh, 760px);
-    display: flex;
-    align-items: end;
-    padding: 5rem 0 4rem;
-    overflow: hidden;
-    color: #fffdfc;
-    background: #10271e;
+    z-index: 2;
+    display: grid;
+    gap: 0.85rem;
+    max-width: 42rem;
+    padding: clamp(4.5rem, 12vw, 7rem) 0 clamp(3rem, 8vw, 5rem);
+    color: var(--color-porcelain);
   }
-  .hero__image {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 0;
+
+  .hero__eyebrow {
+    color: var(--color-sand);
   }
-  .hero__shade {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background:
-      linear-gradient(120deg, rgb(16 39 30 / 0.88), rgb(24 57 43 / 0.55) 45%, rgb(16 39 30 / 0.35)),
-      linear-gradient(to top, var(--color-cream), transparent 30%);
-  }
-  .hero__content { position: relative; z-index: 2; max-width: 40rem; padding-bottom: 1rem; }
+
   .hero h1 {
-    font-size: clamp(2.4rem, 6vw, 4.4rem);
-    line-height: 1.05;
-    margin: 0.6rem 0 1rem;
-    color: #FFFDFC;
+    font-size: clamp(2.35rem, 5.5vw, 4rem);
+    line-height: 1.08;
+    margin: 0;
+    color: var(--color-porcelain);
   }
-  .hero__eyebrow { color: #C99A45; }
-  .hero__lede { font-size: 1.1rem; line-height: 1.65; color: rgb(255 253 252 / 0.9); margin: 0 0 1.25rem; }
-  .hero__actions { display: flex; flex-wrap: wrap; gap: 0.65rem; }
-  .hero__reassure { margin-top: 1rem; max-width: 36rem; color: rgb(255 253 252 / 0.78); font-size: 0.92rem; }
-  .option-grid, .featured-grid, .experience-grid, .event-grid, .showcase-grid {
-    list-style: none; margin: 1.5rem 0 0; padding: 0;
-    display: grid; gap: 1rem;
+
+  .hero__lede {
+    margin: 0;
+    font-size: 1.08rem;
+    line-height: 1.65;
+    color: rgb(255 254 251 / 0.9);
   }
-  .option-grid, .event-grid { grid-template-columns: 1fr; }
-  .experience-grid, .showcase-grid { grid-template-columns: 1fr; }
-  @media (min-width: 720px) {
-    .option-grid, .event-grid { grid-template-columns: 1fr 1fr; }
-    .experience-grid { grid-template-columns: 1fr 1fr 1fr; }
-    .featured-grid { grid-template-columns: 1fr 1fr; }
-    .showcase-grid { grid-template-columns: 1fr 1fr 1fr; }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
   }
-  @media (min-width: 1100px) {
-    .featured-grid { grid-template-columns: 1fr 1fr 1fr; }
+
+  .hero__reassure {
+    margin: 0;
+    max-width: 36rem;
+    font-size: 0.9rem;
+    color: rgb(255 254 251 / 0.78);
   }
-  .option, .event-card, .featured-card, .experience-grid li {
-    background: rgb(255 253 252 / 0.82);
-    border: 1px solid rgb(24 57 43 / 0.08);
-    border-radius: 1.1rem;
-    padding: 1.1rem;
+
+  .collection-grid,
+  .room-grid,
+  .values-grid,
+  .bundle-grid,
+  .showcase-grid {
+    list-style: none;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .collection-grid {
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 640px) {
+    .collection-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .collection-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .collection-card {
+    display: grid;
     text-decoration: none;
+    overflow: hidden;
+    height: 100%;
   }
-  .option h3, .event-card h3, .featured-card h3, .experience-grid h3 {
-    margin: 0 0 0.4rem; font-family: var(--font-display); color: #10271E;
+
+  .collection-card img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    background: var(--color-linen);
   }
-  .hours { font-size: 0.85rem; color: rgb(34 38 34 / 0.7); }
-  .featured-card { padding: 0; overflow: hidden; display: grid; }
-  .featured-card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; }
-  .featured-card__body { padding: 1rem; display: grid; gap: 0.5rem; }
-  .row { display: flex; justify-content: space-between; gap: 0.75rem; align-items: baseline; }
-  .chips { list-style: none; display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0; padding: 0; }
-  .featured-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-  .story {
-    background:
-      linear-gradient(90deg, rgb(24 57 43 / 0.96), rgb(16 39 30 / 0.9)),
-      url('/images/hero-table.svg') center / cover;
-    color: #FFFDFC;
+
+  .collection-card__body {
+    padding: 1rem;
+    display: grid;
+    gap: 0.35rem;
   }
-  .story .section-title, .story .section-lede { color: #FFFDFC; }
-  .showcase { background: #E7EFE4; }
-  .showcase-grid li {
-    background: rgb(255 253 252 / 0.8);
-    border-radius: 0.85rem;
-    padding: 0.9rem 1rem;
+
+  .collection-card h3 {
+    margin: 0;
+    font-family: var(--font-display);
+    color: var(--color-dark-pine);
+    font-size: 1.15rem;
+  }
+
+  .collection-card p {
+    margin: 0;
+    color: rgb(36 40 36 / 0.78);
+    line-height: 1.5;
+    font-size: 0.95rem;
+  }
+
+  .section-cta {
+    margin: 1.5rem 0 0;
+  }
+
+  .values {
+    background: linear-gradient(180deg, rgb(23 59 50 / 0.04), transparent);
+  }
+
+  .values-grid {
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 720px) {
+    .values-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .values-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .values-card {
+    padding: 1.1rem;
+  }
+
+  .values-card h3 {
+    margin: 0 0 0.45rem;
+    font-family: var(--font-display);
+    color: var(--color-dark-pine);
+    font-size: 1.05rem;
+  }
+
+  .values-card p {
+    margin: 0;
+    line-height: 1.6;
+    color: rgb(36 40 36 / 0.8);
+    font-size: 0.95rem;
+  }
+
+  .room-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (min-width: 768px) {
+    .room-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .room-card {
+    display: grid;
+    gap: 0.65rem;
+    padding: 0.65rem;
+    text-decoration: none;
+    text-align: center;
+    font-weight: 700;
+    color: var(--color-dark-pine);
+  }
+
+  .room-card img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    background: var(--color-linen);
+  }
+
+  .bundle-grid {
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 768px) {
+    .bundle-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .bundle-card {
+    padding: 1.15rem;
+    display: grid;
+    gap: 0.65rem;
+    align-content: start;
+  }
+
+  .bundle-card h3 {
+    margin: 0;
+    font-family: var(--font-display);
+    color: var(--color-dark-pine);
+  }
+
+  .bundle-card > p {
+    margin: 0;
+    line-height: 1.55;
+    color: rgb(36 40 36 / 0.8);
+  }
+
+  .bundle-products {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .bundle-products li {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    align-items: baseline;
+    font-size: 0.92rem;
+  }
+
+  .bundle-products a {
+    color: var(--color-harbour);
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .bundle-total {
+    margin: 0;
     font-weight: 650;
   }
-  .faq-list { display: grid; gap: 0.65rem; margin-top: 1.25rem; }
+
+  .bundle-note {
+    margin: 0;
+    font-size: 0.85rem;
+    color: rgb(36 40 36 / 0.68);
+  }
+
+  .showcase {
+    background: rgb(158 175 157 / 0.18);
+  }
+
+  .showcase-grid {
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 720px) {
+    .showcase-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .showcase-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .showcase-grid li {
+    background: rgb(255 254 251 / 0.85);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 1rem;
+    font-weight: 650;
+    color: var(--color-dark-pine);
+  }
+
+  .faq-list {
+    display: grid;
+    gap: 0.65rem;
+    margin-top: 1.25rem;
+  }
+
   details {
-    background: rgb(255 253 252 / 0.82);
-    border: 1px solid rgb(24 57 43 / 0.1);
-    border-radius: 0.85rem;
+    background: rgb(255 254 251 / 0.88);
+    border: 1px solid rgb(23 59 50 / 0.1);
+    border-radius: var(--radius-md);
     padding: 0.85rem 1rem;
   }
-  summary { cursor: pointer; font-weight: 700; min-height: 44px; display: flex; align-items: center; }
-  .final-cta { text-align: left; }
-  .tiny { margin-top: 1rem; color: rgb(34 38 34 / 0.65); font-size: 0.85rem; }
+
+  summary {
+    cursor: pointer;
+    font-weight: 700;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  details p {
+    margin: 0.65rem 0 0;
+    line-height: 1.65;
+    color: rgb(36 40 36 / 0.82);
+  }
+
+  .footer-note {
+    margin: 1rem 0 0;
+    font-size: 0.9rem;
+    text-align: center;
+    color: rgb(36 40 36 / 0.7);
+  }
+
+  .footer-note a {
+    color: var(--color-harbour);
+    text-decoration: underline;
+  }
 </style>

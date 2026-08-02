@@ -1,46 +1,53 @@
 export const STUDIO = {
   name: 'Che Xu Studio',
   url: 'https://chexustudio.com',
-  caseStudyUrl: 'https://chexustudio.com/work/tablekind-kitchen',
+  caseStudyUrl: 'https://chexustudio.com/work/harbour-pine-home',
   packagesUrl: 'https://chexustudio.com/packages',
   contactPath: '/contact',
 } as const;
 
-export const RESTAURANT = {
-  name: 'Tablekind Kitchen',
-  tagline: 'Seasonal food, made for gathering.',
-  positioning: 'Modern Canadian neighbourhood dining',
+export const STORE = {
+  name: 'Harbour & Pine Home',
+  shortName: 'Harbour & Pine',
+  monogram: 'H&P',
+  tagline: 'Thoughtful pieces for everyday living.',
+  positioning: 'Modern Canadian home and lifestyle store',
   locale: 'en-CA',
   currency: 'CAD',
   currencySymbol: '$',
-  workerName: 'tablekind-kitchen-demo',
-  stagingWorkerName: 'tablekind-kitchen-demo-staging',
-  publicDomain: 'https://tablekindkitchen.chexustudio.com',
-  sourceDemo: 'tablekind-kitchen',
+  workerName: 'harbour-pine-home-demo',
+  stagingWorkerName: 'harbour-pine-home-demo-staging',
+  publicDomain: 'https://harbourandpinehome.chexustudio.com',
+  sourceDemo: 'harbour-pine-home',
 } as const;
 
 export const DISCLOSURE = {
-  short: 'Portfolio concept by Che Xu Studio. Tablekind Kitchen is a fictional restaurant demonstration.',
+  short:
+    'Portfolio concept by Che Xu Studio. Harbour & Pine Home is a fictional e-commerce demonstration.',
   lines: [
     'Portfolio concept by Che Xu Studio',
-    'Tablekind Kitchen is a fictional restaurant demonstration.',
+    'Harbour & Pine Home is a fictional e-commerce demonstration.',
   ],
-  portfolioBar: 'Restaurant website concept designed by Che Xu Studio.',
-  reservation:
-    'This is an interactive portfolio demonstration. No real table will be reserved and no personal information is required.',
-  ordering:
-    'Demo ordering only—no food will be prepared and no real payment will be processed.',
-  dietary:
-    'Dietary labels are illustrative. In a real restaurant, always confirm ingredients and allergens with staff.',
-  hours: 'Sample hours shown for demonstration only.',
-  location:
-    'No street address or phone number is published because Tablekind Kitchen is a fictional portfolio concept.',
+  portfolioBar: 'E-commerce website concept designed by Che Xu Studio.',
+  cart: 'Demo cart—no real order will be created.',
+  checkout:
+    'This is a portfolio demonstration. No order, shipment or payment will be created.',
+  shipping:
+    'Illustrative policy for a fictional portfolio store. A real merchant must provide and approve its own terms.',
+  sampleShipping:
+    'Sample shipping information for demonstration only—not a real shipping offer.',
+  sampleReturns:
+    'Sample return information for demonstration only—not a real return policy.',
 } as const;
 
-export const TAX_RATE = 0.13; // Illustrative Canadian HST sample for demo totals only
+/** Illustrative Canadian HST sample for demo totals only */
+export const TAX_RATE = 0.13;
+
+/** Sample flat shipping estimate for demo cart totals only (CAD) */
+export const SAMPLE_SHIPPING = 12;
 
 export function getSiteUrl(): string {
-  return import.meta.env.PUBLIC_SITE_URL ?? RESTAURANT.publicDomain;
+  return import.meta.env.PUBLIC_SITE_URL ?? STORE.publicDomain;
 }
 
 export function getStudioUrl(): string {

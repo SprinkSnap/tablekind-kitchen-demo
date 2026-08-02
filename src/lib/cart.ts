@@ -1,34 +1,30 @@
-import { TAX_RATE } from './config';
-import { getMenuItem, type MenuModifier } from '../data/menu';
+import { SAMPLE_SHIPPING, TAX_RATE } from './config';
+import { getProductById, getVariantPrice } from '../data/products';
 import { roundMoney } from './currency';
 
-export const CART_STORAGE_KEY = 'tablekind-demo-cart-v1';
-
-export type CartModifierSelection = {
-  id: string;
-  name: string;
-  priceDelta: number;
-};
+export const CART_STORAGE_KEY = 'harbour-pine-demo-cart-v1';
 
 export type CartLine = {
   key: string;
-  itemId: string;
+  productId: string;
+  slug: string;
   name: string;
+  image: string;
+  imageAlt: string;
+  variantId: string;
+  variantName: string;
   unitPrice: number;
   quantity: number;
-  modifiers: CartModifierSelection[];
-  notes?: string;
 };
 
 export type CartState = {
   lines: CartLine[];
-  pickupTime?: string;
-  orderNotes?: string;
   updatedAt: number;
 };
 
 export type CartTotals = {
   subtotal: number;
+  shipping: number;
   tax: number;
   total: number;
   itemCount: number;
@@ -38,65 +34,56 @@ export function createEmptyCart(): CartState {
   return { lines: [], updatedAt: Date.now() };
 }
 
-export function lineKey(itemId: string, modifiers: CartModifierSelection[]): string {
-  const mod = modifiers
-    .map((m) => m.id)
-    .sort()
-    .join('+');
-  return `${itemId}::${mod || 'base'}`;
-}
-
-export function unitPriceWithModifiers(basePrice: number, modifiers: CartModifierSelection[]): number {
-  return roundMoney(basePrice + modifiers.reduce((sum, m) => sum + m.priceDelta, 0));
+export function lineKey(productId: string, variantId: string): string {
+  return `${productId}::${variantId}`;
 }
 
 export function calculateTotals(cart: CartState): CartTotals {
   const subtotal = roundMoney(
     cart.lines.reduce((sum, line) => sum + line.unitPrice * line.quantity, 0),
   );
-  const tax = roundMoney(subtotal * TAX_RATE);
-  const total = roundMoney(subtotal + tax);
   const itemCount = cart.lines.reduce((sum, line) => sum + line.quantity, 0);
-  return { subtotal, tax, total, itemCount };
+  const shipping = itemCount > 0 ? SAMPLE_SHIPPING : 0;
+  const tax = roundMoney((subtotal + shipping) * TAX_RATE);
+  const total = roundMoney(subtotal + shipping + tax);
+  return { subtotal, shipping, tax, total, itemCount };
 }
 
 export function addToCart(
   cart: CartState,
-  itemId: string,
+  productId: string,
+  variantId: string,
   quantity: number,
-  modifiers: MenuModifier[] = [],
-  notes?: string,
 ): CartState {
-  const item = getMenuItem(itemId);
-  if (!item || !item.availableForPickup || quantity < 1) return cart;
+  const product = getProductById(productId);
+  if (!product || !product.available || quantity < 1) return cart;
 
-  const selected: CartModifierSelection[] = modifiers.map((m) => ({
-    id: m.id,
-    name: m.name,
-    priceDelta: m.priceDelta,
-  }));
-  const key = lineKey(itemId, selected);
-  const unitPrice = unitPriceWithModifiers(item.price, selected);
+  const variant = product.variants.find((v) => v.id === variantId) ?? product.variants[0];
+  if (!variant || !variant.available) return cart;
+
+  const key = lineKey(product.id, variant.id);
+  const unitPrice = getVariantPrice(product, variant.id);
   const existing = cart.lines.find((line) => line.key === key);
 
   let lines: CartLine[];
   if (existing) {
     lines = cart.lines.map((line) =>
-      line.key === key
-        ? { ...line, quantity: line.quantity + quantity, notes: notes ?? line.notes }
-        : line,
+      line.key === key ? { ...line, quantity: line.quantity + quantity } : line,
     );
   } else {
     lines = [
       ...cart.lines,
       {
         key,
-        itemId: item.id,
-        name: item.name,
+        productId: product.id,
+        slug: product.slug,
+        name: product.name,
+        image: product.images[0],
+        imageAlt: product.imageAlt[0] ?? product.name,
+        variantId: variant.id,
+        variantName: variant.name,
         unitPrice,
         quantity,
-        modifiers: selected,
-        notes,
       },
     ];
   }

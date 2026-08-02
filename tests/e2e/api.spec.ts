@@ -12,9 +12,10 @@ test.describe('portfolio lead API', () => {
       data: {
         name: 'Alex',
         email: 'alex@example.com',
-        businessType: 'restaurant',
-        primaryGoal: 'more-reservations',
-        neededFeatures: ['menu'],
+        businessType: 'home-goods',
+        productCount: '21-100',
+        primaryGoal: 'increase-online-sales',
+        neededFeatures: ['product-catalogue'],
         launchTiming: 'exploring',
         consent: true,
         turnstileToken: 'dev-bypass',
@@ -29,9 +30,10 @@ test.describe('portfolio lead API', () => {
       data: {
         name: 'Alex Example',
         email: 'alex@example.com',
-        businessType: 'restaurant',
-        primaryGoal: 'more-reservations',
-        neededFeatures: ['menu', 'reservations'],
+        businessType: 'home-goods',
+        productCount: '21-100',
+        primaryGoal: 'increase-online-sales',
+        neededFeatures: ['product-catalogue', 'cart-checkout'],
         launchTiming: 'exploring',
         consent: true,
         turnstileToken: 'dev-bypass',
@@ -41,7 +43,47 @@ test.describe('portfolio lead API', () => {
         'content-type': 'application/json',
       },
     });
-    // In preview without D1, API may return 503; validate it is not a silent success with bad data.
+    // In preview without D1, API may return 503; validate schema acceptance path.
     expect([200, 503]).toContain(res.status());
+  });
+
+  test('rejects turnstile failure when secret would be required pattern', async ({
+    request,
+    baseURL,
+  }) => {
+    const res = await request.post(`${baseURL}/api/portfolio-lead/`, {
+      data: {
+        name: 'Alex Example',
+        email: 'alex@example.com',
+        businessType: 'home-goods',
+        productCount: '1-20',
+        primaryGoal: 'product-seo',
+        neededFeatures: ['variants'],
+        launchTiming: 'asap',
+        consent: true,
+        turnstileToken: '',
+      },
+      headers: {
+        origin: baseURL!,
+        'content-type': 'application/json',
+      },
+    });
+    expect([400, 403, 415]).toContain(res.status());
+  });
+});
+
+test.describe('assistant API', () => {
+  test('returns a safe local reply', async ({ request, baseURL }) => {
+    const res = await request.post(`${baseURL}/api/assistant/`, {
+      data: { message: 'Help me find a gift' },
+      headers: {
+        origin: baseURL!,
+        'content-type': 'application/json',
+      },
+    });
+    expect(res.ok()).toBeTruthy();
+    const body = (await res.json()) as { reply?: string };
+    expect(body.reply?.toLowerCase()).toContain('gift');
+    expect(body.reply?.toLowerCase()).not.toContain('payment card');
   });
 });

@@ -7,7 +7,7 @@ import {
   portfolioLeadSchema,
   redactLeadForLogs,
 } from '../../lib/validation';
-import { RESTAURANT } from '../../lib/config';
+import { STORE } from '../../lib/config';
 import { getWorkerEnv, parseAllowedOrigins } from '../../lib/env';
 
 const genericError = { error: 'Unable to submit your request right now.' };
@@ -110,9 +110,9 @@ export const POST: APIRoute = async ({ request }) => {
         .prepare(
           `INSERT INTO portfolio_leads (
             id, name, email, business_name, business_type, existing_website,
-            primary_goal, needed_features, launch_timing, message, consent,
-            source_demo, created_at
-          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            product_count, primary_goal, needed_features, launch_timing, message,
+            consent, source_demo, created_at
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         )
         .bind(
           id,
@@ -121,12 +121,13 @@ export const POST: APIRoute = async ({ request }) => {
           lead.businessName ?? null,
           lead.businessType,
           lead.existingWebsite ?? null,
+          lead.productCount,
           lead.primaryGoal,
           JSON.stringify(lead.neededFeatures),
           lead.launchTiming,
           lead.message ?? null,
           1,
-          RESTAURANT.sourceDemo,
+          STORE.sourceDemo,
           createdAt,
         )
         .run();

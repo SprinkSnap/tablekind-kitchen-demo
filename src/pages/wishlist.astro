@@ -1,0 +1,33 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/astro/Breadcrumbs.astro';
+import WishlistPage from '../components/react/WishlistPage';
+import { STORE } from '../lib/config';
+import { breadcrumbSchema } from '../lib/seo';
+
+const schemas = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Wishlist', path: '/wishlist/' },
+  ]),
+];
+---
+
+<BaseLayout
+  title="Wishlist"
+  description={`Save favourite ${STORE.name} products to a demo wishlist—stored locally in your browser for this portfolio demonstration.`}
+  path="/wishlist/"
+  schemas={schemas}
+>
+  <section class="section container-page">
+    <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Wishlist' }]} />
+    <h1 class="section-title">Wishlist</h1>
+    <p class="section-lede">
+      Save products you like and move them to the demo cart when you are ready. Wishlist data stays in
+      your browser for this demonstration only.
+    </p>
+    <WishlistPage client:load />
+  </section>
+</BaseLayout>

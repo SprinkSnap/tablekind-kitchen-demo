@@ -1,0 +1,155 @@
+---
+import type { Product } from '../../data/products';
+import { getCollection } from '../../data/products';
+import { formatCad } from '../../lib/currency';
+import ProductCardActions from '../react/ProductCardActions';
+
+interface Props {
+  product: Product;
+  eager?: boolean;
+  showQuickView?: boolean;
+}
+
+const { product, eager = false, showQuickView = true } = Astro.props;
+const collection = getCollection(product.collection);
+const defaultVariant =
+  product.variants.find((variant) => variant.available) ?? product.variants[0];
+const productUrl = `/products/${product.slug}/`;
+---
+
+<article class="product-card surface">
+  <a class="product-card__media" href={productUrl}>
+    {
+      product.newArrival && <span class="product-card__badge chip">New</span>
+    }
+    <img
+      src={product.images[0]}
+      alt={product.imageAlt[0] ?? product.name}
+      width="600"
+      height="600"
+      loading={eager ? 'eager' : 'lazy'}
+      decoding="async"
+      class="product-card__image"
+    />
+  </a>
+
+  <div class="product-card__body">
+    <p class="product-card__collection">
+      {collection?.name ?? product.collection}
+    </p>
+    <h3 class="product-card__title">
+      <a href={productUrl}>{product.name}</a>
+    </h3>
+    <p class="product-card__price">
+      <span class="price">{formatCad(product.price)}</span>
+      {
+        product.compareAtPrice && product.compareAtPrice > product.price && (
+          <span class="product-card__compare">{formatCad(product.compareAtPrice)}</span>
+        )
+      }
+    </p>
+
+    <ProductCardActions
+      client:visible
+      productId={product.id}
+      productSlug={product.slug}
+      productName={product.name}
+      variants={product.variants.map((variant) => ({
+        id: variant.id,
+        name: variant.name,
+        available: variant.available,
+      }))}
+      defaultVariantId={defaultVariant?.id}
+      price={product.price}
+      showQuickView={showQuickView}
+    />
+  </div>
+</article>
+
+<style>
+  .product-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    transition: box-shadow var(--motion-fast) var(--ease-out);
+  }
+
+  .product-card:hover {
+    box-shadow: var(--shadow-lift);
+  }
+
+  .product-card__media {
+    position: relative;
+    display: block;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: var(--color-linen);
+    text-decoration: none;
+  }
+
+  .product-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--motion-med) var(--ease-out);
+  }
+
+  .product-card__media:hover .product-card__image {
+    transform: scale(1.03);
+  }
+
+  .product-card__badge {
+    position: absolute;
+    top: 0.65rem;
+    left: 0.65rem;
+    z-index: 1;
+  }
+
+  .product-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 0.9rem 0.95rem 1rem;
+    flex: 1;
+  }
+
+  .product-card__collection {
+    margin: 0;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-harbour);
+  }
+
+  .product-card__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    line-height: 1.25;
+  }
+
+  .product-card__title a {
+    color: var(--color-dark-pine);
+    text-decoration: none;
+  }
+
+  .product-card__title a:hover {
+    color: var(--color-harbour);
+  }
+
+  .product-card__price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.45rem;
+    margin: 0;
+  }
+
+  .product-card__compare {
+    font-size: 0.88rem;
+    color: rgb(36 40 36 / 0.55);
+    text-decoration: line-through;
+    font-weight: 500;
+  }
+</style>

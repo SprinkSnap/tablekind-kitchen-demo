@@ -1,32 +1,33 @@
-# Tablekind Kitchen Demo
+# Harbour & Pine Home Demo
 
-Portfolio restaurant website concept by **Che Xu Studio**.
+Portfolio e-commerce website concept by **Che Xu Studio**.
 
-- Restaurant: **Tablekind Kitchen**
-- Tagline: **Seasonal food, made for gathering.**
-- Public domain: https://tablekindkitchen.chexustudio.com
-- Case study: https://chexustudio.com/work/tablekind-kitchen
-- Worker: `tablekind-kitchen-demo`
-- Staging Worker: `tablekind-kitchen-demo-staging`
+- Store: **Harbour & Pine Home**
+- Tagline: **Thoughtful pieces for everyday living.**
+- Public domain: https://harbourandpinehome.chexustudio.com
+- Case study: https://chexustudio.com/work/harbour-pine-home
+- Worker: `harbour-pine-home-demo`
+- Staging Worker: `harbour-pine-home-demo-staging`
 
-Tablekind Kitchen is fictional. The standalone demo uses `noindex, nofollow`. Genuine business enquiries go to Che Xu Studio only.
+Harbour & Pine Home is fictional. The standalone demo uses `noindex, nofollow`. Genuine business enquiries go to Che Xu Studio only.
 
 ## Architecture
 
-- **Astro** (static prerendered pages) + **Cloudflare Workers** adapter
-- **React islands** for reservations, ordering, catering planner, portfolio bar, enquiry drawer and assistant
+- **Astro** (prerendered public pages) + **Cloudflare Workers** adapter
+- **React islands** for filters, cart drawer, wishlist, checkout demo, enquiry drawer and assistant
 - **Tailwind CSS v4** design tokens
-- **Typed menu module** shared across pages and demos
-- **D1** for consented Che Xu Studio leads (`source_demo = tablekind-kitchen`)
+- **Typed product module** (`src/data/products.ts`) as the single catalogue source of truth
+- **D1** for consented Che Xu Studio leads (`source_demo = harbour-pine-home`)
 - **Turnstile** + origin checks + honeypot + in-process rate limiting on `/api/portfolio-lead/`
 - Optional **Workers AI** assistant at `/api/assistant/` with safe local fallback
+- Demo cart/wishlist persist in **localStorage** only—never to production services
 
 ```
 src/
   components/astro|react  UI
-  data/                   menu + FAQ
+  data/                   products + FAQ
   layouts/                BaseLayout
-  lib/                    config, cart, SEO, validation, reservations
+  lib/                    config, cart, wishlist, SEO, validation, analytics
   pages/                  routes + API
 migrations/               D1 SQL
 tests/                    Vitest + Playwright
@@ -38,6 +39,7 @@ tests/                    Vitest + Playwright
 npm install
 cp .env.example .env
 cp .dev.vars.example .dev.vars
+npm run generate:assets   # regenerates SVG product/collection imagery
 npm run dev
 ```
 
@@ -71,41 +73,42 @@ When `DEMO_MODE=true` (default):
 
 - `noindex, nofollow`
 - Fictional disclosure shown
-- No fake LocalBusiness / address / phone schema
-- Reservations + ordering stay local demos
+- No fake Product / Offer / merchant schema
+- Cart + checkout stay local demos (no real orders or payments)
 - Real leads route to Che Xu Studio
 
 When `DEMO_MODE=false`:
 
-- Require verified restaurant NAP, hours and menu data
+- Require verified merchant information, product data and pricing
+- Require accurate stock and identifiers
+- Require approved shipping and return policies
 - Enable indexing only after validation
 - Enable accurate structured data
-- Remove fictional disclosure
-- Connect approved real integrations
+- Remove fictional disclosures
+- Connect approved checkout and fulfilment integrations
 
 ## Cloudflare setup
 
 1. Deploy with `npm run deploy` (or Workers Builds using that command).  
-   Wrangler auto-provisions the `tablekind-leads` D1 database when `database_id` is omitted, then applies migrations via `npm run db:remote`.
+   Wrangler auto-provisions the `harbour-pine-leads` D1 database when `database_id` is omitted, then applies migrations via `npm run db:remote`.
 2. Create Turnstile widget and set secrets:
    - `wrangler secret put TURNSTILE_SECRET_KEY`
 3. Set production vars / secrets for allowed origins
-4. Attach custom domain `tablekindkitchen.chexustudio.com`
+4. Attach custom domain `harbourandpinehome.chexustudio.com`
 
 Do not commit a placeholder D1 `database_id`. Leave it omitted for auto-provisioning, or paste a real ID from `wrangler d1 list` after the first deploy.
 
 Staging:
 
 ```bash
-npm run build
-npx wrangler deploy --env staging
+npm run deploy:staging
 ```
 
 ## D1 migrations
 
 Migration: `migrations/0001_portfolio_leads.sql`
 
-Stores consented Che Xu Studio leads only. Never store fictional reservation/order payloads.
+Stores consented Che Xu Studio leads only (`product_count` included). Never store fictional cart or checkout payloads.
 
 ## Turnstile
 
@@ -120,18 +123,29 @@ Stores consented Che Xu Studio leads only. Never store fictional reservation/ord
 ## Image workflow
 
 ```bash
-node scripts/generate-dish-svgs.mjs
+npm run generate:assets
 ```
 
-Original SVG dish/hero/OG assets are documented in `ASSET_LICENSES.md`. Replace with licensed photography for a real restaurant and prefer Cloudflare Images when configured.
+Original SVG product/hero/OG assets are documented in `ASSET_LICENSES.md`. Replace with licensed photography for a real merchant and prefer Cloudflare Images when configured (AVIF/WebP, responsive `srcset`, reserved aspect ratios).
+
+## Stripe test mode (optional)
+
+Not enabled by default. If implemented later:
+
+- Test mode only with explicit configuration
+- Create Checkout Sessions server-side
+- Use server-side product/price allowlists
+- Never trust client-provided prices
+- Verify webhook signatures and protect against duplicate events
+- Clearly label Stripe’s test environment
 
 ## Workers AI
 
-If the `AI` binding is available, `/api/assistant/` uses a small instruct model with strict guardrails. Without AI, a deterministic local helper responds safely.
+If the `AI` binding is available, `/api/assistant/` uses a small instruct model with strict guardrails. Without AI, a deterministic local helper responds safely from the typed catalogue.
 
-## Menu editing
+## Product and collection editing
 
-Edit `src/data/menu.ts`. All menu pages, filters, featured modules and ordering read from this typed source.
+Edit `src/data/products.ts`. Shop, collections, product pages, filters, finder, cart and assistant all read from this typed source.
 
 ## Testing
 
@@ -157,55 +171,47 @@ Production deploy (build + Wrangler):
 npm run deploy
 ```
 
-Staging deploy:
-
-```bash
-npm run deploy:staging
-```
-
 ### Cloudflare Workers Builds settings
 
-Workers Builds must build Astro **before** Wrangler deploys. Use one of:
+| Field | Value |
+| --- | --- |
+| Deploy command | `npm run deploy` |
 
-**Option A — single deploy command (recommended)**
+Or separate build + deploy:
 
-- **Build command:** leave empty / unused
-- **Deploy command:** `npm run deploy`
+| Field | Value |
+| --- | --- |
+| Build command | `npm run build` |
+| Deploy command | `npx wrangler deploy --env="" && npm run db:remote` |
 
-**Option B — separate build + deploy**
-
-- **Build command:** `npm run build`
-- **Deploy command:** `npx wrangler deploy --env=""`
-
-`--env=""` targets the top-level Worker (`tablekind-kitchen-demo`) when a `staging` environment is also defined in `wrangler.jsonc`.
-
-Do **not** set the deploy command to bare `npx wrangler deploy` without a prior Astro build — Wrangler will fail looking for `@astrojs/cloudflare/entrypoints/server` before `dist/` exists.
+`--env=""` targets the top-level Worker (`harbour-pine-home-demo`) when a `staging` environment is also defined.
 
 ## Custom domain
 
 1. Deploy Worker
-2. In Cloudflare, add route/custom domain `tablekindkitchen.chexustudio.com`
+2. In Cloudflare, add route/custom domain `harbourandpinehome.chexustudio.com`
 3. Update `PUBLIC_SITE_URL` and `ALLOWED_ORIGINS`
 4. Verify HTTPS, headers and Turnstile
 
 ## Case-study publishing
 
-Use `CASE_STUDY_COPY.md` for `https://chexustudio.com/work/tablekind-kitchen`. Attach real screenshots after deploy. Never invent traffic/conversion results.
+Use `CASE_STUDY_COPY.md` for `https://chexustudio.com/work/harbour-pine-home`. Attach real screenshots after deploy. Never invent traffic/conversion results.
 
-## Converting the demo for a verified restaurant
+## Converting the demo for a verified real merchant
 
-1. Collect verified NAP, hours, menu, imagery and policies
+1. Collect verified merchant info, products, pricing, imagery and policies
 2. Set `DEMO_MODE=false` only after validation
-3. Wire reservation + ordering adapters to approved providers
-4. Enable accurate Restaurant/LocalBusiness schema
+3. Wire checkout + fulfilment to approved providers
+4. Enable accurate Product / Offer / OnlineStore schema
 5. Remove portfolio disclosure + studio-only lead routing as appropriate
 6. Re-run accessibility, SEO and performance QA
 
 ## Owner review required
 
 - Turnstile keys
-- D1 database id
+- D1 database id (after first deploy)
 - Custom domain / DNS
 - Packages + case study URLs if different
-- Any real restaurant content before leaving demo mode
+- Any real merchant content before leaving demo mode
 - Privacy policy / data retention for leads
+- Stripe test keys only if enabling payments later

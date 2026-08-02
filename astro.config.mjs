@@ -4,7 +4,7 @@ import cloudflare from '@astrojs/cloudflare';
 import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 
-const site = process.env.PUBLIC_SITE_URL ?? 'https://tablekindkitchen.chexustudio.com';
+const site = process.env.PUBLIC_SITE_URL ?? 'https://harbourandpinehome.chexustudio.com';
 
 // https://astro.build/config
 export default defineConfig({

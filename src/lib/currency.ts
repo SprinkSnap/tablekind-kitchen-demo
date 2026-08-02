@@ -1,10 +1,10 @@
-import { RESTAURANT } from './config';
+import { STORE } from './config';
 
 /** Format a CAD amount for en-CA display. */
 export function formatCad(amount: number): string {
-  return new Intl.NumberFormat(RESTAURANT.locale, {
+  return new Intl.NumberFormat(STORE.locale, {
     style: 'currency',
-    currency: RESTAURANT.currency,
+    currency: STORE.currency,
     minimumFractionDigits: amount % 1 === 0 ? 0 : 2,
     maximumFractionDigits: 2,
   }).format(amount);

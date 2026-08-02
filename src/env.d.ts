@@ -12,6 +12,14 @@ declare namespace Cloudflare {
     TURNSTILE_SECRET_KEY?: string;
     RATE_LIMIT_SALT?: string;
     PUBLIC_TURNSTILE_SITE_KEY?: string;
+    ALLOWED_ORIGINS?: string;
+    DEMO_MODE?: string;
+    PUBLIC_DEMO_MODE?: string;
+    PUBLIC_SITE_URL?: string;
+    PUBLIC_STUDIO_URL?: string;
+    PUBLIC_CASE_STUDY_URL?: string;
+    PUBLIC_PACKAGES_URL?: string;
+    DB?: D1Database;
     /** Optional Workers AI binding — enable in wrangler when desired. */
     AI?: Ai;
   }

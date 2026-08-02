@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <rect width="1200" height="630" fill="#10271E"/>
-  <circle cx="980" cy="140" r="180" fill="#C76548" opacity="0.35"/>
-  <circle cx="180" cy="520" r="160" fill="#C99A45" opacity="0.28"/>
-  <text x="80" y="250" fill="#F7F2E8" font-family="Georgia, serif" font-size="72">Tablekind Kitchen</text>
-  <text x="80" y="330" fill="#A9B8A4" font-family="Arial, sans-serif" font-size="34">Seasonal food, made for gathering.</text>
-  <text x="80" y="520" fill="#F7F2E8" font-family="Arial, sans-serif" font-size="24">Portfolio concept by Che Xu Studio</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Harbour and Pine Home">
+  <rect width="1200" height="630" fill="#102820"/>
+  <circle cx="980" cy="120" r="200" fill="#285B68" opacity="0.35"/>
+  <circle cx="180" cy="520" r="160" fill="#9EAF9D" opacity="0.3"/>
+  <text x="80" y="280" fill="#F7F3EC" font-family="Georgia, serif" font-size="64">Harbour &amp; Pine Home</text>
+  <text x="80" y="360" fill="#E8DDCC" font-family="Arial, sans-serif" font-size="28">Thoughtful pieces for everyday living.</text>
+  <text x="80" y="520" fill="#9EAF9D" font-family="Arial, sans-serif" font-size="20">Portfolio concept by Che Xu Studio</text>
 </svg>

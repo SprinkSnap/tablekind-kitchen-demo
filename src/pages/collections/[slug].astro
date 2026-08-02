@@ -1,0 +1,90 @@
+---
+export const prerender = true;
+
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/astro/Breadcrumbs.astro';
+import ProductFilters from '../../components/react/ProductFilters';
+import { COLLECTIONS, type Collection } from '../../data/products';
+import { breadcrumbSchema } from '../../lib/seo';
+
+export const getStaticPaths: GetStaticPaths = () =>
+  COLLECTIONS.map((collection) => ({
+    params: { slug: collection.slug },
+    props: { collection },
+  }));
+
+interface Props {
+  collection: Collection;
+}
+
+const { collection } = Astro.props;
+
+const schemas = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Collections', path: '/collections/' },
+    { name: collection.name, path: `/collections/${collection.slug}/` },
+  ]),
+];
+---
+
+<BaseLayout
+  title={collection.seoTitle}
+  description={collection.seoDescription}
+  path={`/collections/${collection.slug}/`}
+  schemas={schemas}
+>
+  <section class="section container-page">
+    <Breadcrumbs
+      items={[
+        { name: 'Home', href: '/' },
+        { name: 'Collections', href: '/collections/' },
+        { name: collection.name },
+      ]}
+    />
+    <div class="collection-hero">
+      <img
+        src={collection.image}
+        alt={collection.imageAlt}
+        width="1200"
+        height="750"
+        loading="eager"
+        decoding="async"
+        class="collection-hero__image"
+      />
+      <div class="collection-hero__copy">
+        <h1 class="section-title">{collection.name}</h1>
+        <p class="section-lede">{collection.longDescription}</p>
+      </div>
+    </div>
+    <ProductFilters client:load mode="collection" initialCollection={collection.slug} />
+  </section>
+</BaseLayout>
+
+<style>
+  .collection-hero {
+    display: grid;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .collection-hero {
+      grid-template-columns: 1fr 1.1fr;
+      align-items: center;
+    }
+  }
+
+  .collection-hero__image {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    background: var(--color-linen);
+  }
+
+  .collection-hero__copy .section-title {
+    margin-bottom: 0.65rem;
+  }
+</style>
