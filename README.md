@@ -173,16 +173,16 @@ npm run deploy
 
 ### Cloudflare Workers Builds settings
 
+**Required:** set the Workers Builds **Deploy command** to `npm run deploy`.
+
+Bare `npx wrangler deploy` previously failed with “Could not detect a directory containing static files” because Astro had not written `dist/client`. See `CLOUDFLARE_BUILD.md`.
+
 | Field | Value |
 | --- | --- |
+| Install command | `npm ci` |
 | Deploy command | `npm run deploy` |
 
-Or separate build + deploy:
-
-| Field | Value |
-| --- | --- |
-| Build command | `npm run build` |
-| Deploy command | `npx wrangler deploy --env="" && npm run db:remote` |
+`wrangler.jsonc` also defines `build.command = npm run build` so Wrangler runs Astro before upload. Prefer `npm run deploy` so D1 migrations and `--env=""` are included.
 
 `--env=""` targets the top-level Worker (`harbour-pine-home-demo`) when a `staging` environment is also defined.
 

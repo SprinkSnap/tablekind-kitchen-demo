@@ -3,8 +3,15 @@
   "compatibility_date": "2026-08-02",
   "compatibility_flags": ["nodejs_compat"],
   "name": "harbour-pine-home-demo",
+  // Astro must emit dist/ before Wrangler can upload assets or resolve the
+  // Worker entry. This runs automatically on `wrangler deploy` / `wrangler dev`
+  // so Cloudflare Workers Builds with deploy command `npx wrangler deploy`
+  // still builds the site (prefer dashboard deploy command: `npm run deploy`).
+  "build": {
+    "command": "npm run build",
+    "watch_dir": ["src", "public"]
+  },
   // Resolved by Astro after `npm run build` into dist/server/entry.mjs.
-  // Do not run `wrangler deploy` without building first.
   "main": "@astrojs/cloudflare/entrypoints/server",
   "assets": {
     "binding": "ASSETS",
