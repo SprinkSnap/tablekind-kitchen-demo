@@ -104,14 +104,24 @@ Performance should be measured on the deployed Worker with Lighthouse / CrUX aft
 
 ## Screenshots
 
-Capture and attach after deploy:
+Capture after deploy with `npm run screenshots:mobile` (iPhone 14 @ 2×, 390×844).
 
-1. Desktop homepage hero
-2. Mobile homepage with sticky actions
-3. Menu filtering
-4. Reservation demo completion
-5. Pickup cart drawer
-6. Che Xu Studio enquiry drawer
+### Recommended mobile set (case-study priority)
+
+1. `01-mobile-homepage-sticky-actions.png` — Homepage hero + sticky Menu / Reserve / Order bar
+2. `02-mobile-menu-filtering.png` — Menu search + dietary filter with live results
+3. `03-mobile-reservation-complete.png` — Reservation demo completion + studio CTA
+4. `04-mobile-pickup-cart-drawer.png` — Pickup cart drawer with totals
+5. `05-mobile-studio-enquiry-drawer.png` — Che Xu Studio enquiry drawer
+
+### Supporting mobile shots
+
+6. `06-mobile-reservation-preferences.png` — Reservation preferences step
+7. `07-mobile-order-browse.png` — Pickup order browse with dish card
+
+### Also capture (desktop)
+
+8. Desktop homepage hero (≥1280px, full-bleed, no DevTools chrome)
 
 ## Primary CTA
 
