@@ -104,7 +104,7 @@ Performance should be measured on the deployed Worker with Lighthouse / CrUX aft
 
 ## Screenshots
 
-Capture after deploy with `npm run screenshots:desktop` (1440×900 @ 2×) and `npm run screenshots:mobile` when available.
+Capture after deploy with `npm run screenshots:desktop` (1440×900 @ 2×) and `npm run screenshots:mobile` (iPhone 14 @ 2×, 390×844).
 
 ### Recommended desktop set (case-study priority)
 
@@ -120,10 +120,18 @@ Capture after deploy with `npm run screenshots:desktop` (1440×900 @ 2×) and `n
 7. `07-desktop-dining-options.png` — Homepage “Choose How You Gather” paths
 8. `08-desktop-order-browse.png` — Pickup order dish grid
 
-### Also capture (mobile)
+### Recommended mobile set (case-study priority)
 
-9. Mobile homepage with sticky Menu / Reserve / Order actions
-10. Mobile menu filtering, reservation complete, cart drawer, and studio enquiry
+1. `01-mobile-homepage-sticky-actions.png` — Homepage hero + sticky Menu / Reserve / Order bar
+2. `02-mobile-menu-filtering.png` — Menu search + dietary filter with live results
+3. `03-mobile-reservation-complete.png` — Reservation demo completion + studio CTA
+4. `04-mobile-pickup-cart-drawer.png` — Pickup cart drawer with totals
+5. `05-mobile-studio-enquiry-drawer.png` — Che Xu Studio enquiry drawer
+
+### Supporting mobile shots
+
+6. `06-mobile-reservation-preferences.png` — Reservation preferences step
+7. `07-mobile-order-browse.png` — Pickup order browse with dish card
 
 ## Primary CTA
 
