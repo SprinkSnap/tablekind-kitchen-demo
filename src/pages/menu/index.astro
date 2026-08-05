@@ -52,23 +52,25 @@ const byCategory = Object.keys(CATEGORY_META).map((key) => ({
 
     <MenuFilters client:load showAddButtons />
 
-    <div class="sr-only-focusable noscript-menu">
-      <h2>Full menu</h2>
-      {
-        byCategory.map((cat) => (
-          <section id={`static-${cat.key}`} aria-label={cat.label}>
-            <h3>{cat.label}</h3>
-            <ul>
-              {cat.items.map((item) => (
-                <li>
-                  <strong>{item.name}</strong> — {money(item.price)}. {item.description}
-                </li>
-              ))}
-            </ul>
-          </section>
-        ))
-      }
-    </div>
+    <noscript>
+      <div class="noscript-menu">
+        <h2>Full menu</h2>
+        {
+          byCategory.map((cat) => (
+            <section id={cat.key} aria-labelledby={`static-${cat.key}`}>
+              <h3 id={`static-${cat.key}`}>{cat.label}</h3>
+              <ul>
+                {cat.items.map((item) => (
+                  <li>
+                    <strong>{item.name}</strong> — {money(item.price)}. {item.description}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))
+        }
+      </div>
+    </noscript>
   </section>
 </BaseLayout>
 
@@ -92,4 +94,13 @@ const byCategory = Object.keys(CATEGORY_META).map((key) => ({
   }
   .disclosure { margin: 1rem 0; }
   .noscript-menu { margin-top: 2rem; }
+  .noscript-menu h2,
+  .noscript-menu h3 {
+    font-family: var(--font-display);
+    color: #10271e;
+  }
+  .noscript-menu ul {
+    margin: 0.5rem 0 1.25rem;
+    padding-left: 1.1rem;
+  }
 </style>
