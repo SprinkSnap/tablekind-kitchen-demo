@@ -41,28 +41,30 @@ const schemas = [
     <h1 class="section-title">Dinner</h1>
     <p class="section-lede">Seasonal dinners with neighbourhood warmth—small plates, mains and sides.</p>
     <p class="disclosure">{DISCLOSURE.dietary}</p>
-    {
-      groups.map((group) => (
-        <section class="group">
-          <h2>{group.category.replace('-', ' ')}</h2>
-          <ul class="static-list">
-            {group.items.map((item) => (
-              <li>
-                <div class="row">
-                  <h3>{item.name}</h3>
-                  <p class="price">{formatCad(item.price)}</p>
-                </div>
-                <p>{item.description}</p>
-                {item.dietaryLabels.length > 0 && (
-                  <p>{item.dietaryLabels.map((l) => DIETARY_LABELS[l]).join(' · ')}</p>
-                )}
-              </li>
-            ))}
-          </ul>
-        </section>
-      ))
-    }
     <MenuFilters client:load initialCategory="mains" showAddButtons />
+    <noscript>
+      {
+        groups.map((group) => (
+          <section class="group">
+            <h2>{group.category.replace('-', ' ')}</h2>
+            <ul class="static-list">
+              {group.items.map((item) => (
+                <li>
+                  <div class="row">
+                    <h3>{item.name}</h3>
+                    <p class="price">{formatCad(item.price)}</p>
+                  </div>
+                  <p>{item.description}</p>
+                  {item.dietaryLabels.length > 0 && (
+                    <p>{item.dietaryLabels.map((l) => DIETARY_LABELS[l]).join(' · ')}</p>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))
+      }
+    </noscript>
   </section>
 </BaseLayout>
 
