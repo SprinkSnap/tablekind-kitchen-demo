@@ -17,39 +17,46 @@ function isActive(href: string) {
 }
 ---
 
-<header class="site-header" data-site-header>
-  <div class="container-page site-header__inner">
-    <Logo />
-    <nav class="desktop-nav" aria-label="Primary">
-      <ul>
-        {
-          links.map((link) => (
-            <li>
-              <a href={link.href} aria-current={isActive(link.href) ? 'page' : undefined}>
-                {link.label}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </nav>
-    <div class="site-header__actions">
-      <a class="btn btn-ghost header-studio" href="#studio-enquiry" data-open-enquiry>
-        Build a Website Like This
-      </a>
-      <a class="btn btn-primary" href="/reservations/">Reserve a Table</a>
-      <button
-        class="menu-toggle"
-        type="button"
-        aria-expanded="false"
-        aria-controls="mobile-nav"
-        data-menu-toggle
-      >
-        <span class="sr-only">Open menu</span>
-        <span aria-hidden="true" class="menu-toggle__bars"></span>
-      </button>
+<!--
+  Keep the mobile overlay outside the sticky header. backdrop-filter /
+  sticky on the header creates a containing block that would otherwise
+  trap position:fixed and clip the menu inside the top bar.
+-->
+<div class="site-header-root" data-site-header>
+  <header class="site-header">
+    <div class="container-page site-header__inner">
+      <Logo />
+      <nav class="desktop-nav" aria-label="Primary">
+        <ul>
+          {
+            links.map((link) => (
+              <li>
+                <a href={link.href} aria-current={isActive(link.href) ? 'page' : undefined}>
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      <div class="site-header__actions">
+        <a class="btn btn-ghost header-studio" href="#studio-enquiry" data-open-enquiry>
+          Build a Website Like This
+        </a>
+        <a class="btn btn-primary header-reserve" href="/reservations/">Reserve a Table</a>
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mobile-nav"
+          data-menu-toggle
+        >
+          <span class="sr-only">Open menu</span>
+          <span aria-hidden="true" class="menu-toggle__bars"></span>
+        </button>
+      </div>
     </div>
-  </div>
+  </header>
 
   <div id="mobile-nav" class="mobile-nav" data-mobile-nav hidden>
     <div class="mobile-nav__panel" role="dialog" aria-modal="true" aria-label="Mobile navigation">
@@ -81,16 +88,24 @@ function isActive(href: string) {
       </div>
     </div>
   </div>
-</header>
+</div>
 
 <script>
   function initHeader() {
     const root = document.querySelector('[data-site-header]');
-    if (!root) return;
+    if (!root || root instanceof HTMLElement === false) return;
+    if (root.dataset.menuBound === '1') return;
+    root.dataset.menuBound = '1';
+
     const toggle = root.querySelector('[data-menu-toggle]');
     const closeBtn = root.querySelector('[data-menu-close]');
     const nav = root.querySelector('[data-mobile-nav]');
     if (!(toggle instanceof HTMLButtonElement) || !(nav instanceof HTMLElement)) return;
+
+    // Ensure overlay is a direct child of body so fixed positioning uses the viewport.
+    if (nav.parentElement !== document.body) {
+      document.body.appendChild(nav);
+    }
 
     let lastFocus: HTMLElement | null = null;
 
@@ -98,6 +113,7 @@ function isActive(href: string) {
       lastFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
       nav.hidden = false;
       toggle.setAttribute('aria-expanded', 'true');
+      document.documentElement.classList.add('nav-open');
       document.body.style.overflow = 'hidden';
       const first = nav.querySelector('a, button');
       if (first instanceof HTMLElement) first.focus();
@@ -106,6 +122,7 @@ function isActive(href: string) {
     const close = () => {
       nav.hidden = true;
       toggle.setAttribute('aria-expanded', 'false');
+      document.documentElement.classList.remove('nav-open');
       document.body.style.overflow = '';
       (lastFocus ?? toggle).focus();
     };
@@ -129,6 +146,11 @@ function isActive(href: string) {
 </script>
 
 <style>
+  .site-header-root {
+    position: relative;
+    z-index: 40;
+  }
+
   .site-header {
     position: sticky;
     top: var(--portfolio-offset, 0px);
@@ -142,7 +164,7 @@ function isActive(href: string) {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
+    gap: 0.75rem;
     min-height: var(--header-height);
   }
 
@@ -179,9 +201,14 @@ function isActive(href: string) {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    flex-shrink: 0;
   }
 
   .header-studio {
+    display: none;
+  }
+
+  .header-reserve {
     display: none;
   }
 
@@ -221,29 +248,91 @@ function isActive(href: string) {
     top: 6px;
   }
 
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+
+  @media (min-width: 480px) {
+    .header-reserve {
+      display: inline-flex;
+    }
+  }
+
+  @media (min-width: 960px) {
+    .desktop-nav {
+      display: block;
+    }
+
+    .header-studio {
+      display: inline-flex;
+    }
+
+    .header-reserve {
+      display: inline-flex;
+    }
+
+    .menu-toggle {
+      display: none;
+    }
+  }
+</style>
+
+<style is:global>
   .mobile-nav {
     position: fixed;
     inset: 0;
-    z-index: 60;
-    background: rgb(16 39 30 / 0.45);
+    z-index: 80;
+    background: rgb(16 39 30 / 0.5);
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .mobile-nav[hidden] {
+    display: none !important;
   }
 
   .mobile-nav__panel {
-    position: absolute;
-    inset: 0 0 0 auto;
     width: min(22rem, 100%);
+    height: 100%;
+    max-height: 100dvh;
     background: var(--color-cream);
     padding: 1rem;
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
     display: flex;
     flex-direction: column;
     gap: 1rem;
     overflow: auto;
+    box-shadow: -12px 0 40px rgb(16 39 30 / 0.2);
+    animation: mobile-nav-in 180ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-nav__panel {
+      animation: none;
+    }
+  }
+
+  @keyframes mobile-nav-in {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
   }
 
   .mobile-nav__top {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 0.75rem;
   }
 
   .mobile-nav ul {
@@ -262,11 +351,13 @@ function isActive(href: string) {
     border-radius: var(--radius-md);
     text-decoration: none;
     font-weight: 650;
+    color: var(--color-charcoal);
   }
 
   .mobile-nav a[aria-current='page'],
   .mobile-nav a:hover {
     background: rgb(24 57 43 / 0.07);
+    color: var(--color-forest);
   }
 
   .mobile-nav__ctas {
@@ -275,28 +366,19 @@ function isActive(href: string) {
     margin-top: auto;
   }
 
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
+  .mobile-nav .menu-close {
+    min-width: 44px;
+    min-height: 44px;
+    border: 1px solid rgb(24 57 43 / 0.18);
+    border-radius: 999px;
+    background: var(--color-soft);
+    cursor: pointer;
+    padding: 0.4rem 0.9rem;
+    font: inherit;
+    font-weight: 650;
   }
 
-  @media (min-width: 960px) {
-    .desktop-nav {
-      display: block;
-    }
-
-    .header-studio {
-      display: inline-flex;
-    }
-
-    .menu-toggle {
-      display: none;
-    }
+  html.nav-open .mobile-actions {
+    visibility: hidden;
   }
 </style>
