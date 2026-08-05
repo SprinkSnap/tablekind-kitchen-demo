@@ -272,7 +272,7 @@ export const MENU_ITEMS: MenuItem[] = [
     description: 'High-heat broccoli, garlic yogurt, toasted almonds and zest.',
     price: 14,
     category: 'small-plates',
-    image: '/images/dishes/charred-broccoli.svg',
+    image: '/images/dishes/charred-broccoli.webp',
     imageAlt: 'Charred broccoli with yogurt and almonds',
     dietaryLabels: ['vegetarian', 'gluten-conscious'],
     featured: false,
