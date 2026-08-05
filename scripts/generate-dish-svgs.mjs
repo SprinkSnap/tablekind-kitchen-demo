@@ -8,26 +8,9 @@ mkdirSync(outDir, { recursive: true });
 mkdirSync(join(root, 'public/images'), { recursive: true });
 mkdirSync(join(root, 'public/og'), { recursive: true });
 
-const dishes = [
-  // Photo dishes (.webp): orchard-pancake, trout-toast, market-greens, chicken-sandwich, halloumi-bites, maple-chicken, tomato-farro, garden-scramble, mushroom-benny, citrus-granola, cedar-salmon, squash-soup, charred-broccoli
-  ['whipped-ricotta', '#FFFDFC', '#C99A45', 'Ricotta'],
-  ['carrot-fritters', '#C76548', '#C99A45', 'Fritters'],
-  ['mushroom-risotto', '#A9B8A4', '#10271E', 'Risotto'],
-  ['steelhead-lentils', '#C76548', '#18392B', 'Steelhead'],
-  ['short-rib', '#10271E', '#C76548', 'Short rib'],
-  ['cabbage-steak', '#18392B', '#A9B8A4', 'Cabbage'],
-  ['crispy-potatoes', '#C99A45', '#F7F2E8', 'Potatoes'],
-  ['seasonal-greens', '#18392B', '#A9B8A4', 'Greens'],
-  ['warm-bread', '#C99A45', '#F7F2E8', 'Bread'],
-  ['chocolate-budino', '#10271E', '#C99A45', 'Budino'],
-  ['lemon-cake', '#C99A45', '#FFFDFC', 'Cake'],
-  ['berry-pavlova', '#C76548', '#FFFDFC', 'Pavlova'],
-  ['pear-crumble', '#C99A45', '#18392B', 'Crumble'],
-  ['garden-spritz', '#A9B8A4', '#18392B', 'Spritz'],
-  ['maple-ginger', '#C99A45', '#C76548', 'Soda'],
-  ['earl-grey', '#18392B', '#F7F2E8', 'Latte'],
-  ['cold-brew', '#10271E', '#C99A45', 'Cold brew'],
-];
+// All menu dish photos are owner-provided WebP assets under public/images/dishes/.
+// This script only regenerates the fallback hero SVG and Open Graph image.
+const dishes = [];
 
 function dishSvg(accent, secondary, label) {
   return `<?xml version="1.0" encoding="UTF-8"?>
