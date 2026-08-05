@@ -9,9 +9,8 @@ mkdirSync(join(root, 'public/images'), { recursive: true });
 mkdirSync(join(root, 'public/og'), { recursive: true });
 
 const dishes = [
-  // orchard-pancake uses public/images/dishes/orchard-pancake.webp (photo asset)
+  // orchard-pancake / trout-toast use .webp photo assets
   ['garden-scramble', '#A9B8A4', '#18392B', 'Scramble'],
-  ['trout-toast', '#C76548', '#F7F2E8', 'Toast'],
   ['mushroom-benny', '#18392B', '#C99A45', 'Benny'],
   ['citrus-granola', '#C99A45', '#FFFDFC', 'Granola'],
   ['market-greens', '#18392B', '#A9B8A4', 'Greens'],
