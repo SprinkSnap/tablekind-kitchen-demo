@@ -267,7 +267,7 @@
     overflow: hidden;
     background:
       linear-gradient(120deg, rgb(16 39 30 / 0.88), rgb(24 57 43 / 0.55) 45%, rgb(16 39 30 / 0.35)),
-      url("/images/hero-table.svg") center / cover no-repeat;
+      url("/images/tablekind-kitchen-seasonal-gathering-hero.webp") center / cover no-repeat;
     color: var(--color-soft);
   }
 
