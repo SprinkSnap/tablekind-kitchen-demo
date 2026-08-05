@@ -9,8 +9,7 @@ mkdirSync(join(root, 'public/images'), { recursive: true });
 mkdirSync(join(root, 'public/og'), { recursive: true });
 
 const dishes = [
-  // Photo dishes (.webp): orchard-pancake, trout-toast, market-greens, chicken-sandwich, halloumi-bites, maple-chicken, tomato-farro
-  ['garden-scramble', '#A9B8A4', '#18392B', 'Scramble'],
+  // Photo dishes (.webp): orchard-pancake, trout-toast, market-greens, chicken-sandwich, halloumi-bites, maple-chicken, tomato-farro, garden-scramble
   ['mushroom-benny', '#18392B', '#C99A45', 'Benny'],
   ['citrus-granola', '#C99A45', '#FFFDFC', 'Granola'],
   ['cedar-salmon', '#C76548', '#C99A45', 'Salmon'],
