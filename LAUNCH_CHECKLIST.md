@@ -20,7 +20,7 @@
 - [ ] `npm run test:e2e` passes
 - [ ] `npm run cf:dry-run` passes
 - [ ] Custom domain `tablekindkitchen.chexustudio.com` ready (owner action)
-- [ ] Case study published at `https://chexustudio.com/work/tablekind-kitchen` (owner action)
+- [ ] Case study published at `https://chexustudio.com/work/` (owner action)
 
 ## Production Worker
 
