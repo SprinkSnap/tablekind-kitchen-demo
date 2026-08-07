@@ -27,8 +27,8 @@
     "PUBLIC_DEMO_MODE": "true",
     "PUBLIC_SITE_URL": "https://tablekindkitchen.chexustudio.com",
     "PUBLIC_STUDIO_URL": "https://chexustudio.com",
-    "PUBLIC_CASE_STUDY_URL": "https://chexustudio.com/work/tablekind-kitchen",
-    "PUBLIC_PACKAGES_URL": "https://chexustudio.com/packages",
+    "PUBLIC_CASE_STUDY_URL": "https://chexustudio.com/work/",
+    "PUBLIC_PACKAGES_URL": "https://chexustudio.com/pricing/",
     "ALLOWED_ORIGINS": "https://tablekindkitchen.chexustudio.com,http://localhost:4321"
   },
   // Omit database_id so Wrangler auto-provisions D1 on first deploy.
@@ -50,8 +50,8 @@
         "PUBLIC_DEMO_MODE": "true",
         "PUBLIC_SITE_URL": "https://tablekind-kitchen-demo-staging.workers.dev",
         "PUBLIC_STUDIO_URL": "https://chexustudio.com",
-        "PUBLIC_CASE_STUDY_URL": "https://chexustudio.com/work/tablekind-kitchen",
-        "PUBLIC_PACKAGES_URL": "https://chexustudio.com/packages",
+        "PUBLIC_CASE_STUDY_URL": "https://chexustudio.com/work/",
+        "PUBLIC_PACKAGES_URL": "https://chexustudio.com/pricing/",
         "ALLOWED_ORIGINS": "https://tablekind-kitchen-demo-staging.workers.dev,http://localhost:4321"
       }
     }

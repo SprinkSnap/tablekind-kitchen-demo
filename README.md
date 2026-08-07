@@ -5,7 +5,7 @@ Portfolio restaurant website concept by **Che Xu Studio**.
 - Restaurant: **Tablekind Kitchen**
 - Tagline: **Seasonal food, made for gathering.**
 - Public domain: https://tablekindkitchen.chexustudio.com
-- Case study: https://chexustudio.com/work/tablekind-kitchen
+- Case study: https://chexustudio.com/work/
 - Worker: `tablekind-kitchen-demo`
 - Staging Worker: `tablekind-kitchen-demo-staging`
 
@@ -190,7 +190,7 @@ Do **not** set the deploy command to bare `npx wrangler deploy` without a prior 
 
 ## Case-study publishing
 
-Use `CASE_STUDY_COPY.md` for `https://chexustudio.com/work/tablekind-kitchen`. Attach real screenshots after deploy. Never invent traffic/conversion results.
+Use `CASE_STUDY_COPY.md` for `https://chexustudio.com/work/`. Attach real screenshots after deploy. Never invent traffic/conversion results.
 
 ## Converting the demo for a verified restaurant
 

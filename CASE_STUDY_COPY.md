@@ -1,6 +1,6 @@
 # Tablekind Kitchen Case Study Copy
 
-Publish at: `https://chexustudio.com/work/tablekind-kitchen`
+Publish at: `https://chexustudio.com/work/`
 
 ## SEO title
 

@@ -1,8 +1,8 @@
 export const STUDIO = {
   name: 'Che Xu Studio',
   url: 'https://chexustudio.com',
-  caseStudyUrl: 'https://chexustudio.com/work/tablekind-kitchen',
-  packagesUrl: 'https://chexustudio.com/packages',
+  caseStudyUrl: 'https://chexustudio.com/work/',
+  packagesUrl: 'https://chexustudio.com/pricing/',
   contactPath: '/contact',
 } as const;
 
