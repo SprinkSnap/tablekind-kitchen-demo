@@ -203,11 +203,11 @@ npm run screenshots:mobile    # iPhone 14 @ 2×
 # or: npm run screenshots
 ```
 
-Best single showcase frames for the work page:
+Committed frames live in [`docs/screenshots/`](./docs/screenshots/). Best single showcase frames:
 
-- Desktop — `01-desktop-homepage-hero.png`
-- Tablet — `01-tablet-homepage-hero.png`
-- Mobile — `01-mobile-homepage-sticky-actions.png`
+- Desktop — `docs/screenshots/showcase/showcase-desktop-homepage-hero.png`
+- Tablet — `docs/screenshots/showcase/showcase-tablet-homepage-hero.png`
+- Mobile — `docs/screenshots/showcase/showcase-mobile-homepage-sticky-actions.png`
 
 ## Converting the demo for a verified restaurant
 
