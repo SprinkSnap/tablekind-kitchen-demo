@@ -41,6 +41,7 @@ const schemas = [
       fetchpriority="high"
       decoding="async"
     />
+    <div class="hero__lift" aria-hidden="true"></div>
     <div class="hero__shade" aria-hidden="true"></div>
     <div class="container-page hero__content fade-up">
       <p class="eyebrow hero__eyebrow">Modern Neighbourhood Dining</p>
@@ -242,26 +243,62 @@ const schemas = [
     height: 100%;
     object-fit: cover;
     z-index: 0;
+    filter: brightness(1.58) contrast(1.16) saturate(1.35);
+    transform: scale(1.05);
+    transform-origin: 72% 42%;
+  }
+  .hero__lift {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 82% 95% at 80% 40%, rgb(255 240 210 / 0.55), transparent 60%),
+      radial-gradient(ellipse 58% 65% at 64% 72%, rgb(255 214 160 / 0.3), transparent 55%);
+    mix-blend-mode: soft-light;
   }
   .hero__shade {
     position: absolute;
     inset: 0;
-    z-index: 1;
+    z-index: 2;
+    /* Scrim only under the copy; keep the food plane bright and open. */
     background:
-      linear-gradient(120deg, rgb(16 39 30 / 0.88), rgb(24 57 43 / 0.55) 45%, rgb(16 39 30 / 0.35)),
-      linear-gradient(to top, var(--color-cream), transparent 30%);
+      linear-gradient(
+        95deg,
+        rgb(16 39 30 / 0.78) 0%,
+        rgb(16 39 30 / 0.5) 22%,
+        rgb(16 39 30 / 0.16) 40%,
+        transparent 58%
+      ),
+      linear-gradient(
+        to top,
+        rgb(16 39 30 / 0.32) 0%,
+        rgb(16 39 30 / 0.08) 18%,
+        transparent 42%
+      );
   }
-  .hero__content { position: relative; z-index: 2; max-width: 40rem; padding-bottom: 1rem; }
+  .hero__content {
+    position: relative;
+    z-index: 3;
+    max-width: 40rem;
+    padding-bottom: 1rem;
+    text-shadow: 0 1px 2px rgb(16 39 30 / 0.55), 0 10px 32px rgb(16 39 30 / 0.45);
+  }
   .hero h1 {
     font-size: clamp(2.4rem, 6vw, 4.4rem);
     line-height: 1.05;
     margin: 0.6rem 0 1rem;
     color: #FFFDFC;
   }
-  .hero__eyebrow { color: #C99A45; }
-  .hero__lede { font-size: 1.1rem; line-height: 1.65; color: rgb(255 253 252 / 0.9); margin: 0 0 1.25rem; }
-  .hero__actions { display: flex; flex-wrap: wrap; gap: 0.65rem; }
-  .hero__reassure { margin-top: 1rem; max-width: 36rem; color: rgb(255 253 252 / 0.78); font-size: 0.92rem; }
+  .hero__eyebrow { color: #E2B86A; }
+  .hero__lede { font-size: 1.1rem; line-height: 1.65; color: rgb(255 253 252 / 0.96); margin: 0 0 1.25rem; }
+  .hero__actions { display: flex; flex-wrap: wrap; gap: 0.65rem; text-shadow: none; }
+  .hero__reassure { margin-top: 1rem; max-width: 36rem; color: rgb(255 253 252 / 0.88); font-size: 0.92rem; }
+  .hero__actions .btn { box-shadow: 0 6px 18px rgb(16 39 30 / 0.28); }
+  .hero__actions .btn-ghost {
+    background: rgb(255 253 252 / 0.92);
+    border-color: rgb(255 253 252 / 0.55);
+  }
   .option-grid, .featured-grid, .experience-grid, .event-grid, .showcase-grid {
     list-style: none; margin: 1.5rem 0 0; padding: 0;
     display: grid; gap: 1rem;
