@@ -123,11 +123,11 @@ These three frames are the highest-leverage conversion + SEO proof for the case 
 | Tablet | `01-tablet-homepage-hero.png` | Mid-breakpoint brand composition without mobile chrome — proves responsive design |
 | Mobile | `01-mobile-homepage-sticky-actions.png` | Hero + sticky Menu / Reserve / Order — conversion path is immediately visible |
 
-Copy into the case-study media kit as:
+Committed media kit paths:
 
-- `showcase-desktop-homepage-hero.png`
-- `showcase-tablet-homepage-hero.png`
-- `showcase-mobile-homepage-sticky-actions.png`
+- `docs/screenshots/showcase/showcase-desktop-homepage-hero.png`
+- `docs/screenshots/showcase/showcase-tablet-homepage-hero.png`
+- `docs/screenshots/showcase/showcase-mobile-homepage-sticky-actions.png`
 
 ### Recommended desktop set (case-study priority)
 

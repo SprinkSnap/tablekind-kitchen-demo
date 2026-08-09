@@ -10,7 +10,7 @@ import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 
 const baseURL = process.argv[2] ?? 'http://127.0.0.1:4321';
-const outDir = process.argv[3] ?? '/opt/cursor/artifacts/screenshots/mobile';
+const outDir = process.argv[3] ?? 'docs/screenshots/mobile';
 
 async function settle(page, ms = 400) {
   await page.waitForLoadState('networkidle').catch(() => {});
