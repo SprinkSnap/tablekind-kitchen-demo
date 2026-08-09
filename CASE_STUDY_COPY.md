@@ -104,7 +104,30 @@ Performance should be measured on the deployed Worker with Lighthouse / CrUX aft
 
 ## Screenshots
 
-Capture after deploy with `npm run screenshots:desktop` (1440×900 @ 2×) and `npm run screenshots:mobile` (iPhone 14 @ 2×, 390×844).
+Capture after deploy (or against a local `astro` preview) with:
+
+```bash
+npm run screenshots:desktop   # 1440×900 @ 2×
+npm run screenshots:tablet    # iPad Pro 11 @ 2×
+npm run screenshots:mobile    # iPhone 14 @ 2× (390×844)
+# or: npm run screenshots
+```
+
+### Best single showcase shot per device (use these first on chexustudio.com/work)
+
+These three frames are the highest-leverage conversion + SEO proof for the case study:
+
+| Device | File | Why it wins |
+| --- | --- | --- |
+| Desktop | `01-desktop-homepage-hero.png` | Full-bleed brand hero + clear CTAs — SEO first impression and editorial quality |
+| Tablet | `01-tablet-homepage-hero.png` | Mid-breakpoint brand composition without mobile chrome — proves responsive design |
+| Mobile | `01-mobile-homepage-sticky-actions.png` | Hero + sticky Menu / Reserve / Order — conversion path is immediately visible |
+
+Copy into the case-study media kit as:
+
+- `showcase-desktop-homepage-hero.png`
+- `showcase-tablet-homepage-hero.png`
+- `showcase-mobile-homepage-sticky-actions.png`
 
 ### Recommended desktop set (case-study priority)
 
@@ -119,6 +142,14 @@ Capture after deploy with `npm run screenshots:desktop` (1440×900 @ 2×) and `n
 6. `06-desktop-reservation-form.png` — Reservation step 1 booking form
 7. `07-desktop-dining-options.png` — Homepage “Choose How You Gather” paths
 8. `08-desktop-order-browse.png` — Pickup order dish grid
+
+### Recommended tablet set (case-study priority)
+
+1. `01-tablet-homepage-hero.png` — Brand-first responsive hero on iPad Pro 11
+2. `02-tablet-menu-filtering.png` — Semantic menu search + dietary filters
+3. `03-tablet-reservation-complete.png` — Reservation demo completion + studio CTA
+4. `04-tablet-pickup-cart-drawer.png` — Pickup cart drawer with totals
+5. `05-tablet-studio-enquiry-drawer.png` — Che Xu Studio enquiry drawer
 
 ### Recommended mobile set (case-study priority)
 
