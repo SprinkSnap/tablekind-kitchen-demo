@@ -35,20 +35,20 @@ const schemas = [
     <img
       class="hero__image"
       src="/images/tablekind-kitchen-seasonal-gathering-hero.webp"
-      alt="Shared table with seasonal dishes in warm evening light"
+      alt="Shared table with seasonal dishes—grilled salmon, roasted vegetables and fresh greens—in warm evening light"
       width="1920"
       height="1080"
       fetchpriority="high"
       decoding="async"
     />
-    <div class="hero__lift" aria-hidden="true"></div>
+    <div class="hero__glow" aria-hidden="true"></div>
     <div class="hero__shade" aria-hidden="true"></div>
     <div class="container-page hero__content fade-up">
-      <p class="eyebrow hero__eyebrow">Modern Neighbourhood Dining</p>
+      <p class="eyebrow hero__eyebrow">Seasonal Neighbourhood Dining</p>
       <h1>Seasonal Food, Made for Gathering.</h1>
       <p class="hero__lede">
-        Thoughtfully prepared dishes, welcoming service and a simple dining experience—from choosing
-        your meal to reserving your table.
+        Bright plates of the season—grilled fish, roasted vegetables and fresh greens—served with
+        warm hospitality from first browse to reserved table.
       </p>
       <div class="hero__actions">
         <a class="btn btn-accent" href="/reservations/">Reserve a Table</a>
@@ -228,13 +228,13 @@ const schemas = [
   .hero {
     position: relative;
     isolation: isolate;
-    min-height: min(86vh, 760px);
+    min-height: min(88vh, 820px);
     display: flex;
     align-items: end;
-    padding: 5rem 0 4rem;
+    padding: 5rem 0 3.5rem;
     overflow: hidden;
     color: #fffdfc;
-    background: #10271e;
+    background: #18392b;
   }
   .hero__image {
     position: absolute;
@@ -242,62 +242,81 @@ const schemas = [
     width: 100%;
     height: 100%;
     object-fit: cover;
+    /* Crop into the table so seasonal dishes fill the first look. */
+    object-position: 88% 46%;
     z-index: 0;
-    filter: brightness(1.58) contrast(1.16) saturate(1.35);
-    transform: scale(1.05);
-    transform-origin: 72% 42%;
+    filter: brightness(1.22) contrast(1.14) saturate(1.28);
+    transform: scale(1.16);
+    transform-origin: 88% 46%;
   }
-  .hero__lift {
+  .hero__glow {
     position: absolute;
     inset: 0;
     z-index: 1;
     pointer-events: none;
     background:
-      radial-gradient(ellipse 82% 95% at 80% 40%, rgb(255 240 210 / 0.55), transparent 60%),
-      radial-gradient(ellipse 58% 65% at 64% 72%, rgb(255 214 160 / 0.3), transparent 55%);
+      radial-gradient(ellipse 75% 85% at 68% 42%, rgb(255 240 210 / 0.5), transparent 64%),
+      radial-gradient(ellipse 55% 60% at 58% 72%, rgb(255 200 140 / 0.28), transparent 58%);
     mix-blend-mode: soft-light;
   }
   .hero__shade {
     position: absolute;
     inset: 0;
     z-index: 2;
-    /* Scrim only under the copy; keep the food plane bright and open. */
+    /* Soft readable edge only—food stays the dominant plane. */
     background:
       linear-gradient(
-        95deg,
-        rgb(16 39 30 / 0.78) 0%,
-        rgb(16 39 30 / 0.5) 22%,
-        rgb(16 39 30 / 0.16) 40%,
-        transparent 58%
+        100deg,
+        rgb(16 39 30 / 0.55) 0%,
+        rgb(16 39 30 / 0.22) 24%,
+        rgb(16 39 30 / 0.04) 42%,
+        transparent 60%
       ),
       linear-gradient(
         to top,
-        rgb(16 39 30 / 0.32) 0%,
-        rgb(16 39 30 / 0.08) 18%,
-        transparent 42%
+        rgb(16 39 30 / 0.48) 0%,
+        rgb(16 39 30 / 0.16) 30%,
+        transparent 58%
       );
   }
   .hero__content {
     position: relative;
     z-index: 3;
-    max-width: 40rem;
-    padding-bottom: 1rem;
-    text-shadow: 0 1px 2px rgb(16 39 30 / 0.55), 0 10px 32px rgb(16 39 30 / 0.45);
+    max-width: 38rem;
+    padding-bottom: 0.5rem;
+    text-shadow: 0 1px 2px rgb(16 39 30 / 0.6), 0 12px 36px rgb(16 39 30 / 0.5);
   }
   .hero h1 {
-    font-size: clamp(2.4rem, 6vw, 4.4rem);
-    line-height: 1.05;
-    margin: 0.6rem 0 1rem;
+    font-size: clamp(2.5rem, 6.2vw, 4.6rem);
+    line-height: 1.04;
+    margin: 0.55rem 0 0.95rem;
     color: #FFFDFC;
   }
-  .hero__eyebrow { color: #E2B86A; }
-  .hero__lede { font-size: 1.1rem; line-height: 1.65; color: rgb(255 253 252 / 0.96); margin: 0 0 1.25rem; }
+  .hero__eyebrow { color: #F0C56A; }
+  .hero__lede { font-size: 1.12rem; line-height: 1.65; color: rgb(255 253 252 / 0.97); margin: 0 0 1.25rem; }
   .hero__actions { display: flex; flex-wrap: wrap; gap: 0.65rem; text-shadow: none; }
-  .hero__reassure { margin-top: 1rem; max-width: 36rem; color: rgb(255 253 252 / 0.88); font-size: 0.92rem; }
-  .hero__actions .btn { box-shadow: 0 6px 18px rgb(16 39 30 / 0.28); }
+  .hero__reassure { margin-top: 1rem; max-width: 36rem; color: rgb(255 253 252 / 0.9); font-size: 0.92rem; }
+  .hero__actions .btn { box-shadow: 0 8px 22px rgb(16 39 30 / 0.32); }
   .hero__actions .btn-ghost {
-    background: rgb(255 253 252 / 0.92);
-    border-color: rgb(255 253 252 / 0.55);
+    background: rgb(255 253 252 / 0.95);
+    border-color: rgb(255 253 252 / 0.7);
+  }
+  @media (max-width: 719px) {
+    .hero__image {
+      object-position: 84% 40%;
+      transform: scale(1.22);
+      transform-origin: 84% 40%;
+    }
+    .hero__shade {
+      background:
+        linear-gradient(
+          180deg,
+          rgb(16 39 30 / 0.2) 0%,
+          rgb(16 39 30 / 0.08) 35%,
+          rgb(16 39 30 / 0.55) 72%,
+          rgb(16 39 30 / 0.72) 100%
+        );
+    }
   }
   .option-grid, .featured-grid, .experience-grid, .event-grid, .showcase-grid {
     list-style: none; margin: 1.5rem 0 0; padding: 0;
