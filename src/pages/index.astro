@@ -243,11 +243,11 @@ const schemas = [
     height: 100%;
     object-fit: cover;
     /* Crop into the table so seasonal dishes fill the first look. */
-    object-position: 82% 48%;
+    object-position: 88% 46%;
     z-index: 0;
-    filter: brightness(1.18) contrast(1.12) saturate(1.22);
-    transform: scale(1.12);
-    transform-origin: 82% 48%;
+    filter: brightness(1.22) contrast(1.14) saturate(1.28);
+    transform: scale(1.16);
+    transform-origin: 88% 46%;
   }
   .hero__glow {
     position: absolute;
@@ -255,8 +255,8 @@ const schemas = [
     z-index: 1;
     pointer-events: none;
     background:
-      radial-gradient(ellipse 70% 80% at 70% 45%, rgb(255 236 200 / 0.45), transparent 62%),
-      radial-gradient(ellipse 50% 55% at 55% 75%, rgb(255 200 140 / 0.22), transparent 55%);
+      radial-gradient(ellipse 75% 85% at 68% 42%, rgb(255 240 210 / 0.5), transparent 64%),
+      radial-gradient(ellipse 55% 60% at 58% 72%, rgb(255 200 140 / 0.28), transparent 58%);
     mix-blend-mode: soft-light;
   }
   .hero__shade {
@@ -267,16 +267,16 @@ const schemas = [
     background:
       linear-gradient(
         100deg,
-        rgb(16 39 30 / 0.62) 0%,
-        rgb(16 39 30 / 0.28) 28%,
-        rgb(16 39 30 / 0.06) 48%,
-        transparent 68%
+        rgb(16 39 30 / 0.55) 0%,
+        rgb(16 39 30 / 0.22) 24%,
+        rgb(16 39 30 / 0.04) 42%,
+        transparent 60%
       ),
       linear-gradient(
         to top,
-        rgb(16 39 30 / 0.42) 0%,
-        rgb(16 39 30 / 0.12) 26%,
-        transparent 52%
+        rgb(16 39 30 / 0.48) 0%,
+        rgb(16 39 30 / 0.16) 30%,
+        transparent 58%
       );
   }
   .hero__content {
@@ -303,9 +303,9 @@ const schemas = [
   }
   @media (max-width: 719px) {
     .hero__image {
-      object-position: 78% 42%;
-      transform: scale(1.18);
-      transform-origin: 78% 42%;
+      object-position: 84% 40%;
+      transform: scale(1.22);
+      transform-origin: 84% 40%;
     }
     .hero__shade {
       background:
