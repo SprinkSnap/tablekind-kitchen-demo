@@ -110,7 +110,7 @@ Capture after deploy (or against a local `astro` preview) with:
 npm run screenshots:desktop   # 1440×900 @ 2×
 npm run screenshots:tablet    # iPad Pro 11 @ 2×
 npm run screenshots:mobile    # iPhone 14 @ 2× (390×844)
-# or: npm run screenshots
+npm run screenshots           # all devices + assemble showcase kit
 ```
 
 ### Best single showcase shot per device (use these first on chexustudio.com/work)
