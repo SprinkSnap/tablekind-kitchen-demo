@@ -25,7 +25,10 @@ async function dismissChrome(page) {
   }
   await page
     .addStyleTag({
-      content: `.assistant { display: none !important; }`,
+      content: `
+        .assistant { display: none !important; }
+        astro-dev-toolbar { display: none !important; pointer-events: none !important; }
+      `,
     })
     .catch(() => {});
 }

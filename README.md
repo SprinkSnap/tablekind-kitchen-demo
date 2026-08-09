@@ -192,6 +192,23 @@ Do **not** set the deploy command to bare `npx wrangler deploy` without a prior 
 
 Use `CASE_STUDY_COPY.md` for `https://chexustudio.com/work/`. Attach real screenshots after deploy. Never invent traffic/conversion results.
 
+### Case-study screenshots
+
+With the site running locally (or pass a deployed base URL):
+
+```bash
+npm run screenshots:desktop   # 1440×900 @ 2×
+npm run screenshots:tablet    # iPad Pro 11 @ 2×
+npm run screenshots:mobile    # iPhone 14 @ 2×
+# or: npm run screenshots
+```
+
+Best single showcase frames for the work page:
+
+- Desktop — `01-desktop-homepage-hero.png`
+- Tablet — `01-tablet-homepage-hero.png`
+- Mobile — `01-mobile-homepage-sticky-actions.png`
+
 ## Converting the demo for a verified restaurant
 
 1. Collect verified NAP, hours, menu, imagery and policies
