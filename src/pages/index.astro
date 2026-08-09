@@ -288,6 +288,19 @@ const schemas = [
     padding-block: 0.5rem;
     text-shadow: 0 1px 2px rgb(16 39 30 / 0.7), 0 14px 40px rgb(16 39 30 / 0.55);
   }
+  .hero__content::before {
+    content: "";
+    position: absolute;
+    inset: -1.5rem -2rem -1.75rem -2.5rem;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(
+      120% 90% at 20% 45%,
+      rgb(16 39 30 / 0.55) 0%,
+      rgb(16 39 30 / 0.22) 48%,
+      transparent 72%
+    );
+  }
   .hero h1 {
     font-size: clamp(2.5rem, 5.6vw, 4.4rem);
     line-height: 1.05;
@@ -317,28 +330,38 @@ const schemas = [
       min-height: min(84vh, 740px);
     }
     .hero__image {
-      object-position: 80% 44%;
-      transform: scale(1.12);
-      transform-origin: 80% 44%;
+      object-position: 86% 44%;
+      transform: scale(1.14);
+      transform-origin: 86% 44%;
     }
     .hero__shade {
       background:
         linear-gradient(
           96deg,
-          rgb(16 39 30 / 0.9) 0%,
-          rgb(16 39 30 / 0.76) 32%,
-          rgb(16 39 30 / 0.4) 52%,
-          rgb(16 39 30 / 0.12) 70%,
-          transparent 84%
+          rgb(16 39 30 / 0.94) 0%,
+          rgb(16 39 30 / 0.84) 36%,
+          rgb(16 39 30 / 0.52) 56%,
+          rgb(16 39 30 / 0.18) 72%,
+          transparent 88%
         ),
         linear-gradient(
           to top,
-          rgb(16 39 30 / 0.5) 0%,
-          rgb(16 39 30 / 0.16) 36%,
-          transparent 64%
+          rgb(16 39 30 / 0.58) 0%,
+          rgb(16 39 30 / 0.2) 38%,
+          transparent 66%
         );
     }
-    .hero__content { max-width: 32rem; }
+    .hero__content { max-width: 28rem; }
+    .hero__content::before {
+      inset: -1.75rem -1.25rem -2rem -2rem;
+      background: radial-gradient(
+        130% 95% at 15% 45%,
+        rgb(16 39 30 / 0.7) 0%,
+        rgb(16 39 30 / 0.32) 50%,
+        transparent 74%
+      );
+    }
+    .hero h1 { max-width: 12ch; }
   }
   @media (max-width: 719px) {
     .hero {
