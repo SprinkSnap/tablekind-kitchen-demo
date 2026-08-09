@@ -200,10 +200,10 @@ With the site running locally (or pass a deployed base URL):
 npm run screenshots:desktop   # 1440×900 @ 2×
 npm run screenshots:tablet    # iPad Pro 11 @ 2×
 npm run screenshots:mobile    # iPhone 14 @ 2×
-# or: npm run screenshots
+npm run screenshots           # all devices + assemble showcase kit
 ```
 
-Committed frames live in [`docs/screenshots/`](./docs/screenshots/). Best single showcase frames:
+Committed frames live in [`docs/screenshots/`](./docs/screenshots/). Best single showcase frames for `chexustudio.com/work` (conversion + SEO first impression):
 
 - Desktop — `docs/screenshots/showcase/showcase-desktop-homepage-hero.png`
 - Tablet — `docs/screenshots/showcase/showcase-tablet-homepage-hero.png`
