@@ -437,14 +437,18 @@ const schemas = [
     }
     .hero h1 {
       max-width: 12ch;
-      font-size: clamp(1.9rem, 7.8vw, 2.4rem);
-      margin: 0.3rem 0 0.5rem;
+      font-size: clamp(1.75rem, 7.2vw, 2.2rem);
+      margin: 0.25rem 0 0.4rem;
     }
     .hero__lede {
       margin-bottom: 0;
-      font-size: 0.95rem;
-      line-height: 1.5;
+      font-size: 0.92rem;
+      line-height: 1.45;
       max-width: 28rem;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
     }
     /* Sticky Menu / Reserve / Order owns conversion actions on mobile. */
     .hero__actions,
