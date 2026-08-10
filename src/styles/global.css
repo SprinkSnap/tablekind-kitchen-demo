@@ -68,9 +68,9 @@
     font-family: var(--font-sans);
     color: var(--color-charcoal);
     background:
-      radial-gradient(1200px 600px at 10% -10%, rgb(169 184 164 / 0.35), transparent 55%),
-      radial-gradient(900px 500px at 100% 0%, rgb(199 101 72 / 0.12), transparent 50%),
-      linear-gradient(180deg, var(--color-cream) 0%, var(--color-soft) 42%, var(--color-cream) 100%);
+      radial-gradient(1100px 560px at 8% -8%, rgb(231 239 228 / 0.55), transparent 58%),
+      radial-gradient(860px 480px at 100% 0%, rgb(255 253 252 / 0.7), transparent 52%),
+      linear-gradient(180deg, #f9f6f0 0%, var(--color-soft) 46%, var(--color-cream) 100%);
     text-rendering: optimizeLegibility;
   }
 
@@ -266,16 +266,22 @@
     isolation: isolate;
     overflow: hidden;
     background:
-      linear-gradient(120deg, rgb(16 39 30 / 0.88), rgb(24 57 43 / 0.55) 45%, rgb(16 39 30 / 0.35)),
-      url("/images/tablekind-kitchen-seasonal-gathering-hero.webp") center / cover no-repeat;
-    color: var(--color-soft);
+      linear-gradient(
+        105deg,
+        rgb(249 246 240 / 0.96) 0%,
+        rgb(249 246 240 / 0.78) 42%,
+        rgb(249 246 240 / 0.28) 68%,
+        transparent 88%
+      ),
+      url("/images/tablekind-kitchen-seasonal-gathering-hero.webp") 78% 42% / cover no-repeat;
+    color: var(--color-deep);
   }
 
   .hero-atmosphere::after {
     content: "";
     position: absolute;
     inset: auto 0 0;
-    height: 30%;
+    height: 28%;
     background: linear-gradient(to top, var(--color-cream), transparent);
     pointer-events: none;
     z-index: 1;
