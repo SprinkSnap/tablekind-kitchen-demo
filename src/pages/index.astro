@@ -35,14 +35,13 @@ const schemas = [
     <img
       class="hero__image"
       src="/images/tablekind-kitchen-seasonal-gathering-hero.webp"
-      alt="Shared table with seasonal dishes—grilled salmon, roasted vegetables and fresh greens—in warm evening light"
+      alt="Shared table with seasonal dishes—grilled salmon, roasted vegetables and fresh greens—in bright natural light"
       width="1920"
       height="1080"
       fetchpriority="high"
       decoding="async"
     />
-    <div class="hero__glow" aria-hidden="true"></div>
-    <div class="hero__shade" aria-hidden="true"></div>
+    <div class="hero__veil" aria-hidden="true"></div>
     <div class="container-page hero__content fade-up">
       <p class="eyebrow hero__eyebrow">Seasonal Neighbourhood Dining</p>
       <h1>Seasonal Food, Made for Gathering.</h1>
@@ -51,17 +50,22 @@ const schemas = [
         warm hospitality from first browse to reserved table.
       </p>
       <div class="hero__actions">
-        <a class="btn btn-accent" href="/reservations/">Reserve a Table</a>
+        <a class="btn btn-primary" href="/reservations/">Reserve a Table</a>
         <a class="btn btn-ghost" href="/menu/">Explore the Menu</a>
         <a class="btn btn-ghost" href="/order/">Order Pickup</a>
       </div>
-      <p class="hero__reassure">{DISCLOSURE.short} Reservations and ordering are interactive portfolio demonstrations only.</p>
+      <p class="hero__reassure">
+        {DISCLOSURE.short} Reservations and ordering are interactive portfolio demonstrations only.
+      </p>
     </div>
   </section>
 
   <section class="section container-page" aria-labelledby="dining-options">
     <h2 id="dining-options" class="section-title">Choose How You Gather.</h2>
-    <p class="section-lede">Four clear paths for brunch, lunch, dinner and pickup—labelled with illustrative demo hours only.</p>
+    <p class="section-lede">
+      Four clear paths for brunch, lunch, dinner and pickup—labelled with illustrative demo hours
+      only.
+    </p>
     <div class="option-grid">
       <a class="option" href="/menu/brunch/">
         <h3>Weekend Brunch</h3>
@@ -88,7 +92,9 @@ const schemas = [
 
   <section class="section container-page" aria-labelledby="featured">
     <h2 id="featured" class="section-title">Something for Every Table.</h2>
-    <p class="section-lede">A sample of featured dishes from the typed menu system—ready for browse, filter or demo order.</p>
+    <p class="section-lede">
+      A sample of featured dishes from the typed menu system—ready for browse, filter or demo order.
+    </p>
     <ul class="featured-grid">
       {
         featured.map((item) => (
@@ -101,24 +107,22 @@ const schemas = [
                 <p class="price">{formatCad(item.price)}</p>
               </div>
               <p>{item.description}</p>
-              {
-                item.dietaryLabels.length > 0 && (
-                  <ul class="chips">
-                    {item.dietaryLabels.map((label) => (
-                      <li class="chip">{DIETARY_LABELS[label]}</li>
-                    ))}
-                  </ul>
-                )
-              }
+              {item.dietaryLabels.length > 0 && (
+                <ul class="chips">
+                  {item.dietaryLabels.map((label) => (
+                    <li class="chip">{DIETARY_LABELS[label]}</li>
+                  ))}
+                </ul>
+              )}
               <div class="featured-actions">
-                <a class="btn btn-secondary" href={`/menu/#${item.category}`}>View on menu</a>
-                {
-                  item.availableForPickup && (
-                    <a class="btn btn-ghost" href={`/order/?item=${item.slug}`}>
-                      Add to demo order
-                    </a>
-                  )
-                }
+                <a class="btn btn-secondary" href={`/menu/#${item.category}`}>
+                  View on menu
+                </a>
+                {item.availableForPickup && (
+                  <a class="btn btn-ghost" href={`/order/?item=${item.slug}`}>
+                    Add to demo order
+                  </a>
+                )}
               </div>
             </div>
           </li>
@@ -143,7 +147,11 @@ const schemas = [
     <h2 id="experience" class="section-title">The Restaurant Experience.</h2>
     <ul class="experience-grid">
       <li><h3>Seasonal menu</h3><p>Semantic HTML menus that are easy to scan and filter.</p></li>
-      <li><h3>Welcoming atmosphere</h3><p>Warm visual identity with calm hierarchy on every screen.</p></li>
+      <li>
+        <h3>Welcoming atmosphere</h3><p>
+          Warm visual identity with calm hierarchy on every screen.
+        </p>
+      </li>
       <li><h3>Easy reservations</h3><p>A short, accessible multistep demo booking flow.</p></li>
       <li><h3>Pickup ordering</h3><p>Cart, modifiers, tax sample and local completion.</p></li>
       <li><h3>Catering</h3><p>Structured enquiries for meetings and gatherings.</p></li>
@@ -153,7 +161,9 @@ const schemas = [
 
   <section class="section container-page" aria-labelledby="reserve-preview">
     <h2 id="reserve-preview" class="section-title">Reserve a Demo Table.</h2>
-    <p class="section-lede">Try party size, date and preferred time. No real reservation is created.</p>
+    <p class="section-lede">
+      Try party size, date and preferred time. No real reservation is created.
+    </p>
     <ReservationFlow client:visible />
   </section>
 
@@ -175,7 +185,9 @@ const schemas = [
 
   <section class="section showcase" aria-labelledby="showcase">
     <div class="container-page">
-      <h2 id="showcase" class="section-title">Designed to Turn Local Searches Into Reservations and Orders.</h2>
+      <h2 id="showcase" class="section-title">
+        Designed to Turn Local Searches Into Reservations and Orders.
+      </h2>
       <ul class="showcase-grid">
         <li>Mobile-first menu navigation</li>
         <li>Search-friendly HTML menus</li>
@@ -187,7 +199,9 @@ const schemas = [
         <li>Accessible interactions</li>
         <li>Conversion analytics</li>
       </ul>
-      <a class="btn btn-accent" href="#studio-enquiry" data-open-enquiry>Build This for My Business</a>
+      <a class="btn btn-accent" href="#studio-enquiry" data-open-enquiry
+        >Build This for My Business</a
+      >
     </div>
   </section>
 
@@ -206,14 +220,21 @@ const schemas = [
   </section>
 
   <section class="section container-page final-cta" aria-labelledby="final-cta">
-    <h2 id="final-cta" class="section-title">Your Restaurant Deserves More Than a PDF Menu and a Slow Website.</h2>
+    <h2 id="final-cta" class="section-title">
+      Your Restaurant Deserves More Than a PDF Menu and a Slow Website.
+    </h2>
     <p class="section-lede">
       Che Xu Studio can build a fast, customer-friendly website designed around reservations, online
       orders and local discovery.
     </p>
     <div class="hero__actions">
       <a class="btn btn-accent" href="#studio-enquiry" data-open-enquiry>Request My Website Plan</a>
-      <a class="btn btn-secondary" href={getPackagesUrl()} target="_blank" rel="noopener noreferrer">
+      <a
+        class="btn btn-secondary"
+        href={getPackagesUrl()}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         View Che Xu Studio Packages
       </a>
       <a class="btn btn-ghost" href={getCaseStudyUrl()} target="_blank" rel="noopener noreferrer">
@@ -230,12 +251,13 @@ const schemas = [
     isolation: isolate;
     min-height: min(88vh, 820px);
     display: flex;
-    /* Conversion/SEO: H1 + primary CTA in the left mid-band, above the fold. */
     align-items: center;
-    padding: clamp(5.5rem, 10vh, 7rem) 0 3.25rem;
+    padding: clamp(4.5rem, 9vh, 6.5rem) 0 3.5rem;
     overflow: hidden;
-    color: #fffdfc;
-    background: #10271e;
+    color: var(--color-charcoal);
+    background:
+      radial-gradient(900px 520px at 12% 18%, rgb(255 253 252 / 0.95), transparent 58%),
+      linear-gradient(180deg, #f9f6f0 0%, var(--color-cream) 100%);
   }
   .hero__image {
     position: absolute;
@@ -243,182 +265,314 @@ const schemas = [
     width: 100%;
     height: 100%;
     object-fit: cover;
-    /* Food leads on the right; left stays calm for copy. */
-    object-position: 82% 46%;
+    /* Bright food plane leads on the right; left stays calm for copy. */
+    object-position: 78% 42%;
     z-index: 0;
-    filter: brightness(1.18) contrast(1.12) saturate(1.24);
-    transform: scale(1.08);
-    transform-origin: 82% 46%;
+    filter: brightness(1.16) contrast(1.05) saturate(1.1);
+    transform: scale(1.04);
+    transform-origin: 78% 42%;
+    animation: hero-drift 18s var(--ease-out) both;
   }
-  .hero__glow {
+  .hero__veil {
     position: absolute;
     inset: 0;
     z-index: 1;
     pointer-events: none;
-    /* Warm lift only on the food side — do not wash the copy lane. */
-    background: radial-gradient(
-      ellipse 58% 72% at 84% 44%,
-      rgb(255 236 200 / 0.38),
-      transparent 68%
-    );
-    mix-blend-mode: soft-light;
-  }
-  .hero__shade {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    /* Near-solid left conversion lane; food remains open on the right. */
+    /* Soft cream reading lane — keeps the full-bleed photo open on the right. */
     background:
       linear-gradient(
         90deg,
-        rgb(16 39 30 / 0.96) 0%,
-        rgb(16 39 30 / 0.93) 36%,
-        rgb(16 39 30 / 0.72) 50%,
-        rgb(16 39 30 / 0.28) 64%,
-        rgb(16 39 30 / 0.06) 78%,
-        transparent 90%
+        rgb(249 246 240 / 0.97) 0%,
+        rgb(249 246 240 / 0.92) 32%,
+        rgb(249 246 240 / 0.62) 46%,
+        rgb(249 246 240 / 0.2) 60%,
+        rgb(249 246 240 / 0.04) 74%,
+        transparent 88%
       ),
       linear-gradient(
         to top,
-        rgb(16 39 30 / 0.5) 0%,
-        rgb(16 39 30 / 0.16) 32%,
-        transparent 58%
-      );
+        rgb(249 246 240 / 0.42) 0%,
+        rgb(249 246 240 / 0.1) 32%,
+        transparent 56%
+      ),
+      radial-gradient(ellipse 54% 66% at 84% 38%, rgb(255 250 236 / 0.28), transparent 72%);
   }
   .hero__content {
     position: relative;
-    z-index: 3;
+    z-index: 2;
     max-width: 34rem;
     padding-block: 0.35rem;
-    text-shadow: 0 1px 1px rgb(16 39 30 / 0.85), 0 10px 28px rgb(16 39 30 / 0.55);
   }
   .hero h1 {
     font-size: clamp(2.45rem, 5.2vw, 4.2rem);
     line-height: 1.05;
     margin: 0.5rem 0 0.9rem;
-    color: #FFFDFC;
+    color: var(--color-deep);
     max-width: 13ch;
   }
-  .hero__eyebrow { color: #F0C56A; }
+  .hero__eyebrow {
+    color: var(--color-terracotta-deep);
+  }
   .hero__lede {
     font-size: 1.08rem;
     line-height: 1.6;
-    color: #FFFDFC;
+    color: rgb(34 38 34 / 0.84);
     margin: 0 0 1.2rem;
     max-width: 32rem;
   }
-  .hero__actions { display: flex; flex-wrap: wrap; gap: 0.65rem; text-shadow: none; }
-  .hero__reassure { margin-top: 0.9rem; max-width: 32rem; color: rgb(255 253 252 / 0.88); font-size: 0.9rem; }
-  .hero__actions .btn { box-shadow: 0 8px 22px rgb(16 39 30 / 0.35); }
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+  }
+  .hero__reassure {
+    margin-top: 0.9rem;
+    max-width: 32rem;
+    color: rgb(34 38 34 / 0.68);
+    font-size: 0.9rem;
+  }
+  .hero__actions .btn-primary {
+    box-shadow: 0 10px 24px rgb(16 39 30 / 0.16);
+  }
   .hero__actions .btn-ghost {
-    background: #FFFDFC;
-    color: #10271E;
-    border-color: rgb(255 253 252 / 0.85);
+    background: rgb(255 253 252 / 0.88);
+    color: var(--color-deep);
+    border-color: rgb(24 57 43 / 0.16);
+  }
+  .hero__actions .btn-ghost:hover {
+    background: #fffdfc;
+    border-color: rgb(24 57 43 / 0.28);
+  }
+  @keyframes hero-drift {
+    from {
+      transform: scale(1.08);
+      filter: brightness(1.08) contrast(1.02) saturate(1.05);
+    }
+    to {
+      transform: scale(1.04);
+      filter: brightness(1.16) contrast(1.05) saturate(1.1);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero__image {
+      animation: none;
+    }
   }
   @media (min-width: 720px) and (max-width: 1099px) {
-    .hero { min-height: min(84vh, 740px); }
-    .hero__image {
-      object-position: 88% 44%;
-      transform: scale(1.12);
-      transform-origin: 88% 44%;
+    .hero {
+      min-height: min(84vh, 740px);
     }
-    .hero__shade {
+    .hero__image {
+      object-position: 84% 40%;
+      transform-origin: 84% 40%;
+    }
+    .hero__veil {
       background:
         linear-gradient(
           90deg,
-          rgb(16 39 30 / 0.97) 0%,
-          rgb(16 39 30 / 0.95) 42%,
-          rgb(16 39 30 / 0.76) 56%,
-          rgb(16 39 30 / 0.3) 70%,
+          rgb(249 246 240 / 0.98) 0%,
+          rgb(249 246 240 / 0.95) 40%,
+          rgb(249 246 240 / 0.74) 54%,
+          rgb(249 246 240 / 0.28) 70%,
           transparent 88%
         ),
         linear-gradient(
           to top,
-          rgb(16 39 30 / 0.55) 0%,
-          rgb(16 39 30 / 0.18) 36%,
+          rgb(249 246 240 / 0.5) 0%,
+          rgb(249 246 240 / 0.14) 36%,
           transparent 62%
         );
     }
-    .hero__content { max-width: 28rem; }
-    .hero h1 { max-width: 12ch; font-size: clamp(2.3rem, 5.4vw, 3.5rem); }
+    .hero__content {
+      max-width: 28rem;
+    }
+    .hero h1 {
+      max-width: 12ch;
+      font-size: clamp(2.3rem, 5.4vw, 3.5rem);
+    }
   }
   @media (max-width: 719px) {
     .hero {
       align-items: end;
-      padding-top: 4.5rem;
+      padding: 3.25rem 0 calc(1.25rem + var(--mobile-action-height));
+      min-height: min(86vh, 700px);
     }
     .hero__image {
-      object-position: 84% 40%;
-      transform: scale(1.16);
-      transform-origin: 84% 40%;
+      object-position: 72% 34%;
+      transform: scale(1.1);
+      transform-origin: 72% 34%;
+      animation: none;
+      filter: brightness(1.14) contrast(1.04) saturate(1.08);
     }
-    .hero__shade {
-      background:
-        linear-gradient(
-          180deg,
-          rgb(16 39 30 / 0.16) 0%,
-          rgb(16 39 30 / 0.12) 28%,
-          rgb(16 39 30 / 0.62) 64%,
-          rgb(16 39 30 / 0.86) 100%
-        );
+    .hero__veil {
+      background: linear-gradient(
+        180deg,
+        rgb(249 246 240 / 0.55) 0%,
+        rgb(249 246 240 / 0.18) 24%,
+        rgb(249 246 240 / 0.5) 52%,
+        rgb(249 246 240 / 0.92) 100%
+      );
     }
-    .hero__content { max-width: none; }
-    .hero h1 { max-width: none; }
+    .hero__content {
+      max-width: none;
+    }
+    .hero h1 {
+      max-width: none;
+      font-size: clamp(2.15rem, 9vw, 2.75rem);
+      margin: 0.4rem 0 0.7rem;
+    }
+    .hero__lede {
+      margin-bottom: 1rem;
+      font-size: 1.02rem;
+    }
+    .hero__actions {
+      flex-direction: column;
+    }
+    .hero__actions .btn {
+      width: 100%;
+    }
+    .hero__reassure {
+      margin-top: 0.7rem;
+    }
   }
-  .option-grid, .featured-grid, .experience-grid, .event-grid, .showcase-grid {
-    list-style: none; margin: 1.5rem 0 0; padding: 0;
-    display: grid; gap: 1rem;
+  .option-grid,
+  .featured-grid,
+  .experience-grid,
+  .event-grid,
+  .showcase-grid {
+    list-style: none;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
   }
-  .option-grid, .event-grid { grid-template-columns: 1fr; }
-  .experience-grid, .showcase-grid { grid-template-columns: 1fr; }
+  .option-grid,
+  .event-grid {
+    grid-template-columns: 1fr;
+  }
+  .experience-grid,
+  .showcase-grid {
+    grid-template-columns: 1fr;
+  }
   @media (min-width: 720px) {
-    .option-grid, .event-grid { grid-template-columns: 1fr 1fr; }
-    .experience-grid { grid-template-columns: 1fr 1fr 1fr; }
-    .featured-grid { grid-template-columns: 1fr 1fr; }
-    .showcase-grid { grid-template-columns: 1fr 1fr 1fr; }
+    .option-grid,
+    .event-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .experience-grid {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    .featured-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .showcase-grid {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
   }
   @media (min-width: 1100px) {
-    .featured-grid { grid-template-columns: 1fr 1fr 1fr; }
+    .featured-grid {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
   }
-  .option, .event-card, .featured-card, .experience-grid li {
+  .option,
+  .event-card,
+  .featured-card,
+  .experience-grid li {
     background: rgb(255 253 252 / 0.82);
     border: 1px solid rgb(24 57 43 / 0.08);
     border-radius: 1.1rem;
     padding: 1.1rem;
     text-decoration: none;
   }
-  .option h3, .event-card h3, .featured-card h3, .experience-grid h3 {
-    margin: 0 0 0.4rem; font-family: var(--font-display); color: #10271E;
+  .option h3,
+  .event-card h3,
+  .featured-card h3,
+  .experience-grid h3 {
+    margin: 0 0 0.4rem;
+    font-family: var(--font-display);
+    color: #10271e;
   }
-  .hours { font-size: 0.85rem; color: rgb(34 38 34 / 0.7); }
-  .featured-card { padding: 0; overflow: hidden; display: grid; }
-  .featured-card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; }
-  .featured-card__body { padding: 1rem; display: grid; gap: 0.5rem; }
-  .row { display: flex; justify-content: space-between; gap: 0.75rem; align-items: baseline; }
-  .chips { list-style: none; display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0; padding: 0; }
-  .featured-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .hours {
+    font-size: 0.85rem;
+    color: rgb(34 38 34 / 0.7);
+  }
+  .featured-card {
+    padding: 0;
+    overflow: hidden;
+    display: grid;
+  }
+  .featured-card img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+  }
+  .featured-card__body {
+    padding: 1rem;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    align-items: baseline;
+  }
+  .chips {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0;
+    padding: 0;
+  }
+  .featured-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
   .story {
     background:
       linear-gradient(90deg, rgb(24 57 43 / 0.96), rgb(16 39 30 / 0.9)),
       url('/images/tablekind-kitchen-seasonal-gathering-hero.webp') center / cover;
-    color: #FFFDFC;
+    color: #fffdfc;
   }
-  .story .section-title, .story .section-lede { color: #FFFDFC; }
-  .showcase { background: #E7EFE4; }
+  .story .section-title,
+  .story .section-lede {
+    color: #fffdfc;
+  }
+  .showcase {
+    background: #e7efe4;
+  }
   .showcase-grid li {
     background: rgb(255 253 252 / 0.8);
     border-radius: 0.85rem;
     padding: 0.9rem 1rem;
     font-weight: 650;
   }
-  .faq-list { display: grid; gap: 0.65rem; margin-top: 1.25rem; }
+  .faq-list {
+    display: grid;
+    gap: 0.65rem;
+    margin-top: 1.25rem;
+  }
   details {
     background: rgb(255 253 252 / 0.82);
     border: 1px solid rgb(24 57 43 / 0.1);
     border-radius: 0.85rem;
     padding: 0.85rem 1rem;
   }
-  summary { cursor: pointer; font-weight: 700; min-height: 44px; display: flex; align-items: center; }
-  .final-cta { text-align: left; }
-  .tiny { margin-top: 1rem; color: rgb(34 38 34 / 0.65); font-size: 0.85rem; }
+  summary {
+    cursor: pointer;
+    font-weight: 700;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+  .final-cta {
+    text-align: left;
+  }
+  .tiny {
+    margin-top: 1rem;
+    color: rgb(34 38 34 / 0.65);
+    font-size: 0.85rem;
+  }
 </style>
