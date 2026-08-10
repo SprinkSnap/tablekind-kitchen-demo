@@ -251,8 +251,9 @@ const schemas = [
     isolation: isolate;
     min-height: min(88vh, 820px);
     display: flex;
-    align-items: center;
-    padding: clamp(4.5rem, 9vh, 6.5rem) 0 3.5rem;
+    /* Conversion/SEO: pin H1 + primary CTA into the upper-left reading lane. */
+    align-items: flex-start;
+    padding: clamp(2.75rem, 5.5vh, 4rem) 0 clamp(3rem, 7vh, 4.5rem);
     overflow: hidden;
     color: var(--color-charcoal);
     background:
@@ -300,15 +301,21 @@ const schemas = [
   .hero__content {
     position: relative;
     z-index: 2;
-    max-width: 34rem;
-    padding-block: 0.35rem;
+    /* Keep the full page container width so copy stays on the left grid edge. */
+    width: min(1120px, calc(100% - 2rem));
+    max-width: min(1120px, calc(100% - 2rem));
+    margin-inline: auto;
+    padding-block: 0.15rem;
+    /* Reserve the right plane for food photography. */
+    padding-right: min(48%, 30rem);
+    box-sizing: border-box;
   }
   .hero h1 {
     font-size: clamp(2.45rem, 5.2vw, 4.2rem);
     line-height: 1.05;
     margin: 0.5rem 0 0.9rem;
     color: var(--color-deep);
-    max-width: 13ch;
+    max-width: 14ch;
   }
   .hero__eyebrow {
     color: var(--color-terracotta-deep);
@@ -384,7 +391,7 @@ const schemas = [
         );
     }
     .hero__content {
-      max-width: 28rem;
+      padding-right: min(40%, 22rem);
     }
     .hero h1 {
       max-width: 12ch;
