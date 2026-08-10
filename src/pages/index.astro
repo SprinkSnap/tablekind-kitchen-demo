@@ -301,9 +301,14 @@ const schemas = [
   .hero__content {
     position: relative;
     z-index: 2;
-    max-width: min(36rem, 46%);
-    margin-right: auto;
+    /* Keep the full page container width so copy stays on the left grid edge. */
+    width: min(1120px, calc(100% - 2rem));
+    max-width: min(1120px, calc(100% - 2rem));
+    margin-inline: auto;
     padding-block: 0.15rem;
+    /* Reserve the right plane for food photography. */
+    padding-right: min(48%, 30rem);
+    box-sizing: border-box;
   }
   .hero h1 {
     font-size: clamp(2.45rem, 5.2vw, 4.2rem);
@@ -386,7 +391,7 @@ const schemas = [
         );
     }
     .hero__content {
-      max-width: 28rem;
+      padding-right: min(40%, 22rem);
     }
     .hero h1 {
       max-width: 12ch;
